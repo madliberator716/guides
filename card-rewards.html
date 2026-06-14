@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="Card Rewards"/>
+<title>Credit Card Cheat Sheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;500&family=Lato:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #080808;
+    --bg2: #0c0c0c;
+    --bg3: #0e0e0e;
+    --line: #181818;
+    --line2: #141414;
+    --muted: #3a3a3a;
+    --csr-c: #b8974a; --csr-bg: #1c1508; --csr-bd: #5a3e10;
+    --gold-c: #e8c460; --gold-bg: #1a1500; --gold-bd: #6b5300;
+    --wfa-c:  #e05a5a; --wfa-bg:  #1a0808; --wfa-bd:  #6b1a1a;
+    --cfu-c:  #5aace8; --cfu-bg:  #071320; --cfu-bd:  #1a4a6b;
+    --apl-c:  #b0b0b0; --apl-bg:  #111111; --apl-bd:  #3a3a3a;
+  }
+
+  html { background: var(--bg); }
+
+  body {
+    background: var(--bg);
+    color: #ddd;
+    font-family: 'Lato', sans-serif;
+    min-height: 100vh;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  /* ── Header ── */
+  .header {
+    background: var(--bg2);
+    border-bottom: 1px solid var(--line);
+    padding: 1.4rem 1.2rem 1.1rem;
+    padding-top: calc(1.4rem + env(safe-area-inset-top));
+    position: sticky; top: 0; z-index: 100;
+  }
+  .header-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px; letter-spacing: 0.22em;
+    color: var(--muted); text-transform: uppercase; margin-bottom: 5px;
+  }
+  .header h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(1.9rem, 8vw, 3rem);
+    letter-spacing: 0.06em; line-height: 1; color: #f0ece4;
+  }
+  .header h1 span { color: var(--csr-c); }
+  .header-sub {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px; color: #333; margin-top: 8px;
+  }
+
+  /* ── Filter pills ── */
+  .filters {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    padding: 10px 1.2rem;
+    background: var(--bg2);
+    border-bottom: 1px solid var(--line);
+    overflow-x: auto; flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+  .filters::-webkit-scrollbar { display: none; }
+
+  .pill {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 5px 12px; border-radius: 4px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    cursor: pointer; border: 1px solid #1e1e1e;
+    background: transparent; color: #404040;
+    white-space: nowrap; transition: all 0.15s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .pill.active { border-color: var(--pill-c); color: var(--pill-c); background: var(--pill-bg); }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+
+  /* ── Category rows ── */
+  .categories { padding-bottom: 2rem; }
+
+  .cat-block { border-bottom: 1px solid var(--line2); }
+
+  .cat-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 13px 1.2rem; cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: background 0.1s;
+    gap: 10px;
+  }
+  .cat-header:active { background: rgba(255,255,255,0.02); }
+
+  .cat-left { display: flex; align-items: center; gap: 9px; flex: 1; min-width: 0; }
+  .cat-icon { font-size: 20px; flex-shrink: 0; }
+  .cat-name { font-size: 14px; font-weight: 700; color: #c5c0b8; }
+
+  .cat-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+
+  .winner-badge {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px; padding: 3px 8px; border-radius: 3px;
+    text-transform: uppercase; letter-spacing: 0.07em;
+    border: 1px solid; white-space: nowrap;
+  }
+
+  .chevron {
+    color: #333; font-size: 12px;
+    transition: transform 0.2s; flex-shrink: 0;
+  }
+  .chevron.open { transform: rotate(180deg); }
+
+  /* ── Rate pills on summary row ── */
+  .rate-row {
+    display: flex; gap: 5px; padding: 0 1.2rem 11px;
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+  }
+  .rate-row::-webkit-scrollbar { display: none; }
+
+  .rate-chip {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px; padding: 4px 9px; border-radius: 3px;
+    border: 1px solid transparent; white-space: nowrap; flex-shrink: 0;
+    color: #363636;
+  }
+  .rate-chip.best { font-weight: 600; }
+  .rate-chip .star { font-size: 8px; }
+
+  /* ── Expanded detail ── */
+  .detail {
+    background: #090909;
+    border-top: 1px solid var(--line);
+    padding: 10px 1.2rem 14px;
+    display: none;
+    animation: slideDown 0.15s ease;
+  }
+  .detail.open { display: block; }
+
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-5px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .detail-card {
+    border-radius: 5px; border: 1px solid;
+    padding: 10px 12px; margin-bottom: 8px;
+  }
+  .detail-card:last-child { margin-bottom: 0; }
+
+  .detail-card-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px; letter-spacing: 0.1em;
+    text-transform: uppercase; margin-bottom: 3px;
+  }
+  .detail-rate {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px; letter-spacing: 0.05em; line-height: 1;
+    margin-bottom: 7px;
+  }
+
+  .merchants { display: flex; flex-wrap: wrap; gap: 0; }
+  .merchant-tag {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px; padding: 2px 7px;
+    border-radius: 3px; margin: 2px 2px 2px 0;
+    border: 1px solid #1e1e1e;
+    background: rgba(255,255,255,0.03);
+    color: #585858; white-space: nowrap;
+  }
+  .merchant-tag.winner { }
+
+  .detail-perk {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px; color: #444; margin-top: 7px; line-height: 1.5;
+  }
+
+  /* ── Footer perks ── */
+  .footer {
+    padding: 1.4rem 1.2rem 2rem;
+    border-top: 1px solid var(--line2);
+    margin-top: 4px;
+  }
+  .footer-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: #2a2a2a; margin-bottom: 10px;
+  }
+  .perk-card {
+    border-radius: 5px; border: 1px solid;
+    padding: 10px 12px; margin-bottom: 8px;
+  }
+  .perk-card-name {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px; letter-spacing: 0.06em;
+    margin-bottom: 5px;
+  }
+  .perk-card-text {
+    font-size: 11px; color: #484848; line-height: 1.6;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <p class="header-label">Your 5-Card Stack · Rewards Maximizer</p>
+  <h1>CREDIT CARD <span>CHEAT SHEET</span></h1>
+  <p class="header-sub">Tap any row to expand merchants &amp; notes ↓</p>
+</div>
+
+<div class="filters" id="filters">
+  <button class="pill active" style="--pill-c:#aaa;--pill-bg:#1e1e1e; border-color:#333; color:#aaa; background:#1e1e1e;" data-filter="all">All</button>
+  <button class="pill" style="--pill-c:var(--csr-c);--pill-bg:var(--csr-bg);" data-filter="csr"><span class="dot" style="background:var(--csr-c)"></span>Sapphire Reserve</button>
+  <button class="pill" style="--pill-c:var(--gold-c);--pill-bg:var(--gold-bg);" data-filter="gold"><span class="dot" style="background:var(--gold-c)"></span>Amex Gold</button>
+  <button class="pill" style="--pill-c:var(--wfa-c);--pill-bg:var(--wfa-bg);" data-filter="wfa"><span class="dot" style="background:var(--wfa-c)"></span>WF Autograph</button>
+  <button class="pill" style="--pill-c:var(--cfu-c);--pill-bg:var(--cfu-bg);" data-filter="cfu"><span class="dot" style="background:var(--cfu-c)"></span>Freedom Unltd.</button>
+  <button class="pill" style="--pill-c:var(--apl-c);--pill-bg:var(--apl-bg);" data-filter="apple"><span class="dot" style="background:var(--apl-c)"></span>Apple Card</button>
+</div>
+
+<div class="categories" id="categories"></div>
+
+<div class="footer">
+  <p class="footer-label">Annual Perks Reminder</p>
+  <div id="perks"></div>
+</div>
+
+<script>
+const CARDS = {
+  csr:   { short: "Sapphire Reserve", abbr: "CSR",   c: "var(--csr-c)", bg: "var(--csr-bg)", bd: "var(--csr-bd)" },
+  gold:  { short: "Amex Gold",        abbr: "AMEX",  c: "var(--gold-c)",bg: "var(--gold-bg)",bd: "var(--gold-bd)" },
+  wfa:   { short: "WF Autograph",     abbr: "WFA",   c: "var(--wfa-c)", bg: "var(--wfa-bg)", bd: "var(--wfa-bd)" },
+  cfu:   { short: "Freedom Unltd.",   abbr: "CFU",   c: "var(--cfu-c)", bg: "var(--cfu-bg)", bd: "var(--cfu-bd)" },
+  apple: { short: "Apple Card",       abbr: "APPLE", c: "var(--apl-c)", bg: "var(--apl-bg)", bd: "var(--apl-bd)" },
+};
+
+const DATA = [
+  { icon:"🍽️", category:"Dining & Restaurants", winner:"gold", rows:[
+    { card:"gold",  rate:"4x MR",   merchants:["All restaurants worldwide","Cheesecake Factory¹","Shake Shack¹","Grubhub¹","Goldbelly¹"], perk:"¹ Counts toward $120/yr dining credit" },
+    { card:"csr",   rate:"3x UR",   merchants:["All restaurants","DoorDash (DashPass included)","Instacart"], perk:"Free DashPass subscription included" },
+    { card:"wfa",   rate:"3x pts",  merchants:["All restaurants","Fast food chains","Coffee shops","Bars & breweries"] },
+    { card:"cfu",   rate:"3x UR",   merchants:["All restaurants & dining"] },
+    { card:"apple", rate:"3% CB",   merchants:["Panera Bread only"], perk:"2% on all other dining via Apple Pay" },
+  ]},
+  { icon:"🛒", category:"Groceries & Supermarkets", winner:"gold", rows:[
+    { card:"gold",  rate:"4x MR",   merchants:["Whole Foods","Trader Joe's","Kroger / Ralph's","Safeway","Publix","ALDI","Sprouts","Target Grocery","Walmart Grocery pickup"], perk:"Up to $25,000/yr, then 1x" },
+    { card:"cfu",   rate:"1.5x UR", merchants:["All grocery stores (catch-all)"] },
+    { card:"apple", rate:"2% CB",   merchants:["Any grocery store via Apple Pay"] },
+    { card:"csr",   rate:"1x UR",   merchants:["All groceries"] },
+    { card:"wfa",   rate:"1x pts",  merchants:["All groceries"] },
+  ]},
+  { icon:"✈️", category:"Flights", winner:"csr", rows:[
+    { card:"csr",   rate:"5x UR",   merchants:["All airlines via Chase Travel","Delta","United","American","Southwest","JetBlue","Spirit","Alaska"], perk:"3x if booked direct with airline" },
+    { card:"gold",  rate:"3x MR",   merchants:["All airlines direct or via Amex Travel","Delta","United","American","Alaska","JetBlue"] },
+    { card:"wfa",   rate:"3x pts",  merchants:["All airline purchases"] },
+    { card:"cfu",   rate:"5x UR",   merchants:["Via Chase Travel portal only"], perk:"1.5x if booked direct" },
+    { card:"apple", rate:"2% CB",   merchants:["Any airline via Apple Pay"] },
+  ]},
+  { icon:"🏨", category:"Hotels & Lodging", winner:"csr", rows:[
+    { card:"csr",   rate:"10x UR",  merchants:["Marriott","Hilton","Hyatt","IHG","Four Seasons","Airbnb","VRBO"], perk:"Via Chase Travel; $300 credit applies; 3x booked direct" },
+    { card:"wfa",   rate:"3x pts",  merchants:["All hotels & vacation rentals"] },
+    { card:"cfu",   rate:"5x UR",   merchants:["Via Chase Travel portal only"], perk:"1.5x if booked elsewhere" },
+    { card:"gold",  rate:"1x MR",   merchants:["All hotels"] },
+    { card:"apple", rate:"2% CB",   merchants:["Any hotel via Apple Pay"] },
+  ]},
+  { icon:"🚗", category:"Car Rentals", winner:"csr", rows:[
+    { card:"csr",   rate:"10x UR",  merchants:["Hertz","Enterprise","Avis","Budget","National","Alamo","Dollar","Thrifty","Sixt"], perk:"Via Chase Travel; includes primary rental car insurance" },
+    { card:"wfa",   rate:"3x pts",  merchants:["All car rental companies"] },
+    { card:"cfu",   rate:"5x UR",   merchants:["Via Chase Travel portal only"] },
+    { card:"gold",  rate:"1x MR",   merchants:["All car rentals"] },
+    { card:"apple", rate:"2% CB",   merchants:["Any rental via Apple Pay"] },
+  ]},
+  { icon:"🛵", category:"Food Delivery", winner:"gold", rows:[
+    { card:"gold",  rate:"4x MR",   merchants:["Uber Eats","DoorDash","Grubhub¹","Instacart","Gopuff","Caviar","Seamless"], perk:"¹ Counts toward $120 dining credit; also $10/mo Uber Cash for Uber Eats" },
+    { card:"csr",   rate:"3x UR",   merchants:["DoorDash (free DashPass)","Uber Eats","Grubhub","Instacart","Caviar"], perk:"Free DashPass subscription included" },
+    { card:"cfu",   rate:"3x UR",   merchants:["All delivery apps (count as dining)"] },
+    { card:"wfa",   rate:"3x pts",  merchants:["All delivery apps (count as restaurants)"] },
+    { card:"apple", rate:"3% CB",   merchants:["Uber Eats only"], perk:"2% on all others via Apple Pay" },
+  ]},
+  { icon:"🚕", category:"Rideshare & Transit", winner:"csr", rows:[
+    { card:"csr",   rate:"10x UR",  merchants:["Lyft"], perk:"10x on Lyft; includes complimentary Lyft Pink membership" },
+    { card:"wfa",   rate:"3x pts",  merchants:["Uber","Lyft","Via","Metro/subway fare","Bus passes","Toll roads","Parking garages","Parking meters"] },
+    { card:"apple", rate:"3% CB",   merchants:["Uber only"], perk:"2% on Lyft & others via Apple Pay" },
+    { card:"gold",  rate:"1x MR",   merchants:["Rideshare"], perk:"But get $10/mo Uber Cash for Uber rides (not points)" },
+    { card:"cfu",   rate:"1.5x UR", merchants:["All rideshare & transit (catch-all)"] },
+  ]},
+  { icon:"⛽", category:"Gas Stations", winner:"wfa", rows:[
+    { card:"wfa",   rate:"3x pts",  merchants:["Shell","Chevron","BP","Marathon","Sunoco","Circle K","QuikTrip","Casey's General Store","RaceTrac"] },
+    { card:"apple", rate:"3% CB",   merchants:["Exxon & Mobil only"], perk:"2% at all other stations via Apple Pay" },
+    { card:"cfu",   rate:"1.5x UR", merchants:["All gas stations (catch-all)"] },
+    { card:"csr",   rate:"1x UR",   merchants:["All gas stations"] },
+    { card:"gold",  rate:"1x MR",   merchants:["All gas stations"] },
+  ]},
+  { icon:"📺", category:"Streaming Services", winner:"wfa", rows:[
+    { card:"wfa",   rate:"3x pts",  merchants:["Netflix","Hulu","Disney+","Max (HBO)","Peacock","Paramount+","Apple TV+","Spotify","Apple Music","Amazon Prime Video","YouTube Premium","Crunchyroll","Tidal"] },
+    { card:"apple", rate:"3% CB",   merchants:["Apple TV+","Apple Music","Apple One"], perk:"2% on all other streaming via Apple Pay" },
+    { card:"cfu",   rate:"1.5x UR", merchants:["All streaming (catch-all)"] },
+    { card:"csr",   rate:"1x UR",   merchants:["All streaming"] },
+    { card:"gold",  rate:"1x MR",   merchants:["All streaming"] },
+  ]},
+  { icon:"📱", category:"Phone & Wireless", winner:"wfa", rows:[
+    { card:"wfa",   rate:"3x pts",  merchants:["Verizon","AT&T","T-Mobile","Cricket Wireless","Mint Mobile","Visible","Google Fi","US Cellular","Boost Mobile"], perk:"Also includes cell phone damage protection" },
+    { card:"apple", rate:"3% CB",   merchants:["T-Mobile only"], perk:"2% on all other carriers via Apple Pay" },
+    { card:"cfu",   rate:"1.5x UR", merchants:["All wireless carriers (catch-all)"] },
+    { card:"csr",   rate:"1x UR",   merchants:["All carriers"] },
+    { card:"gold",  rate:"1x MR",   merchants:["All carriers"] },
+  ]},
+  { icon:"💊", category:"Drugstores & Pharmacy", winner:"cfu", rows:[
+    { card:"cfu",   rate:"3x UR",   merchants:["CVS","Walgreens","Rite Aid","Duane Reade","Bartell Drugs","Medicine Shoppe"] },
+    { card:"apple", rate:"3% CB",   merchants:["Walgreens & Duane Reade only"], perk:"2% at CVS, Rite Aid via Apple Pay" },
+    { card:"csr",   rate:"1x UR",   merchants:["All drugstores"] },
+    { card:"gold",  rate:"1x MR",   merchants:["All drugstores"] },
+    { card:"wfa",   rate:"1x pts",  merchants:["All drugstores"] },
+  ]},
+  { icon:"🍎", category:"Apple Ecosystem", winner:"apple", rows:[
+    { card:"apple", rate:"3% CB",   merchants:["Apple Store (retail & online)","App Store","iTunes","iCloud+","Apple TV+","Apple Music","Apple Arcade","Apple Fitness+","Apple One"], perk:"Daily Cash deposited instantly to Apple Cash" },
+    { card:"cfu",   rate:"1.5x UR", merchants:["Apple purchases (catch-all)"] },
+    { card:"csr",   rate:"1x UR",   merchants:["Apple purchases"] },
+    { card:"gold",  rate:"1x MR",   merchants:["Apple purchases"] },
+    { card:"wfa",   rate:"1x pts",  merchants:["Apple purchases"] },
+  ]},
+  { icon:"👟", category:"Nike & Select Retail", winner:"apple", rows:[
+    { card:"apple", rate:"3% CB",   merchants:["Nike (nike.com & stores)","Ace Hardware"], perk:"3% back — categories most cards ignore" },
+    { card:"cfu",   rate:"1.5x UR", merchants:["All retail (catch-all)"] },
+    { card:"csr",   rate:"1x UR",   merchants:["All retail"] },
+    { card:"gold",  rate:"1x MR",   merchants:["All retail"] },
+    { card:"wfa",   rate:"1x pts",  merchants:["All retail"] },
+  ]},
+  { icon:"🏋️", category:"Fitness & Gyms", winner:"wfa", rows:[
+    { card:"wfa",   rate:"3x pts",  merchants:["Planet Fitness","24 Hour Fitness","LA Fitness","Equinox","Orangetheory","CrossFit gyms","SoulCycle","Peloton subscription","Gold's Gym"] },
+    { card:"apple", rate:"3% CB",   merchants:["Apple Fitness+ only"], perk:"2% on all others via Apple Pay" },
+    { card:"cfu",   rate:"1.5x UR", merchants:["All fitness spending (catch-all)"] },
+    { card:"csr",   rate:"1x UR",   merchants:["All gyms & fitness"] },
+    { card:"gold",  rate:"1x MR",   merchants:["All fitness"] },
+  ]},
+  { icon:"🎭", category:"Entertainment & Events", winner:"wfa", rows:[
+    { card:"wfa",   rate:"3x pts",  merchants:["AMC / Regal / Cinemark","Ticketmaster","StubHub","AXS","Live Nation","Sporting event tickets","Theme parks"] },
+    { card:"cfu",   rate:"1.5x UR", merchants:["All entertainment (catch-all)"] },
+    { card:"csr",   rate:"1x UR",   merchants:["All entertainment"] },
+    { card:"gold",  rate:"1x MR",   merchants:["All entertainment"] },
+    { card:"apple", rate:"2% CB",   merchants:["Any via Apple Pay"] },
+  ]},
+  { icon:"🛍️", category:"Everything Else", winner:"cfu", rows:[
+    { card:"cfu",   rate:"1.5x UR", merchants:["Amazon","Target","Walmart","Best Buy","Costco","eBay","Etsy","Home Depot","Lowe's","Macy's","Anywhere not listed above"], perk:"Best flat-rate catch-all — use this when no other card wins" },
+    { card:"apple", rate:"2% CB",   merchants:["Any merchant via Apple Pay"], perk:"1% when using the physical Apple Card" },
+    { card:"csr",   rate:"1x UR",   merchants:["All non-bonus purchases"] },
+    { card:"gold",  rate:"1x MR",   merchants:["All non-bonus purchases"] },
+    { card:"wfa",   rate:"1x pts",  merchants:["All non-bonus purchases"] },
+  ]},
+];
+
+const PERKS = [
+  { card:"csr",   text:"$300/yr travel credit · Free DashPass · 10x Lyft · Lyft Pink · Priority Pass lounges · Points worth 1.5¢ via Chase Travel" },
+  { card:"gold",  text:"$120/yr dining credit (Grubhub, Cheesecake Factory, Shake Shack, Goldbelly) · $120/yr Uber Cash ($10/mo) · 4x dining & US groceries" },
+  { card:"wfa",   text:"No annual fee · 3x on gas, streaming, phone, transit, entertainment, dining & travel · Cell phone protection" },
+  { card:"cfu",   text:"No annual fee · 1.5x everywhere as catch-all · 3x dining & drugstores · Transfer to CSR to boost value to 1.5¢/pt" },
+  { card:"apple", text:"3% at Apple, Uber/Eats, Exxon/Mobil, Walgreens, Nike, T-Mobile, Panera, Ace Hardware · 2% all Apple Pay · Daily Cash" },
+];
+
+let activeFilter = "all";
+const expanded = new Set();
+
+function winnerAbbr(w) {
+  return { csr:"CSR", gold:"AMEX", wfa:"WFA", cfu:"CFU", apple:"APPLE" }[w];
+}
+
+function buildCategories() {
+  const container = document.getElementById("categories");
+  container.innerHTML = "";
+
+  const shown = activeFilter === "all" ? DATA : DATA.filter(d => d.winner === activeFilter);
+
+  shown.forEach(d => {
+    const c = CARDS[d.winner];
+    const isOpen = expanded.has(d.category);
+    const rateMap = {};
+    d.rows.forEach(r => rateMap[r.card] = r);
+
+    const block = document.createElement("div");
+    block.className = "cat-block";
+    block.dataset.cat = d.category;
+
+    // Rate chips for summary
+    const chips = Object.entries(CARDS).map(([k, card]) => {
+      const row = rateMap[k];
+      if (!row) return "";
+      const isW = d.winner === k;
+      return `<span class="rate-chip ${isW ? "best" : ""}" style="${isW ? `color:${card.c};background:${card.bg};border-color:${card.bd};` : ""}">${isW ? '<span class="star">★ </span>' : ""}${row.rate} <span style="opacity:0.5;font-size:9px">${card.abbr}</span></span>`;
+    }).join("");
+
+    // Detail rows
+    const detailRows = d.rows.map(row => {
+      const card = CARDS[row.card];
+      const isW = d.winner === row.card;
+      const tags = row.merchants.map(m =>
+        `<span class="merchant-tag" style="${isW ? `border-color:${card.c}44;color:${card.c}cc;background:${card.bg};` : ""}">${m}</span>`
+      ).join("");
+      return `
+        <div class="detail-card" style="border-color:${isW ? card.bd : "#181818"};background:${isW ? card.bg : "#0d0d0d"};">
+          <div class="detail-card-label" style="color:${card.c}">${isW ? "★ " : ""}${card.short}</div>
+          <div class="detail-rate" style="color:${isW ? card.c : "#383838"}">${row.rate}</div>
+          <div class="merchants">${tags}</div>
+          ${row.perk ? `<div class="detail-perk">ℹ ${row.perk}</div>` : ""}
+        </div>`;
+    }).join("");
+
+    block.innerHTML = `
+      <div class="cat-header">
+        <div class="cat-left">
+          <span class="cat-icon">${d.icon}</span>
+          <span class="cat-name">${d.category}</span>
+        </div>
+        <div class="cat-right">
+          <span class="winner-badge" style="color:${c.c};background:${c.bg};border-color:${c.bd}">${winnerAbbr(d.winner)}</span>
+          <span class="chevron ${isOpen ? "open" : ""}">▾</span>
+        </div>
+      </div>
+      <div class="rate-row">${chips}</div>
+      <div class="detail ${isOpen ? "open" : ""}">${detailRows}</div>
+    `;
+
+    block.querySelector(".cat-header").addEventListener("click", () => {
+      if (expanded.has(d.category)) expanded.delete(d.category);
+      else expanded.add(d.category);
+      buildCategories();
+    });
+
+    container.appendChild(block);
+  });
+}
+
+function buildPerks() {
+  const el = document.getElementById("perks");
+  el.innerHTML = PERKS.map(p => {
+    const c = CARDS[p.card];
+    return `
+      <div class="perk-card" style="border-color:${c.bd};background:#0d0d0d;">
+        <div class="perk-card-name" style="color:${c.c}">${c.short}</div>
+        <div class="perk-card-text">${p.text}</div>
+      </div>`;
+  }).join("");
+}
+
+document.getElementById("filters").addEventListener("click", e => {
+  const pill = e.target.closest(".pill");
+  if (!pill) return;
+  activeFilter = pill.dataset.filter;
+  document.querySelectorAll(".pill").forEach(p => p.classList.remove("active"));
+  pill.classList.add("active");
+  buildCategories();
+});
+
+buildCategories();
+buildPerks();
+</script>
+</body>
+</html>
