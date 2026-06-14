@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spirits 101 — A Gentleman's Primer</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A96E;
+    --gold-light: #E8D5A8;
+    --gold-dim: #7a6440;
+    --bg: #0D0B08;
+    --surface: #161410;
+    --surface2: #1f1c17;
+    --surface3: #2a2620;
+    --text: #E8E0D0;
+    --text-muted: #8A7F6E;
+    --accent-red: #8B3A3A;
+    --accent-amber: #B86A1A;
+    --accent-green: #2D5A3D;
+    --accent-blue: #1E3A5F;
+    --accent-peach: #7A4535;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Grain texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.4;
+  }
+
+  header {
+    text-align: center;
+    padding: 80px 20px 60px;
+    position: relative;
+    border-bottom: 1px solid rgba(201, 169, 110, 0.15);
+  }
+
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 2px;
+    background: var(--gold);
+  }
+
+  .eyebrow {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.2s;
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--gold-light);
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.4s;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .subtitle {
+    margin-top: 18px;
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.6s;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Nav */
+  nav {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    padding: 28px 20px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    position: sticky;
+    top: 0;
+    background: rgba(13,11,8,0.95);
+    backdrop-filter: blur(12px);
+    z-index: 100;
+  }
+
+  .nav-btn {
+    background: transparent;
+    border: 1px solid rgba(201,169,110,0.2);
+    color: var(--text-muted);
+    padding: 7px 14px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    border-radius: 2px;
+  }
+
+  .nav-btn:hover, .nav-btn.active {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: rgba(201,169,110,0.07);
+  }
+
+  /* Main content */
+  main {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 20px 20px 80px;
+  }
+
+  /* Section */
+  .section {
+    display: none;
+    animation: sectionIn 0.5s ease forwards;
+  }
+
+  .section.active { display: block; }
+
+  @keyframes sectionIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .section-header {
+    padding: 60px 0 40px;
+    text-align: center;
+  }
+
+  .section-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 300;
+    color: var(--gold-light);
+    margin-bottom: 12px;
+  }
+
+  .section-header p {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    max-width: 540px;
+    margin: 0 auto;
+    line-height: 1.8;
+    letter-spacing: 0.03em;
+  }
+
+  /* Spirit cards */
+  .spirit-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    margin-top: 20px;
+  }
+
+  .spirit-card {
+    background: var(--surface);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 4px;
+    overflow: hidden;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+    cursor: pointer;
+  }
+
+  .spirit-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(201,169,110,0.3);
+  }
+
+  .card-accent {
+    height: 3px;
+  }
+
+  .card-body {
+    padding: 28px 24px 24px;
+  }
+
+  .card-icon {
+    font-size: 1.8rem;
+    margin-bottom: 14px;
+  }
+
+  .card-body h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--gold-light);
+    margin-bottom: 6px;
+  }
+
+  .card-origin {
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+  }
+
+  .card-body p {
+    font-size: 0.78rem;
+    line-height: 1.85;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+  }
+
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .tag {
+    background: rgba(201,169,110,0.08);
+    border: 1px solid rgba(201,169,110,0.18);
+    color: var(--gold-dim);
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 2px;
+  }
+
+  .card-detail {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+    display: none;
+  }
+
+  .card-detail.open { display: block; }
+
+  .detail-toggle {
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 10px;
+    transition: color 0.2s;
+  }
+
+  .detail-toggle:hover { color: var(--gold); }
+  .detail-toggle .arrow { transition: transform 0.2s; }
+  .detail-toggle.open .arrow { transform: rotate(90deg); }
+
+  /* Divider */
+  .gold-divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 50px 0 36px;
+  }
+
+  .gold-divider::before, .gold-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(201,169,110,0.3));
+  }
+
+  .gold-divider::after {
+    background: linear-gradient(to left, transparent, rgba(201,169,110,0.3));
+  }
+
+  .gold-divider span {
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    white-space: nowrap;
+  }
+
+  /* Taste matrix */
+  .taste-row {
+    display: grid;
+    grid-template-columns: 120px 1fr 60px;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .taste-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+  }
+
+  .taste-bar-bg {
+    height: 4px;
+    background: rgba(255,255,255,0.07);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .taste-bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 1s ease;
+  }
+
+  .taste-bar-fill.animated { transform: scaleX(1); }
+
+  .taste-value {
+    font-size: 0.65rem;
+    color: var(--gold-dim);
+    text-align: right;
+  }
+
+  /* Info blocks */
+  .info-block {
+    background: var(--surface);
+    border-left: 2px solid var(--gold);
+    padding: 24px 28px;
+    margin: 20px 0;
+    border-radius: 0 4px 4px 0;
+  }
+
+  .info-block h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    color: var(--gold-light);
+    margin-bottom: 10px;
+  }
+
+  .info-block p, .info-block li {
+    font-size: 0.78rem;
+    line-height: 1.85;
+    color: var(--text-muted);
+  }
+
+  .info-block ul {
+    padding-left: 16px;
+  }
+
+  .info-block li {
+    margin-bottom: 5px;
+  }
+
+  /* Two col */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  @media (max-width: 600px) {
+    .two-col { grid-template-columns: 1fr; }
+    .taste-row { grid-template-columns: 90px 1fr 48px; }
+  }
+
+  /* Quote */
+  blockquote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--gold);
+    text-align: center;
+    padding: 40px 20px;
+    line-height: 1.6;
+    opacity: 0.85;
+  }
+
+  blockquote cite {
+    display: block;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.62rem;
+    font-style: normal;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-top: 12px;
+  }
+
+  /* How to taste */
+  .steps {
+    counter-reset: steps;
+    list-style: none;
+  }
+
+  .steps li {
+    counter-increment: steps;
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 16px;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    align-items: start;
+  }
+
+  .steps li::before {
+    content: counter(steps);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 300;
+    color: var(--gold-dim);
+    line-height: 1;
+    text-align: center;
+  }
+
+  .steps li h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    color: var(--gold-light);
+    margin-bottom: 5px;
+  }
+
+  .steps li p {
+    font-size: 0.77rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+  }
+
+  /* Convo starters */
+  .convo-card {
+    background: var(--surface2);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 4px;
+    padding: 22px 24px;
+    margin-bottom: 12px;
+  }
+
+  .convo-card .scenario {
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 10px;
+  }
+
+  .convo-card .question {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    color: var(--text);
+    margin-bottom: 10px;
+    font-style: italic;
+  }
+
+  .convo-card .answer {
+    font-size: 0.77rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+  }
+
+  /* ABV badge */
+  .abv-badge {
+    display: inline-block;
+    background: rgba(201,169,110,0.1);
+    border: 1px solid rgba(201,169,110,0.25);
+    color: var(--gold);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    padding: 4px 10px;
+    border-radius: 2px;
+    margin-right: 6px;
+  }
+
+  /* Glassware row */
+  .glass-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  .glass-card {
+    background: var(--surface);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 4px;
+    padding: 20px 16px;
+    text-align: center;
+  }
+
+  .glass-emoji { font-size: 2rem; margin-bottom: 10px; }
+
+  .glass-card h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: var(--gold-light);
+    margin-bottom: 6px;
+  }
+
+  .glass-card p {
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 30px 20px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
+    opacity: 0.6;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">A Gentleman's Primer</div>
+  <h1>Spirits <em>&</em> Fine Liquor<br>101</h1>
+  <p class="subtitle">Everything you need to hold your own at the bar</p>
+</header>
+
+<nav id="main-nav">
+  <button class="nav-btn active" onclick="showSection('spirits')">The Spirits</button>
+  <button class="nav-btn" onclick="showSection('tasting')">How to Taste</button>
+  <button class="nav-btn" onclick="showSection('aging')">Aging & Oak</button>
+  <button class="nav-btn" onclick="showSection('glassware')">Glassware</button>
+  <button class="nav-btn" onclick="showSection('vocab')">The Vocabulary</button>
+  <button class="nav-btn" onclick="showSection('convo')">Conversation</button>
+</nav>
+
+<main>
+
+<!-- SPIRITS -->
+<div id="spirits" class="section active">
+  <div class="section-header">
+    <h2>The Major Spirits</h2>
+    <p>Every category has its own character. Tap any card to learn more.</p>
+  </div>
+
+  <div class="spirit-grid">
+
+    <div class="spirit-card" onclick="toggleDetail(this)">
+      <div class="card-accent" style="background: linear-gradient(90deg, #c9a96e, #8B6914);"></div>
+      <div class="card-body">
+        <div class="card-icon">🥃</div>
+        <h3>Whisky / Whiskey</h3>
+        <div class="card-origin">Scotland · Ireland · USA · Japan · Canada</div>
+        <p>The king of aged spirits. Made from fermented grain mash, aged in oak barrels. The spelling "whisky" (no e) = Scotch, Japanese, Canadian. "Whiskey" (with e) = Irish, American.</p>
+        <div class="card-tags">
+          <span class="tag">Aged</span>
+          <span class="tag">Complex</span>
+          <span class="tag">Oak-forward</span>
+          <span class="abv-badge">40–68% ABV</span>
+        </div>
+        <span class="detail-toggle"><span class="arrow">▶</span> Expand</span>
+        <div class="card-detail">
+          <strong style="color: var(--gold-light); font-size: 0.8rem;">Key Styles:</strong><br><br>
+          <strong style="color: var(--text);">Scotch Single Malt</strong> — 100% malted barley, single distillery, aged ≥3 yrs in Scotland. The prestige pinnacle. Regions matter: Islay = smoky/peaty, Speyside = fruity/elegant, Highlands = varied, Lowlands = light.<br><br>
+          <strong style="color: var(--text);">Bourbon</strong> — American, ≥51% corn, new charred oak barrels. Sweeter, vanilla-forward, caramel. No minimum age, but "straight" = ≥2 yrs. Kentucky is home base.<br><br>
+          <strong style="color: var(--text);">Rye Whiskey</strong> — ≥51% rye grain. Spicier, drier than bourbon. Big in cocktails.<br><br>
+          <strong style="color: var(--text);">Japanese Whisky</strong> — Inspired by Scotch, often blended for balance and elegance. Yamazaki, Hibiki, Nikka are the big names.<br><br>
+          <strong style="color: var(--text);">Irish Whiskey</strong> — Triple-distilled, lighter and smooth. Jameson is entry-level; Redbreast single pot still is the good stuff.
+        </div>
+      </div>
+    </div>
+
+    <div class="spirit-card" onclick="toggleDetail(this)">
+      <div class="card-accent" style="background: linear-gradient(90deg, #2D5A3D, #4a9a68);"></div>
+      <div class="card-body">
+        <div class="card-icon">🌵</div>
+        <h3>Tequila & Mezcal</h3>
+        <div class="card-origin">Mexico — Jalisco & Oaxaca</div>
+        <p>Both made from agave plants. Tequila = blue agave only, from Jalisco. Mezcal = any agave variety, traditionally roasted = smoky character. Craft mezcal is having a major moment.</p>
+        <div class="card-tags">
+          <span class="tag">Agave</span>
+          <span class="tag">Terroir</span>
+          <span class="tag">Earthy</span>
+          <span class="abv-badge">38–55% ABV</span>
+        </div>
+        <span class="detail-toggle"><span class="arrow">▶</span> Expand</span>
+        <div class="card-detail">
+          <strong style="color: var(--gold-light); font-size: 0.8rem;">Tequila Age Classifications:</strong><br><br>
+          <strong style="color: var(--text);">Blanco / Silver</strong> — Unaged or ≤60 days. Purest agave flavor. Best for sipping to understand the plant.<br><br>
+          <strong style="color: var(--text);">Reposado</strong> — Aged 2–12 months in oak. Balance of agave + wood.<br><br>
+          <strong style="color: var(--text);">Añejo</strong> — 1–3 years aged. Richer, more complex. Whisky drinkers often gravitate here.<br><br>
+          <strong style="color: var(--text);">Extra Añejo</strong> — 3+ years. Rare, expensive, almost brandy-like.<br><br>
+          <strong style="color: var(--gold);">💡 Flex:</strong> The agave plant takes 7–25 years to mature before harvest. One plant = one batch.
+        </div>
+      </div>
+    </div>
+
+    <div class="spirit-card" onclick="toggleDetail(this)">
+      <div class="card-accent" style="background: linear-gradient(90deg, #7A4535, #c47a5a);"></div>
+      <div class="card-body">
+        <div class="card-icon">🍇</div>
+        <h3>Cognac & Brandy</h3>
+        <div class="card-origin">France — Cognac AOC</div>
+        <p>Brandy = distilled wine. Cognac = brandy from the Cognac region of France, double-distilled in copper pot stills, aged in Limousin oak. The most regulated spirit in France.</p>
+        <div class="card-tags">
+          <span class="tag">Grape-based</span>
+          <span class="tag">Refined</span>
+          <span class="tag">Aged</span>
+          <span class="abv-badge">40–43% ABV</span>
+        </div>
+        <span class="detail-toggle"><span class="arrow">▶</span> Expand</span>
+        <div class="card-detail">
+          <strong style="color: var(--gold-light); font-size: 0.8rem;">Age Designations:</strong><br><br>
+          <strong style="color: var(--text);">VS (Very Special)</strong> — Youngest brandy in blend ≥2 yrs. Entry level.<br><br>
+          <strong style="color: var(--text);">VSOP (Very Superior Old Pale)</strong> — Youngest ≥4 yrs. The sweet spot for value.<br><br>
+          <strong style="color: var(--text);">XO (Extra Old)</strong> — Youngest ≥10 yrs. Complex, layered, expensive.<br><br>
+          <strong style="color: var(--text);">Hors d'âge</strong> — "Beyond age" — 30, 50, even 100-year blends.<br><br>
+          Big houses: Rémy Martin, Hennessy, Courvoisier, Martell. Boutique: Ferrand, Camus.
+        </div>
+      </div>
+    </div>
+
+    <div class="spirit-card" onclick="toggleDetail(this)">
+      <div class="card-accent" style="background: linear-gradient(90deg, #1E3A5F, #3a6a9f);"></div>
+      <div class="card-body">
+        <div class="card-icon">🫙</div>
+        <h3>Rum</h3>
+        <div class="card-origin">Caribbean · Latin America</div>
+        <p>Made from sugarcane juice or molasses. Hugely varied — from light Cuban-style to funky Jamaican to aged Barbadian. The most underrated premium spirit category.</p>
+        <div class="card-tags">
+          <span class="tag">Sugarcane</span>
+          <span class="tag">Tropical</span>
+          <span class="tag">Varied</span>
+          <span class="abv-badge">37–75% ABV</span>
+        </div>
+        <span class="detail-toggle"><span class="arrow">▶</span> Expand</span>
+        <div class="card-detail">
+          <strong style="color: var(--gold-light); font-size: 0.8rem;">Styles to Know:</strong><br><br>
+          <strong style="color: var(--text);">Agricole</strong> — From fresh sugarcane juice, not molasses. Grassy, vegetal, funky. Primarily Martinique & Guadeloupe.<br><br>
+          <strong style="color: var(--text);">Jamaican</strong> — High ester, funky, overripe fruit. Appleton, Hampden, Worthy Park.<br><br>
+          <strong style="color: var(--text);">Barbadian</strong> — Elegant, balanced. Mount Gay is the oldest rum brand (1703).<br><br>
+          <strong style="color: var(--text);">Aged Demerara</strong> — From Guyana, deep and heavy. El Dorado 15/21 yr are stunning and affordable vs. whisky.<br><br>
+          <strong style="color: var(--gold);">💡 Hot take:</strong> A 15-year aged Barbados rum often rivals $150 Scotch at a fraction of the price.
+        </div>
+      </div>
+    </div>
+
+    <div class="spirit-card" onclick="toggleDetail(this)">
+      <div class="card-accent" style="background: linear-gradient(90deg, #4a2a6a, #8a5aaa);"></div>
+      <div class="card-body">
+        <div class="card-icon">🌿</div>
+        <h3>Gin</h3>
+        <div class="card-origin">England · Netherlands · Global</div>
+        <p>A neutral spirit redistilled with botanicals — juniper must be dominant. The flavor profile beyond that is the distiller's art. From London Dry's sharp bite to contemporary floral styles.</p>
+        <div class="card-tags">
+          <span class="tag">Botanical</span>
+          <span class="tag">Juniper</span>
+          <span class="tag">Aromatic</span>
+          <span class="abv-badge">37–57% ABV</span>
+        </div>
+        <span class="detail-toggle"><span class="arrow">▶</span> Expand</span>
+        <div class="card-detail">
+          <strong style="color: var(--gold-light); font-size: 0.8rem;">Key Styles:</strong><br><br>
+          <strong style="color: var(--text);">London Dry</strong> — Classic. Juniper-forward, dry, no added sugar. Tanqueray, Beefeater, Bombay Sapphire.<br><br>
+          <strong style="color: var(--text);">Old Tom</strong> — Slightly sweeter, historic style. Good for classic cocktails.<br><br>
+          <strong style="color: var(--text);">Navy Strength</strong> — 57% ABV. Historically for the Royal Navy. Bold, punchy.<br><br>
+          <strong style="color: var(--text);">Contemporary / New Western</strong> — Juniper present but other botanicals take center stage. Hendrick's (cucumber/rose), Monkey 47 (47 botanicals).
+        </div>
+      </div>
+    </div>
+
+    <div class="spirit-card" onclick="toggleDetail(this)">
+      <div class="card-accent" style="background: linear-gradient(90deg, #555, #aaa);"></div>
+      <div class="card-body">
+        <div class="card-icon">🫗</div>
+        <h3>Vodka</h3>
+        <div class="card-origin">Russia · Poland · Global</div>
+        <p>Defined by what it's not: no distinctive aroma, taste, or color. Yet base material matters — potato, wheat, rye, and corn all yield different mouthfeels and subtle character.</p>
+        <div class="card-tags">
+          <span class="tag">Neutral</span>
+          <span class="tag">Clean</span>
+          <span class="tag">Versatile</span>
+          <span class="abv-badge">37.5–50% ABV</span>
+        </div>
+        <span class="detail-toggle"><span class="arrow">▶</span> Expand</span>
+        <div class="card-detail">
+          <strong style="color: var(--gold-light); font-size: 0.8rem;">Base Materials:</strong><br><br>
+          <strong style="color: var(--text);">Grain (wheat/rye)</strong> — Crisp, slightly sweet. Grey Goose (wheat), Belvedere (rye).<br><br>
+          <strong style="color: var(--text);">Potato</strong> — Creamy, fuller mouthfeel. Chopin (Poland) is the benchmark.<br><br>
+          <strong style="color: var(--text);">Corn</strong> — Slightly sweet. Tito's (Austin, TX) is huge in the US.<br><br>
+          <strong style="color: var(--gold);">💡 Real talk:</strong> Among serious spirits folks, vodka gets least attention. But Polish and Russian traditional vodkas, sipped at room temp with food, are a legit tradition. Don't dismiss it.
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="gold-divider"><span>Also Worth Knowing</span></div>
+
+  <div class="two-col">
+    <div class="info-block">
+      <h4>Armagnac</h4>
+      <p>France's other great brandy, from Gascony. Older than Cognac. Single-distillation = more rustic, individual character. Vintages are dated (like wine). A 1980 Armagnac at a bar is a real conversation piece.</p>
+    </div>
+    <div class="info-block">
+      <h4>Calvados</h4>
+      <p>Apple (and sometimes pear) brandy from Normandy, France. Aged in oak. Tastes like apples transformed — not like apple juice, but deep, dried-fruit complexity. Underappreciated and often stunning.</p>
+    </div>
+    <div class="info-block">
+      <h4>Pisco</h4>
+      <p>Grape brandy from Peru and Chile. Unaged, distilled once, bottled at natural proof. Clean and fresh but with real depth. The Pisco Sour is the entry point; sipping a premium Quebranta pisco is the revelation.</p>
+    </div>
+    <div class="info-block">
+      <h4>Amaro / Bitters</h4>
+      <p>Italian herbal liqueurs, bitter-sweet. Fernet-Branca, Campari, Aperol, Cynar, Averna. Not really sipped neat at a fine spirits bar, but knowing Amaro is part of the culture — especially as digestifs after meals.</p>
+    </div>
+  </div>
+</div>
+
+<!-- TASTING -->
+<div id="tasting" class="section">
+  <div class="section-header">
+    <h2>How to Actually Taste</h2>
+    <p>The difference between drinking and tasting is attention. Here's the protocol.</p>
+  </div>
+
+  <ol class="steps">
+    <li>
+      <div>
+        <h4>Observe the Color</h4>
+        <p>Hold to light. Pale gold = younger or lighter wood. Deep amber/mahogany = longer aging or darker casks (sherry, port). Color is your first clue. Note: caramel coloring is legal in most Scotch and some spirits — color ≠ always age.</p>
+      </div>
+    </li>
+    <li>
+      <div>
+        <h4>Nose It (the Right Way)</h4>
+        <p>Don't shove your nose in the glass. Hold it an inch or two away. Breathe with your mouth slightly open — it prevents the alcohol from numbing your nose. Give it 3–5 slow passes before forming an opinion. What do you smell first? What comes after? A good spirit has layers.</p>
+      </div>
+    </li>
+    <li>
+      <div>
+        <h4>Add a Few Drops of Water</h4>
+        <p>Even if you're sipping neat, a few drops of still (non-mineral) water opens up aromatics and cuts the ethanol sting. This is not a sign of weakness — Master Blenders do it. It unlocks esters and lighter floral/fruit notes hidden under the ABV.</p>
+      </div>
+    </li>
+    <li>
+      <div>
+        <h4>The First Sip</h4>
+        <p>Small sip. Let it coat your tongue. Notice where you feel it: tip = sweet, sides = sour/salt, back = bitter. Roll it around. You're mapping the "mouthfeel" — is it oily? Thin? Astringent? Silky?</p>
+      </div>
+    </li>
+    <li>
+      <div>
+        <h4>The Finish</h4>
+        <p>After you swallow, how long do the flavors linger? A "long finish" is a quality indicator. What changes? Often warmth, then dried fruit, then spice or oak. Short finish isn't bad — it can mean clean and refreshing. Long finish = complexity.</p>
+      </div>
+    </li>
+    <li>
+      <div>
+        <h4>Return to the Nose</h4>
+        <p>Come back to the glass 5–10 minutes later. The spirit has oxidized slightly and released different notes. This "second nosing" often reveals things the first didn't. Top-tier spirits can evolve in the glass for an hour.</p>
+      </div>
+    </li>
+  </ol>
+
+  <div class="gold-divider"><span>Flavor Families</span></div>
+
+  <div class="two-col">
+    <div class="info-block">
+      <h4>Fruits</h4>
+      <ul>
+        <li>Stone fruit (peach, apricot, plum) — often Speyside Scotch</li>
+        <li>Citrus (orange peel, lemon) — Bourbon, Irish</li>
+        <li>Tropical (banana, pineapple) — Jamaican rum, some Japanese</li>
+        <li>Dried fruit (raisin, fig, prune) — sherry-cask aged spirits</li>
+        <li>Orchard fruit (apple, pear) — Calvados, some Irish</li>
+      </ul>
+    </div>
+    <div class="info-block">
+      <h4>Oak & Baking</h4>
+      <ul>
+        <li>Vanilla — new American oak (bourbon, very common)</li>
+        <li>Caramel / toffee — charred barrels</li>
+        <li>Cinnamon / nutmeg — rye, some Cognac</li>
+        <li>Dark chocolate — heavily aged spirits</li>
+        <li>Toasted bread / biscuit — malted barley character</li>
+      </ul>
+    </div>
+    <div class="info-block">
+      <h4>Earthy & Savory</h4>
+      <ul>
+        <li>Peat / smoke — Islay Scotch (Laphroaig, Ardbeg)</li>
+        <li>Leather — long-aged whisky, aged rum</li>
+        <li>Tobacco — XO Cognac, aged Armagnac</li>
+        <li>Roasted agave / earth — mezcal</li>
+        <li>Mushroom / forest floor — very old spirits</li>
+      </ul>
+    </div>
+    <div class="info-block">
+      <h4>Floral & Herbal</h4>
+      <ul>
+        <li>Heather / honey — Highland Scotch</li>
+        <li>Rose / lavender — Hendrick's Gin, some Armagnac</li>
+        <li>Grass / hay — Agricole rum, blanco tequila</li>
+        <li>Mint / eucalyptus — some bourbon</li>
+        <li>Anise / licorice — Pastis, some Cognac finishes</li>
+      </ul>
+    </div>
+  </div>
+
+  <blockquote>
+    "The most important thing in tasting is to trust what you smell and taste, not what you're supposed to smell and taste."
+    <cite>— Michael Jackson, Whisky Writer</cite>
+  </blockquote>
+</div>
+
+<!-- AGING -->
+<div id="aging" class="section">
+  <div class="section-header">
+    <h2>Aging & The Cask</h2>
+    <p>The barrel isn't just storage — it's an active ingredient. Up to 70% of a whisky's flavor can come from the wood.</p>
+  </div>
+
+  <div class="info-block">
+    <h4>What Happens in the Barrel</h4>
+    <p>Four simultaneous processes occur during aging:</p>
+    <ul style="margin-top: 10px;">
+      <li><strong style="color: var(--text);">Extraction</strong> — Spirit pulls compounds from the wood: vanillin (vanilla), tannins (dryness/structure), lignin (spice), lactones (coconut, oak)</li>
+      <li><strong style="color: var(--text);">Oxidation</strong> — Slow exposure to oxygen through the wood softens harsh ethanol, develops dried fruit and nutty notes</li>
+      <li><strong style="color: var(--text);">Evaporation</strong> — The "Angel's Share": 1–5% lost per year. Concentrates flavor. Hotter climates lose more (Caribbean rum ages faster)</li>
+      <li><strong style="color: var(--text);">Filtration</strong> — Charcoal inside charred barrels removes sulfur compounds, smooths the spirit</li>
+    </ul>
+  </div>
+
+  <div class="gold-divider"><span>Cask Types</span></div>
+
+  <div class="spirit-grid">
+    <div class="spirit-card">
+      <div class="card-accent" style="background: #8B6914;"></div>
+      <div class="card-body">
+        <h3 style="font-size: 1.2rem;">American White Oak (New)</h3>
+        <p>Required for bourbon. Heavy vanilla, caramel, sweet coconut. The most impactful oak type. A spirit "first-fill" in new American oak will be dramatically different from "second-fill."</p>
+      </div>
+    </div>
+    <div class="spirit-card">
+      <div class="card-accent" style="background: #6B2A2A;"></div>
+      <div class="card-body">
+        <h3 style="font-size: 1.2rem;">Sherry Casks (Oloroso/PX)</h3>
+        <p>Used by Scotch producers. Adds dried fruit, raisins, Christmas cake, rich mahogany color. Oloroso = dry nutty sherry influence. PX (Pedro Ximénez) = intensely sweet. Among the most prized casks.</p>
+      </div>
+    </div>
+    <div class="spirit-card">
+      <div class="card-accent" style="background: #3a2a5a;"></div>
+      <div class="card-body">
+        <h3 style="font-size: 1.2rem;">Port / Wine Casks</h3>
+        <p>Portuguese port barrels add berry, grape, and chocolate notes. Often used as "finishing" casks — spirit spends final months here. Glenfarclas 105, Glenmorangie Quinta Ruban.</p>
+      </div>
+    </div>
+    <div class="spirit-card">
+      <div class="card-accent" style="background: #2d4a1a;"></div>
+      <div class="card-body">
+        <h3 style="font-size: 1.2rem;">French Limousin Oak</h3>
+        <p>Standard for Cognac and Armagnac. Tighter grain than American oak = slower extraction. More subtle spice, floral notes, and a particular elegance. Doesn't dominate like new American oak.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="gold-divider"><span>Age Statements vs. No Age Statement (NAS)</span></div>
+
+  <div class="two-col">
+    <div class="info-block">
+      <h4>Age Statements</h4>
+      <p>The number on the label = minimum age of any whisky in the bottle. A 12-year contains no whisky younger than 12 years; much of it may be older. The age tells you something — but not everything. A 12-year in the right cask can beat an 18-year in a tired one.</p>
+    </div>
+    <div class="info-block">
+      <h4>No Age Statement (NAS)</h4>
+      <p>Allows blenders flexibility to use younger and older stocks together for a consistent flavor profile. Not inherently worse — Johnnie Walker Blue, Hibiki Harmony, and Glenfarclas 105 are NAS and exceptional. Judge by taste, not the number.</p>
+    </div>
+  </div>
+
+  <div class="info-block">
+    <h4>The "Double Matured" / Finishing Trend</h4>
+    <p>Many distilleries now "finish" their standard expression in a different cask for the last 6–24 months. Glenmorangie pioneered this. Examples: 10-year bourbon-cask Scotch finished in Sauternes (dessert wine) casks. This is where a lot of the creativity in modern whisky lives — and it's a great conversation topic with enthusiasts.</p>
+  </div>
+</div>
+
+<!-- GLASSWARE -->
+<div id="glassware" class="section">
+  <div class="section-header">
+    <h2>The Glass Matters</h2>
+    <p>Shape directs aroma. Volume controls dilution. The right glass makes a measurable difference.</p>
+  </div>
+
+  <div class="glass-grid">
+    <div class="glass-card">
+      <div class="glass-emoji">🥃</div>
+      <h4>Glencairn</h4>
+      <p>The standard for Scotch & whisky tasting. Tulip shape concentrates aroma at the rim. What every serious whisky bar will default to. If they hand you one, you're in a good place.</p>
+    </div>
+    <div class="glass-card">
+      <div class="glass-emoji">🍷</div>
+      <h4>Copita / Dock Glass</h4>
+      <p>Long stem, tulip bowl. Professional tasting glass for Cognac and Scotch. Stem keeps hands from warming the spirit.</p>
+    </div>
+    <div class="glass-card">
+      <div class="glass-emoji">🥂</div>
+      <h4>Snifter</h4>
+      <p>The classic Cognac glass. Wide bowl, narrow rim. Allows swirling to release aromatics. Don't warm it with your hands — that's outdated advice that ruins the nose.</p>
+    </div>
+    <div class="glass-card">
+      <div class="glass-emoji">🧊</div>
+      <h4>Rocks / Old Fashioned</h4>
+      <p>Short, wide, heavy-bottomed. For spirits over ice or cocktails like the Old Fashioned. Casual. The wide opening makes nosing harder — designed for ice and dilution, not tasting.</p>
+    </div>
+    <div class="glass-card">
+      <div class="glass-emoji">🍸</div>
+      <h4>Coupe</h4>
+      <p>Broad, shallow bowl. Cocktails like the Sidecar (Cognac-based) or anything served "up" (no ice). Retro-elegant. Replaced the Martini V-glass in most upscale bars.</p>
+    </div>
+    <div class="glass-card">
+      <div class="glass-emoji">🫗</div>
+      <h4>Highball</h4>
+      <p>Tall, straight-sided. For highball cocktails — Japanese whisky with soda water is a classic. Ice fills it; carbonation is preserved by the narrow top.</p>
+    </div>
+  </div>
+
+  <div class="gold-divider"><span>Ice</span></div>
+
+  <div class="two-col">
+    <div class="info-block">
+      <h4>Large Format Ice ("King Cube")</h4>
+      <p>2x2" cube or large sphere. Melts slower = less dilution. The premium choice for serious spirits on the rocks. If a bar has it, they care. A sphere is optimal (maximum volume to surface area ratio).</p>
+    </div>
+    <div class="info-block">
+      <h4>Neat vs. Rocks vs. Water</h4>
+      <p><strong style="color: var(--text);">Neat</strong> = no ice, room temp. <strong style="color: var(--text);">Rocks</strong> = on ice. <strong style="color: var(--text);">Up</strong> = chilled, strained, no ice in the glass. <strong style="color: var(--text);">With water</strong> = a few drops still water. For tasting fine spirits, neat or neat with a few drops is ideal.</p>
+    </div>
+  </div>
+</div>
+
+<!-- VOCAB -->
+<div id="vocab" class="section">
+  <div class="section-header">
+    <h2>The Vocabulary</h2>
+    <p>The words that come up constantly. Know these and you'll follow any conversation.</p>
+  </div>
+
+  <div class="two-col">
+    <div class="info-block">
+      <h4>Angel's Share</h4>
+      <p>Evaporation from the cask during aging — absorbed into the atmosphere. Typically 1–2% per year in Scotland, up to 5–10% in tropical climates. A 30-year Scotch may have lost 40% of its original volume.</p>
+    </div>
+    <div class="info-block">
+      <h4>Devil's Cut</h4>
+      <p>Spirit absorbed into the wood stave that doesn't evaporate. Jim Beam trademarked this term but the concept applies broadly. Older barrels have given up more to both angels and devils.</p>
+    </div>
+    <div class="info-block">
+      <h4>Cask Strength / Barrel Proof</h4>
+      <p>Bottled at whatever ABV it came out of the barrel — no dilution. Can be 55–70%+ ABV. More intense, and purists love it. Add water yourself to suit your palate.</p>
+    </div>
+    <div class="info-block">
+      <h4>Single Malt vs. Blended</h4>
+      <p>Single malt = one distillery, malted barley. Blended = multiple distilleries combined. Blends aren't inferior — Johnnie Walker, Chivas, etc. are intentionally complex. Many masters argue great blending is as sophisticated as single malts.</p>
+    </div>
+    <div class="info-block">
+      <h4>Terroir</h4>
+      <p>Borrowed from wine — the idea that soil, climate, water, and local conditions influence flavor. Increasingly used in whisky (peat source, local barley) and mezcal (specific agave varieties, region, altitude) conversations.</p>
+    </div>
+    <div class="info-block">
+      <h4>Expression</h4>
+      <p>A specific bottling of a spirit. Macallan 12 and Macallan 18 are different expressions from the same distillery. A distillery might have dozens of expressions (age, cask type, region of cask).</p>
+    </div>
+    <div class="info-block">
+      <h4>Mouthfeel / Body</h4>
+      <p>The texture and weight of the spirit on the palate. "Full-bodied" = rich, coating. "Light-bodied" = thin, watery. Oily mouthfeel (like Clynelish Scotch) is considered a quality marker in many traditions.</p>
+    </div>
+    <div class="info-block">
+      <h4>Distillate / New Make</h4>
+      <p>The spirit directly off the still, before any aging. Clear, harsh, often surprisingly flavorful. Distilleries sometimes sell it. It's how you taste the raw material before wood transforms it.</p>
+    </div>
+    <div class="info-block">
+      <h4>Peated / PPM</h4>
+      <p>Peat is partially decomposed plant matter burned to dry malted barley in some Scotch. PPM = phenol parts per million, the measure of peatiness. Laphroaig ≈ 40–45 PPM. Ardbeg ≈ 55 PPM. "Heavily peated" means medicinal, smoky, maritime character.</p>
+    </div>
+    <div class="info-block">
+      <h4>Vintage vs. Non-Vintage</h4>
+      <p>Most spirits are non-vintage — blended across years for consistency. Some Cognac houses and Scotch bottlers release single-vintage expressions (e.g., Armagnac 1985). These are more like wine — tied to one harvest year's conditions.</p>
+    </div>
+  </div>
+</div>
+
+<!-- CONVO -->
+<div id="convo" class="section">
+  <div class="section-header">
+    <h2>Holding Your Own</h2>
+    <p>Smart questions and things to say when you're at the bar with people who know their stuff.</p>
+  </div>
+
+  <div class="convo-card">
+    <div class="scenario">When someone orders a specific Scotch</div>
+    <div class="question">"Is that a sherry-cask or bourbon-cask expression?"</div>
+    <div class="answer">Almost every enthusiast has an opinion on this. Sherry-cask drinkers tend to love dried fruit and richness; bourbon-cask people want that vanilla and lighter fruit. Asking this shows you understand the core variable in Scotch production.</div>
+  </div>
+
+  <div class="convo-card">
+    <div class="scenario">When someone orders Mezcal</div>
+    <div class="question">"What agave variety is that? Espadín or something more obscure?"</div>
+    <div class="answer">Espadín is the workhorse agave for mezcal (like the blue agave of tequila). Tobalá, Arroqueño, Tepeztate are wild-harvested varieties — rarer and more expensive. This question signals you understand mezcal is a category, not just a brand.</div>
+  </div>
+
+  <div class="convo-card">
+    <div class="scenario">When ordering a whisky you've never had</div>
+    <div class="question">"What's the cask story on this one?"</div>
+    <div class="answer">Bartenders at fine spirits bars love this question. It opens up conversation about first-fill vs. refill, finishing casks, cooperage. You'll learn something and signal you're there to appreciate, not just consume.</div>
+  </div>
+
+  <div class="convo-card">
+    <div class="scenario">When someone shows off a rare bottle</div>
+    <div class="question">"What's the ABV on that — is it cask strength?"</div>
+    <div class="answer">This shows you understand that cask strength releases are the connoisseur's choice — undiluted, unadulterated. If it is, follow with: "Do you add any water to open it up?" Great conversation starter.</div>
+  </div>
+
+  <div class="convo-card">
+    <div class="scenario">Universal order for a fine spirits bar (when unsure)</div>
+    <div class="question">Ask: "What's a well-aged single malt you're proud of right now — something interesting, not the usual 12-year?"</div>
+    <div class="answer">This invites the bartender to be an expert, shows you have some knowledge, and gets you something genuinely interesting. It's never the wrong move. If they light up, you're in for something good.</div>
+  </div>
+
+  <div class="convo-card">
+    <div class="scenario">When you can't smell or taste what others are describing</div>
+    <div class="question">Just say: "I'm still training my palate on this one."</div>
+    <div class="answer">Honest and respected. The palate genuinely does develop with exposure. The first 5–10 times you nose a peated Scotch, you may only get smoke. Eventually you start to notice the brine, medicinal notes, peat type. It's real — not pretension. Acknowledging you're learning is the right move.</div>
+  </div>
+
+  <div class="gold-divider"><span>The Golden Rule</span></div>
+
+  <blockquote>
+    "There are no wrong answers in tasting — only your honest perception. The vocabulary is just a shared language for describing what you already experience."
+  </blockquote>
+
+  <div class="info-block">
+    <h4>Practical Order of Learning</h4>
+    <ul>
+      <li><strong style="color: var(--text);">Start:</strong> A Speyside Scotch (Glenfiddich 12, Glenlivet 12) — the approachable baseline</li>
+      <li><strong style="color: var(--text);">Then:</strong> A bourbon (Buffalo Trace, Maker's Mark) — compare vanilla/sweetness vs. Scotch</li>
+      <li><strong style="color: var(--text);">Then:</strong> A sherry-cask Scotch (Glenfarclas 12, Aberlour 12) — taste what oak type does</li>
+      <li><strong style="color: var(--text);">Then:</strong> An Islay Scotch (Laphroaig 10 or Bowmore 12) — smoke, peat, maritime</li>
+      <li><strong style="color: var(--text);">Then:</strong> A VS or VSOP Cognac (Rémy Martin VSOP) — grape spirit, flower and fruit</li>
+      <li><strong style="color: var(--text);">Then:</strong> An añejo tequila (Fortaleza, El Tesoro) — how aged agave differs from grain</li>
+    </ul>
+  </div>
+</div>
+
+</main>
+
+<footer>Spirits 101 · Drink slowly, drink well · Always responsibly</footer>
+
+<script>
+  function showSection(id) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    event.target.classList.add('active');
+
+    // Animate taste bars if visible
+    setTimeout(() => {
+      document.querySelectorAll('.taste-bar-fill').forEach(bar => bar.classList.add('animated'));
+    }, 100);
+  }
+
+  function toggleDetail(card) {
+    const detail = card.querySelector('.card-detail');
+    const toggle = card.querySelector('.detail-toggle');
+    if (!detail) return;
+    const isOpen = detail.classList.contains('open');
+    detail.classList.toggle('open', !isOpen);
+    if (toggle) {
+      toggle.classList.toggle('open', !isOpen);
+      toggle.innerHTML = !isOpen
+        ? '<span class="arrow" style="transform:rotate(90deg);">▶</span> Collapse'
+        : '<span class="arrow">▶</span> Expand';
+    }
+  }
+</script>
+</body>
+</html>
