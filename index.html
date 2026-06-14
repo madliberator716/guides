@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>My Guides</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600&display=swap');
+
+  :root {
+    --bg: #F5F4F0;
+    --surface: #FFFFFF;
+    --ink: #1A1A1A;
+    --muted: #6B6B6B;
+    --rule: #E0DDD8;
+    --tag-bg: #EDECEA;
+    --radius: 12px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+    padding: 0 20px 60px;
+  }
+
+  header {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 56px 0 36px;
+    border-bottom: 1.5px solid var(--rule);
+    margin-bottom: 44px;
+  }
+
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(36px, 8vw, 52px);
+    line-height: 1.05;
+    color: var(--ink);
+    margin-bottom: 12px;
+  }
+
+  header p {
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  .grid {
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  a.card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    border: 1px solid var(--rule);
+    padding: 22px 24px;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    transition: box-shadow 0.15s, transform 0.15s;
+  }
+
+  a.card:hover {
+    box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+    transform: translateY(-1px);
+  }
+
+  .card-icon {
+    font-size: 28px;
+    width: 52px;
+    height: 52px;
+    background: var(--tag-bg);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .card-text {
+    flex: 1;
+  }
+
+  .card-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .card-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 19px;
+    color: var(--ink);
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+
+  .card-desc {
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .card-arrow {
+    font-size: 18px;
+    color: var(--rule);
+    flex-shrink: 0;
+  }
+
+  .footnote {
+    text-align: center;
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 40px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Reference Library</div>
+  <h1>My Guides</h1>
+  <p>Tap any guide to open it.</p>
+</header>
+
+<div class="grid">
+
+  <a class="card" href="dyson-v15-attachment-guide.html">
+    <div class="card-icon">🧹</div>
+    <div class="card-text">
+      <div class="card-label">Accessory Guide</div>
+      <div class="card-title">Dyson V15 Detect Attachments</div>
+      <div class="card-desc">Every tool explained with photos, use cases, and pro tips.</div>
+    </div>
+    <div class="card-arrow">›</div>
+  </a>
+
+  <a class="card" href="alcohol-101.html">
+    <div class="card-icon">🥃</div>
+    <div class="card-text">
+      <div class="card-label">A Gentleman's Primer</div>
+      <div class="card-title">Spirits & Fine Liquor 101</div>
+      <div class="card-desc">Everything you need to hold your own at the bar.</div>
+    </div>
+    <div class="card-arrow">›</div>
+  </a>
+
+  <a class="card" href="card-rewards.html">
+    <div class="card-icon">💳</div>
+    <div class="card-text">
+      <div class="card-label">Rewards Maximizer</div>
+      <div class="card-title">Credit Card Cheat Sheet</div>
+      <div class="card-desc">Your 5-card stack — know which card to use, every time.</div>
+    </div>
+    <div class="card-arrow">›</div>
+  </a>
+
+  <a class="card" href="index.html">
+    <div class="card-icon">⚽</div>
+    <div class="card-text">
+      <div class="card-label">Beginner's Guide</div>
+      <div class="card-title">World Cup 101</div>
+      <div class="card-desc">Team profiles, top players, and a deep dive on Team USA.</div>
+    </div>
+    <div class="card-arrow">›</div>
+  </a>
+
+</div>
+
+<p class="footnote">More guides coming soon.</p>
+
+</body>
+</html>
