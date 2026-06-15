@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Home Theater Cheat Sheet</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
+  :root {
+    --bg: #0E0E10; --surface: #1A1A1E; --surface2: #242428;
+    --ink: #F0F0F0; --muted: #888; --accent: #E8A020;
+    --accent-light: #E8A02022; --green: #2ECC71; --red: #E74C3C;
+    --rule: #2A2A2E; --radius: 10px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--ink); font-family: 'Inter', sans-serif; font-size: 14px; line-height: 1.65; padding: 0 16px 60px; }
+  header { max-width: 700px; margin: 0 auto; padding: 48px 0 32px; border-bottom: 1px solid var(--rule); margin-bottom: 40px; }
+  .eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+  h1 { font-family: 'DM Serif Display', serif; font-size: clamp(28px, 6vw, 44px); line-height: 1.1; color: var(--ink); margin-bottom: 8px; }
+  .subtitle { color: var(--muted); font-size: 13px; }
+  .content { max-width: 700px; margin: 0 auto; display: flex; flex-direction: column; gap: 32px; }
+  .section-label { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid var(--rule); }
+  .card { background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius); overflow: hidden; }
+  .card-title { background: var(--surface2); padding: 12px 18px; font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500; color: var(--accent); letter-spacing: 0.06em; border-bottom: 1px solid var(--rule); }
+  .card-body { padding: 16px 18px; display: flex; flex-direction: column; gap: 0; }
+  .row { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--rule); font-size: 13px; }
+  .row:last-child { border-bottom: none; }
+  .row-icon { font-size: 13px; flex-shrink: 0; width: 18px; text-align: center; margin-top: 1px; }
+  .row-text { color: #CCC; flex: 1; }
+  .row-text strong { color: var(--ink); }
+  .row-badge { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); white-space: nowrap; }
+  .note { background: var(--accent-light); border-left: 3px solid var(--accent); padding: 10px 14px; border-radius: 0 6px 6px 0; font-size: 13px; color: #F0C870; }
+  .note strong { color: var(--accent); display: block; margin-bottom: 3px; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 500px) { .grid2 { grid-template-columns: 1fr; } }
+  .priority-item { display: flex; align-items: center; gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--rule); font-size: 13px; }
+  .priority-item:last-child { border-bottom: none; }
+  .star { font-size: 15px; flex-shrink: 0; }
+  .priority-text { color: #CCC; }
+  .priority-text strong { color: var(--ink); }
+  .tldr { background: var(--surface2); border: 1px solid var(--rule); border-radius: var(--radius); padding: 18px 20px; }
+  .tldr h3 { font-family: 'DM Serif Display', serif; font-size: 16px; color: var(--ink); margin-bottom: 12px; }
+  .tldr-row { font-size: 13px; color: #CCC; padding: 5px 0; border-bottom: 1px solid var(--rule); display: flex; gap: 8px; }
+  .tldr-row:last-child { border-bottom: none; }
+  .tldr-key { color: var(--muted); width: 160px; flex-shrink: 0; }
+</style>
+</head>
+<body>
+<header>
+  <div class="eyebrow">Cheat Sheet</div>
+  <h1>Home Theater<br>Setup Guide</h1>
+  <p class="subtitle">Samsung S90D · Google TV Streamer · Samsung HW-Q900F<br><span style="color:#E8A020">Google TV Chain Only — see Stremio guide for Shield/lossless audio notes</span></p>
+</header>
+<div class="content">
+
+  <div>
+    <div class="section-label">Audio Priority — Google TV Chain (Best → Worst)</div>
+    <div class="card">
+      <div class="card-body">
+        <div class="priority-item"><span class="star">⭐</span><div class="priority-text"><strong>DD+ Atmos (EAC3 Atmos)</strong> — Best for this chain</div></div>
+        <div class="priority-item"><span class="star">⭐</span><div class="priority-text"><strong>DTS 5.1</strong> — Good; passes through eARC as-is</div></div>
+        <div class="priority-item"><span class="star">✔️</span><div class="priority-text"><strong>DD+ 5.1 (EAC3)</strong></div></div>
+        <div class="priority-item"><span class="star">✔️</span><div class="priority-text"><strong>DD 5.1 (AC3)</strong></div></div>
+        <div class="priority-item"><span class="star">❌</span><div class="priority-text"><strong>TrueHD Atmos</strong> — Google TV cannot bitstream; TV decodes to PCM</div></div>
+        <div class="priority-item"><span class="star">❌</span><div class="priority-text"><strong>DTS-HD MA</strong> — Samsung TV strips to core DTS over eARC</div></div>
+        <div class="priority-item"><span class="star">❌</span><div class="priority-text"><strong>PCM 2.0</strong> — Avoid</div></div>
+      </div>
+    </div>
+    <div class="note" style="margin-top:12px"><strong>Note</strong>For TrueHD or DTS-HD MA passthrough, use the Shield TV Pro connected directly to the soundbar HDMI IN, or Xbox Series X instead.</div>
+  </div>
+
+  <div>
+    <div class="section-label">Best File Types — Google TV Chain</div>
+    <div class="card">
+      <div class="card-body">
+        <div class="row"><span class="row-icon">✅</span><div class="row-text"><strong>4K WEB-DL x265 10bit + DD+ Atmos</strong></div></div>
+        <div class="row"><span class="row-icon">✅</span><div class="row-text"><strong>1080p x265 + DD+ / DTS 5.1</strong></div></div>
+        <div class="row"><span class="row-icon">❌</span><div class="row-text"><strong>Avoid for this chain:</strong> TrueHD Atmos, DTS-HD MA, LPCM</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="section-label">Settings</div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title">Samsung S90D — Audio</div>
+        <div class="card-body">
+          <div class="row"><span class="row-icon">✅</span><div class="row-text">eARC Mode → <strong>Auto</strong></div></div>
+          <div class="row"><span class="row-icon">✅</span><div class="row-text">Digital Output → <strong>Pass-Through</strong></div></div>
+          <div class="row"><span class="row-icon">✅</span><div class="row-text">Dolby Atmos → <strong>On</strong></div></div>
+          <div class="row"><span class="row-icon">❌</span><div class="row-text">Auto Volume → <strong>Off</strong></div></div>
+          <div class="row"><span class="row-icon">✅</span><div class="row-text">HDMI-CEC (Anynet+) → <strong>On</strong></div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Samsung S90D — Video</div>
+        <div class="card-body">
+          <div class="row"><span class="row-icon">🎬</span><div class="row-text"><strong>Filmmaker Mode</strong></div></div>
+          <div class="row"><span class="row-icon">·</span><div class="row-text">Contrast: <strong>45–50</strong></div></div>
+          <div class="row"><span class="row-icon">·</span><div class="row-text">Sharpness: <strong>0</strong></div></div>
+          <div class="row"><span class="row-icon">·</span><div class="row-text">Color Tone: <strong>Warm 2</strong></div></div>
+          <div class="row"><span class="row-icon">·</span><div class="row-text">Motion: Blur <strong>0</strong> / Judder <strong>0</strong> (movies)</div></div>
+          <div class="row"><span class="row-icon">✅</span><div class="row-text">Input Signal Plus → <strong>On</strong></div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Google TV — Audio</div>
+        <div class="card-body">
+          <div class="row"><span class="row-icon">·</span><div class="row-text">Output Format → <strong>Auto</strong></div></div>
+          <div class="row"><span class="row-icon">·</span><div class="row-text">Surround → <strong>Manual</strong></div></div>
+          <div class="row"><span class="row-icon">✅</span><div class="row-text">Enable: DD, DD+, Atmos, DTS</div></div>
+          <div class="row"><span class="row-icon">❌</span><div class="row-text">Disable: TrueHD, DTS-HD MA, DTS:X, PCM, MAT, AAC</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Google TV — Video</div>
+        <div class="card-body">
+          <div class="row"><span class="row-icon">✅</span><div class="row-text">Match Dynamic Range → <strong>On</strong></div></div>
+          <div class="row"><span class="row-icon">✅</span><div class="row-text">Match Frame Rate → <strong>On</strong></div></div>
+          <div class="row"><span class="row-icon">·</span><div class="row-text">Resolution → <strong>4K 60Hz</strong></div></div>
+          <div class="row"><span class="row-icon">·</span><div class="row-text">Color → YCbCr 4:2:2 or 4:2:0 10-bit</div></div>
+          <div class="row"><span class="row-icon">·</span><div class="row-text">HDMI Range → <strong>Auto</strong></div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Soundbar Q900F</div>
+        <div class="card-body">
+          <div class="row"><span class="row-icon">·</span><div class="row-text">Sound Mode → <strong>Standard</strong></div></div>
+          <div class="row"><span class="row-icon">❌</span><div class="row-text">Virtual Surround → Off</div></div>
+          <div class="row"><span class="row-icon">❌</span><div class="row-text">Adaptive Sound → Off</div></div>
+          <div class="row"><span class="row-icon">❌</span><div class="row-text">Game Mode → Off (unless gaming)</div></div>
+          <div class="row"><span class="row-icon">✅</span><div class="row-text">HDMI-CEC → On</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Q-Symphony</div>
+        <div class="card-body">
+          <div class="row"><span class="row-icon">❌</span><div class="row-text"><strong>OFF</strong> for movies / Atmos / DTS</div></div>
+          <div class="row"><span class="row-icon">✅</span><div class="row-text"><strong>Optional ON</strong> for news / sports / cable</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="section-label">Connections</div>
+    <div class="card">
+      <div class="card-body">
+        <div class="row"><span class="row-icon">📺</span><div class="row-text">Google TV → <strong>HDMI 1/2/3 on Samsung TV</strong> (Input Signal Plus ON)</div></div>
+        <div class="row"><span class="row-icon">🔊</span><div class="row-text">Soundbar → <strong>HDMI eARC port on TV</strong></div></div>
+        <div class="row"><span class="row-icon">❌</span><div class="row-text">Do NOT plug Google TV into soundbar HDMI IN (breaks eARC path)</div></div>
+        <div class="row"><span class="row-icon">💡</span><div class="row-text">For lossless: Shield TV Pro → <strong>soundbar HDMI IN</strong> → soundbar HDMI OUT → TV</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="section-label">Streaming Atmos Test Titles</div>
+    <div class="card">
+      <div class="card-body">
+        <div class="row"><span class="row-icon">🔴</span><div class="row-text"><strong>Netflix:</strong> 6 Underground</div></div>
+        <div class="row"><span class="row-icon">🔵</span><div class="row-text"><strong>Disney+:</strong> Doctor Strange 2 · The Mandalorian</div></div>
+        <div class="row"><span class="row-icon">🟠</span><div class="row-text"><strong>Prime Video:</strong> Jack Ryan · The Tomorrow War</div></div>
+        <div class="row"><span class="row-icon">⚠️</span><div class="row-text"><strong>Paramount+:</strong> Use Samsung TV app, not Google TV — Mission Impossible 7</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="section-label">If You See "Dolby Multichannel PCM"</div>
+    <div class="card">
+      <div class="card-title">Causes</div>
+      <div class="card-body">
+        <div class="row"><span class="row-icon">·</span><div class="row-text">Paramount+ bug on Google TV</div></div>
+        <div class="row"><span class="row-icon">·</span><div class="row-text">Google TV not bitstreaming</div></div>
+        <div class="row"><span class="row-icon">·</span><div class="row-text">TV not in Pass-Through mode</div></div>
+        <div class="row"><span class="row-icon">·</span><div class="row-text">File uses TrueHD Atmos (Google TV cannot bitstream)</div></div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:10px">
+      <div class="card-title">Fixes</div>
+      <div class="card-body">
+        <div class="row"><span class="row-icon">✅</span><div class="row-text">Use Samsung TV app for Paramount+</div></div>
+        <div class="row"><span class="row-icon">✅</span><div class="row-text">Restart Google TV</div></div>
+        <div class="row"><span class="row-icon">✅</span><div class="row-text">Check Surround Manual settings</div></div>
+        <div class="row"><span class="row-icon">✅</span><div class="row-text">Switch to DD+ Atmos files for this chain</div></div>
+        <div class="row"><span class="row-icon">✅</span><div class="row-text">For TrueHD files → use Shield TV Pro via soundbar HDMI IN</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tldr">
+    <h3>TL;DR — Google TV Chain</h3>
+    <div class="tldr-row"><span class="tldr-key">TV</span><span>Pass-Through + eARC Auto + Atmos On</span></div>
+    <div class="tldr-row"><span class="tldr-key">Google TV</span><span>Auto + Manual surround (DD/DD+/Atmos/DTS only)</span></div>
+    <div class="tldr-row"><span class="tldr-key">Soundbar</span><span>Standard mode</span></div>
+    <div class="tldr-row"><span class="tldr-key">Q-Symphony</span><span>Off for movies</span></div>
+    <div class="tldr-row"><span class="tldr-key">Best files</span><span>DD+ Atmos for this chain</span></div>
+    <div class="tldr-row"><span class="tldr-key">Paramount+</span><span>Samsung TV app only</span></div>
+    <div class="tldr-row"><span class="tldr-key">TrueHD/DTS-HD MA</span><span>Shield TV Pro via soundbar HDMI IN</span></div>
+  </div>
+
+</div>
+</body>
+</html>

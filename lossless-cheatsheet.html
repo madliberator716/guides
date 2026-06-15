@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Lossless Music Cheat Sheet</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
+  :root {
+    --bg:#0C0E0C; --surface:#141614; --surface2:#1C201C;
+    --ink:#F0F0F0; --muted:#6A7A6A; --accent:#4ADE80;
+    --accent-light:#4ADE8018; --red:#EF4444; --yellow:#F59E0B;
+    --rule:#1E221E; --radius:10px;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;font-size:14px;line-height:1.65;padding:0 16px 60px;}
+  header{max-width:700px;margin:0 auto;padding:48px 0 32px;border-bottom:1px solid var(--rule);margin-bottom:40px;}
+  .eyebrow{font-size:11px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  h1{font-family:'DM Serif Display',serif;font-size:clamp(28px,6vw,44px);line-height:1.1;margin-bottom:8px;}
+  .subtitle{color:var(--muted);font-size:13px;}
+  .content{max-width:700px;margin:0 auto;display:flex;flex-direction:column;gap:28px;}
+  .section-label{font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--rule);}
+  .card{background:var(--surface);border:1px solid var(--rule);border-radius:var(--radius);overflow:hidden;}
+  .card-title{background:var(--surface2);padding:11px 18px;font-family:'DM Mono',monospace;font-size:12px;color:var(--accent);letter-spacing:0.05em;border-bottom:1px solid var(--rule);}
+  .card-body{padding:14px 18px;}
+  .row{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--rule);font-size:13px;}
+  .row:last-child{border-bottom:none;}
+  .ri{font-size:13px;width:18px;text-align:center;flex-shrink:0;margin-top:1px;}
+  .rt{color:#B0C0B0;flex:1;}
+  .rt strong{color:var(--ink);}
+  .rv{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);white-space:nowrap;}
+  .note{background:var(--accent-light);border-left:3px solid var(--accent);padding:10px 14px;border-radius:0 6px 6px 0;font-size:13px;color:#86EFAC;margin-top:12px;}
+  .note strong{display:block;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:3px;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media(max-width:500px){.grid2{grid-template-columns:1fr;}}
+  table{width:100%;border-collapse:collapse;font-size:13px;background:var(--surface);border-radius:var(--radius);overflow:hidden;border:1px solid var(--rule);}
+  thead th{background:var(--surface2);color:var(--muted);font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:10px 14px;text-align:left;border-bottom:1px solid var(--rule);}
+  tbody tr{border-top:1px solid var(--rule);}
+  tbody tr:hover{background:var(--surface2);}
+  td{padding:10px 14px;vertical-align:top;color:#B0C0B0;}
+  td:first-child{font-family:'DM Mono',monospace;font-size:12px;color:var(--accent);}
+  .master-rule{background:var(--surface2);border:1px solid var(--accent);border-radius:var(--radius);padding:18px 20px;text-align:center;}
+  .master-rule p{font-family:'DM Serif Display',serif;font-size:17px;color:var(--ink);margin-bottom:6px;}
+  .master-rule small{font-size:12px;color:var(--muted);}
+  .zone-table td:nth-child(2){color:#B0C0B0;}
+  .zone-important{color:var(--accent) !important;font-weight:500;}
+</style>
+</head>
+<body>
+<header>
+  <div class="eyebrow">Cheat Sheet</div>
+  <h1>Lossless Music<br>Cheat Sheet</h1>
+  <p class="subtitle">Formats, spectrograms, codecs, and what actually matters for your iPhone + Bose setup.</p>
+</header>
+<div class="content">
+
+  <div>
+    <div class="section-label">Core Definitions</div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title">✅ Lossless</div>
+        <div class="card-body">
+          <div class="row"><div class="rt">Preserves 100% of original data</div></div>
+          <div class="row"><div class="rt"><strong>FLAC, ALAC, WAV, AIFF</strong></div></div>
+          <div class="row"><div class="rt">No data removed</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">❌ Lossy</div>
+        <div class="card-body">
+          <div class="row"><div class="rt">Permanently removes data to save space</div></div>
+          <div class="row"><div class="rt"><strong>MP3, AAC (M4A), Opus</strong></div></div>
+          <div class="row"><div class="rt">Can never be restored to lossless</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="note"><strong>Critical</strong>Converting lossy → FLAC/WAV does NOT make it lossless. The damage is permanent.</div>
+  </div>
+
+  <div>
+    <div class="section-label">Format Quick Reference</div>
+    <table>
+      <thead><tr><th>Format</th><th>Type</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>FLAC / ALAC</td><td>✅ True lossless</td><td>Best archival choice</td></tr>
+        <tr><td>WAV / AIFF</td><td>✅ True lossless</td><td>Bigger files, no metadata</td></tr>
+        <tr><td>AAC (M4A)</td><td>Lossy</td><td>Modern, efficient, Apple-optimized</td></tr>
+        <tr><td>MP3</td><td>Lossy</td><td>Older, less efficient</td></tr>
+        <tr><td>Opus</td><td>Lossy</td><td>Used by YouTube, poor Apple support</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div>
+    <div class="section-label">Bitrate vs Sample Rate vs Bit Depth</div>
+    <div class="card">
+      <div class="card-body">
+        <div class="row"><div class="rt"><strong>kbps (bitrate)</strong> — Data per second. Only applies to lossy. Higher ≠ lossless.</div></div>
+        <div class="row"><div class="rt"><strong>kHz (sample rate)</strong> — Max frequency = sample rate ÷ 2. At 44.1 kHz → max ~22 kHz (human hearing limit).</div></div>
+        <div class="row"><div class="rt"><strong>Bit depth</strong> — Dynamic range detail. 16-bit = CD quality. 24-bit = more headroom (not always audible).</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="section-label">Spectrogram — How to Tell Real from Fake</div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title">✅ True Lossless</div>
+        <div class="card-body">
+          <div class="row"><div class="rt">High frequencies fade gradually</div></div>
+          <div class="row"><div class="rt">Energy continues past 16–18 kHz</div></div>
+          <div class="row"><div class="rt">No straight horizontal cutoff</div></div>
+          <div class="row"><div class="rt">Grainy/noisy texture above ~18 kHz</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">❌ Lossy (or Fake Lossless)</div>
+        <div class="card-body">
+          <div class="row"><div class="rt">Hard "brick wall" cutoff ~16–18 kHz</div></div>
+          <div class="row"><div class="rt">Everything above cutoff = empty / dark</div></div>
+          <div class="row"><div class="rt">Smooth flat line → codec filtering</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="master-rule" style="margin-top:14px">
+      <p>Wall = Lossy &nbsp;·&nbsp; Fade = Lossless</p>
+      <small>This is the single rule that reveals the truth of any file</small>
+    </div>
+  </div>
+
+  <div>
+    <div class="section-label">Spectrogram Zones</div>
+    <table class="zone-table">
+      <thead><tr><th>Frequency Range</th><th>What It Represents</th></tr></thead>
+      <tbody>
+        <tr><td>0–60 Hz</td><td>Sub-bass (not diagnostic)</td></tr>
+        <tr><td>60–250 Hz</td><td>Bass body</td></tr>
+        <tr><td>250 Hz–2 kHz</td><td>Core music (vocals)</td></tr>
+        <tr><td>2–6 kHz</td><td>Presence / attack</td></tr>
+        <tr><td>6–12 kHz</td><td>Detail / sparkle</td></tr>
+        <tr><td>12–16 kHz</td><td>High detail (important)</td></tr>
+        <tr><td class="zone-important">16–18 kHz</td><td class="zone-important">Lossy detection zone ← look here</td></tr>
+        <tr><td class="zone-important">18–22 kHz</td><td class="zone-important">Ultrasonic noise → lossless sign</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div>
+    <div class="section-label">MP3 vs AAC</div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title">AAC (M4A) — Better</div>
+        <div class="card-body">
+          <div class="row"><div class="rt">Newer codec</div></div>
+          <div class="row"><div class="rt">Smoother highs</div></div>
+          <div class="row"><div class="rt">Better quality at same bitrate</div></div>
+          <div class="row"><div class="rt">Optimized for Apple devices</div></div>
+          <div class="row"><div class="rt"><strong>Target: 256 kbps</strong></div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">MP3 — Worse</div>
+        <div class="card-body">
+          <div class="row"><div class="rt">Older codec</div></div>
+          <div class="row"><div class="rt">Rougher/grainier highs</div></div>
+          <div class="row"><div class="rt">Less efficient</div></div>
+          <div class="row"><div class="rt"><strong>If unavoidable: 320 kbps</strong></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="note"><strong>At the same kbps: AAC always beats MP3</strong></div>
+  </div>
+
+  <div>
+    <div class="section-label">Your Setup — iPhone + Bose (Bluetooth)</div>
+    <div class="card">
+      <div class="card-body">
+        <div class="row"><span class="ri">📡</span><div class="rt">Bluetooth is always lossy (AAC codec)</div></div>
+        <div class="row"><span class="ri">🔇</span><div class="rt">You will not hear lossless over Bluetooth — it's re-encoded regardless</div></div>
+        <div class="row"><span class="ri">✅</span><div class="rt"><strong>Best choice for iPhone + Bluetooth: AAC 256 kbps</strong></div></div>
+        <div class="row"><span class="ri">📦</span><div class="rt">Keep lossless only if you want a master archive copy</div></div>
+      </div>
+    </div>
+    <div class="note"><strong>Apple Music Lossless only matters for:</strong>Wired headphones · External DAC · Storage/archive quality</div>
+  </div>
+
+  <div>
+    <div class="section-label">Important Truths</div>
+    <div class="card">
+      <div class="card-body">
+        <div class="row"><span class="ri">⚠️</span><div class="rt">Loud spectrogram ≠ better quality</div></div>
+        <div class="row"><span class="ri">⚠️</span><div class="rt">Dark spectrogram ≠ lossy</div></div>
+        <div class="row"><span class="ri">⚠️</span><div class="rt">Different spectrograms ≠ different formats</div></div>
+        <div class="row"><span class="ri">⚠️</span><div class="rt">Same song can look different due to mastering</div></div>
+        <div class="row"><span class="ri">⚠️</span><div class="rt">Brightness often = EQ + compression, not quality</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="section-label">What to Keep</div>
+    <div class="card">
+      <div class="card-body">
+        <div class="row"><span class="ri">✅</span><div class="rt"><strong>Streaming / iPhone use</strong> → AAC 256 kbps</div></div>
+        <div class="row"><span class="ri">✅</span><div class="rt"><strong>Archival / mastering / collection</strong> → FLAC / ALAC</div></div>
+        <div class="row"><span class="ri">🗑️</span><div class="rt"><strong>Delete</strong> "FLACs" with a hard cutoff → fake lossless</div></div>
+      </div>
+    </div>
+    <div class="note" style="margin-top:12px"><strong>Final Takeaway</strong>Lossless is about data integrity — not how loud, bright, or expensive it looks. Spectrograms reveal the truth.</div>
+  </div>
+
+</div>
+</body>
+</html>

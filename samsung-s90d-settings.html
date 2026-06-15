@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Samsung S90D Settings Guide</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
+  :root {
+    --bg: #0A0F1E; --surface: #121828; --surface2: #1A2235;
+    --ink: #F0F0F0; --muted: #7A8AA0; --accent: #3B82F6;
+    --accent-light: #3B82F615; --green: #22C55E; --red: #EF4444;
+    --yellow: #F59E0B; --rule: #1E2A3A; --radius: 10px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--ink); font-family: 'Inter', sans-serif; font-size: 14px; line-height: 1.65; padding: 0 16px 60px; }
+  header { max-width: 700px; margin: 0 auto; padding: 48px 0 32px; border-bottom: 1px solid var(--rule); margin-bottom: 40px; }
+  .eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+  h1 { font-family: 'DM Serif Display', serif; font-size: clamp(28px, 6vw, 44px); line-height: 1.1; margin-bottom: 8px; }
+  .subtitle { color: var(--muted); font-size: 13px; }
+  .content { max-width: 700px; margin: 0 auto; display: flex; flex-direction: column; gap: 32px; }
+  .section-label { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid var(--rule); }
+  .card { background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius); overflow: hidden; }
+  .card-title { background: var(--surface2); padding: 11px 18px; font-family: 'DM Mono', monospace; font-size: 12px; color: var(--accent); letter-spacing: 0.05em; border-bottom: 1px solid var(--rule); }
+  .card-body { padding: 14px 18px; }
+  .row { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--rule); font-size: 13px; }
+  .row:last-child { border-bottom: none; }
+  .row-icon { font-size: 13px; width: 18px; text-align: center; flex-shrink: 0; margin-top: 1px; }
+  .row-text { color: #C0C8D8; flex: 1; }
+  .row-text strong { color: var(--ink); }
+  .row-val { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--accent); white-space: nowrap; }
+  .note { background: var(--accent-light); border-left: 3px solid var(--accent); padding: 10px 14px; border-radius: 0 6px 6px 0; font-size: 13px; color: #93C5FD; margin-top: 12px; }
+  .warn { background: #F59E0B15; border-left: 3px solid var(--yellow); padding: 10px 14px; border-radius: 0 6px 6px 0; font-size: 13px; color: #FCD34D; margin-top: 12px; }
+  .note strong, .warn strong { display: block; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 3px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 500px) { .grid2 { grid-template-columns: 1fr; } }
+  .mode-card { background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius); padding: 16px 18px; }
+  .mode-card h3 { font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 8px; }
+  .mode-tag { display: inline-block; font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 4px; margin-bottom: 10px; }
+  .tag-blue { background: var(--accent-light); color: var(--accent); }
+  .tag-green { background: #22C55E15; color: var(--green); }
+  .tag-yellow { background: #F59E0B15; color: var(--yellow); }
+  .summary { background: var(--surface2); border: 1px solid var(--rule); border-radius: var(--radius); padding: 20px; }
+  .summary h3 { font-family: 'DM Serif Display', serif; font-size: 17px; margin-bottom: 14px; }
+  .sum-row { display: flex; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--rule); font-size: 13px; align-items: flex-start; }
+  .sum-row:last-child { border-bottom: none; }
+  .sum-key { color: var(--muted); width: 140px; flex-shrink: 0; font-size: 12px; }
+  .sum-val { color: #C0C8D8; }
+  .sum-val strong { color: var(--ink); }
+</style>
+</head>
+<body>
+<header>
+  <div class="eyebrow">Settings Guide</div>
+  <h1>Samsung S90D<br>QD-OLED</h1>
+  <p class="subtitle">Optimal picture, audio, and gaming settings for your setup.</p>
+</header>
+<div class="content">
+
+  <div>
+    <div class="section-label">Picture Mode</div>
+    <div class="grid2">
+      <div class="mode-card">
+        <div class="mode-tag tag-blue">🎬 Movies / Streaming</div>
+        <h3>Filmmaker Mode</h3>
+        <div class="row" style="padding:6px 0;border-bottom:none;font-size:13px;color:#C0C8D8">Best accuracy. If too dim → switch to Movie Mode.</div>
+      </div>
+      <div class="mode-card">
+        <div class="mode-tag tag-yellow">☀️ Sports / Bright Rooms</div>
+        <h3>Movie Mode</h3>
+        <div class="row" style="padding:6px 0;border-bottom:none;font-size:13px;color:#C0C8D8">+ increase Brightness +10 to +20</div>
+      </div>
+      <div class="mode-card" style="grid-column: 1/-1">
+        <div class="mode-tag tag-green">🎮 Gaming (PS5 / Xbox)</div>
+        <h3>Game Mode — ON</h3>
+        <div class="row" style="padding:6px 0;border-bottom:none;font-size:13px;color:#C0C8D8">Turns on automatically when console detected.</div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="section-label">Picture Settings (SDR &amp; HDR)</div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title">General</div>
+        <div class="card-body">
+          <div class="row"><span class="row-text">Brightness</span><span class="row-val">50</span></div>
+          <div class="row"><span class="row-text">Contrast</span><span class="row-val">50</span></div>
+          <div class="row"><span class="row-text">Sharpness</span><span class="row-val">0</span></div>
+          <div class="row"><span class="row-text">Color</span><span class="row-val">25</span></div>
+          <div class="row"><span class="row-text">Tint</span><span class="row-val">0</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Color &amp; Clarity</div>
+        <div class="card-body">
+          <div class="row"><span class="row-text">Color Tone</span><span class="row-val">Warm 2</span></div>
+          <div class="row"><span class="row-text">Gamma (SDR)</span><span class="row-val">BT.1886</span></div>
+          <div class="row"><span class="row-text">Gamma (HDR)</span><span class="row-val">ST.2084</span></div>
+          <div class="row"><span class="row-text">Color Space</span><span class="row-val">Auto</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="section-label">Clarity Controls — All OFF for Accurate Picture</div>
+    <div class="card">
+      <div class="card-body">
+        <div class="row"><span class="row-icon">❌</span><div class="row-text">Contrast Enhancer → <strong>OFF</strong></div></div>
+        <div class="row"><span class="row-icon">❌</span><div class="row-text">Noise Reduction → <strong>OFF</strong></div></div>
+        <div class="row"><span class="row-icon">❌</span><div class="row-text">Digital Clean View → <strong>OFF</strong></div></div>
+        <div class="row"><span class="row-icon">❌</span><div class="row-text">MPEG Noise Filter → <strong>OFF</strong></div></div>
+        <div class="row"><span class="row-icon">❌</span><div class="row-text">Blur Reduction → <strong>0</strong> (movies)</div></div>
+        <div class="row"><span class="row-icon">❌</span><div class="row-text">Judder Reduction → <strong>0</strong> (movies)</div></div>
+        <div class="row"><span class="row-icon">❌</span><div class="row-text">LED Clear Motion → <strong>OFF</strong></div></div>
+      </div>
+    </div>
+    <div class="note"><strong>Sports Exception</strong>Judder Reduction: 3 · Blur Reduction: 7. Keep Blur=0 and Judder=0 for all film content.</div>
+  </div>
+
+  <div>
+    <div class="section-label">HDR Settings</div>
+    <div class="card">
+      <div class="card-body">
+        <div class="row"><span class="row-icon">✅</span><div class="row-text">Picture Mode → <strong>Filmmaker</strong></div></div>
+        <div class="row"><span class="row-icon">✅</span><div class="row-text">HDR10+ → <strong>ON</strong></div></div>
+        <div class="row"><span class="row-icon">❌</span><div class="row-text">Contrast Enhancer → <strong>OFF</strong></div></div>
+        <div class="row"><span class="row-icon">✅</span><div class="row-text">Peak Brightness → <strong>HIGH</strong></div></div>
+        <div class="row"><span class="row-icon">·</span><div class="row-text">Color Tone → <strong>Warm 2</strong></div></div>
+        <div class="row"><span class="row-icon">·</span><div class="row-text">ST.2084 → <strong>0</strong></div></div>
+        <div class="row"><span class="row-icon">·</span><div class="row-text">Shadow Detail → <strong>0</strong></div></div>
+      </div>
+    </div>
+    <div class="warn"><strong>Dolby Vision — Not Supported</strong>S90D supports HDR10 and HDR10+ only. If a source (e.g. Shield with DV enabled) outputs Dolby Vision, the image will look washed out. Fix: disable DV on Shield and force HDR10 output.</div>
+  </div>
+
+  <div>
+    <div class="section-label">Gaming Settings (PS5 / Xbox Series X)</div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title">Core Gaming</div>
+        <div class="card-body">
+          <div class="row"><span class="row-icon">✅</span><div class="row-text">Game Mode → <strong>ON</strong></div></div>
+          <div class="row"><span class="row-icon">✅</span><div class="row-text">Game HDR → <strong>ON</strong></div></div>
+          <div class="row"><span class="row-icon">❌</span><div class="row-text">Game Motion Plus → <strong>OFF</strong> (reduces latency)</div></div>
+          <div class="row"><span class="row-icon">✅</span><div class="row-text">VRR → <strong>ON</strong></div></div>
+          <div class="row"><span class="row-icon">✅</span><div class="row-text">ALLM → <strong>ON</strong></div></div>
+          <div class="row"><span class="row-icon">·</span><div class="row-text">Color Tone → <strong>Warm 1</strong></div></div>
+          <div class="row"><span class="row-icon">·</span><div class="row-text">HDMI Black Level → <strong>Auto</strong></div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Smoother Motion (Optional)</div>
+        <div class="card-body">
+          <div class="row"><span class="row-icon">·</span><div class="row-text">Game Motion Plus → <strong>Custom</strong></div></div>
+          <div class="row"><span class="row-icon">·</span><div class="row-text">Blur → <strong>8</strong></div></div>
+          <div class="row"><span class="row-icon">·</span><div class="row-text">Judder → <strong>3</strong></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="section-label">Audio Settings (Q900F Soundbar)</div>
+    <div class="card">
+      <div class="card-body">
+        <div class="row"><span class="row-icon">✅</span><div class="row-text">Sound Output → <strong>Soundbar</strong></div></div>
+        <div class="row"><span class="row-icon">✅</span><div class="row-text">HDMI-eARC → <strong>ON</strong></div></div>
+        <div class="row"><span class="row-icon">✅</span><div class="row-text">Digital Output Audio Format → <strong>Passthrough</strong></div></div>
+        <div class="row"><span class="row-icon">✅</span><div class="row-text">Dolby Atmos → <strong>ON</strong></div></div>
+        <div class="row"><span class="row-icon">❌</span><div class="row-text">Q-Symphony → <strong>OFF</strong> (cleaner Atmos)</div></div>
+      </div>
+    </div>
+    <div class="warn"><strong>eARC Audio Chain Limits</strong>Samsung TVs strip DTS over eARC. For DTS-HD MA or TrueHD: connect source directly to soundbar HDMI IN, not through TV. DD+ Atmos is the best achievable format via the Google TV → TV eARC chain.</div>
+  </div>
+
+  <div>
+    <div class="section-label">Extra Settings</div>
+    <div class="card">
+      <div class="card-body">
+        <div class="row"><span class="row-icon">❌</span><div class="row-text">Brightness Optimizer → <strong>OFF</strong> (messes with image accuracy)</div></div>
+        <div class="row"><span class="row-icon">❌</span><div class="row-text">Ambient Mode → <strong>OFF</strong> (unless you use it)</div></div>
+        <div class="row"><span class="row-icon">❌</span><div class="row-text">All Eco Settings → <strong>OFF</strong> (dims image, kills HDR brightness)</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="summary">
+    <h3>⭐ Quick Setup Summary</h3>
+    <div class="sum-row"><span class="sum-key">Picture Mode</span><span class="sum-val">Filmmaker Mode</span></div>
+    <div class="sum-row"><span class="sum-key">Color Tone</span><span class="sum-val">Warm 2</span></div>
+    <div class="sum-row"><span class="sum-key">Sharpness</span><span class="sum-val">0</span></div>
+    <div class="sum-row"><span class="sum-key">Contrast Enhancer</span><span class="sum-val">OFF</span></div>
+    <div class="sum-row"><span class="sum-key">Peak Brightness</span><span class="sum-val"><strong>HIGH</strong> (HDR)</span></div>
+    <div class="sum-row"><span class="sum-key">HDR10+</span><span class="sum-val">ON</span></div>
+    <div class="sum-row"><span class="sum-key">Dolby Vision</span><span class="sum-val">Not supported — disable on sources</span></div>
+    <div class="sum-row"><span class="sum-key">Motion</span><span class="sum-val">Blur 0 / Judder 0 for movies · raise for sports only</span></div>
+    <div class="sum-row"><span class="sum-key">Game Mode</span><span class="sum-val">ON for consoles</span></div>
+    <div class="sum-row"><span class="sum-key">Audio</span><span class="sum-val">Passthrough + Atmos ON + eARC ON</span></div>
+    <div class="sum-row"><span class="sum-key">Q-Symphony</span><span class="sum-val">OFF</span></div>
+  </div>
+
+</div>
+</body>
+</html>

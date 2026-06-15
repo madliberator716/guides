@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Best Audio File Guide</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
+  :root {
+    --bg:#0C0C0E; --surface:#161618; --surface2:#1E1E22;
+    --ink:#F0F0F0; --muted:#777; --accent:#22D3EE;
+    --accent-light:#22D3EE18; --green:#22C55E; --red:#EF4444;
+    --yellow:#F59E0B; --rule:#222226; --radius:10px;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;font-size:14px;line-height:1.65;padding:0 16px 60px;}
+  header{max-width:700px;margin:0 auto;padding:48px 0 32px;border-bottom:1px solid var(--rule);margin-bottom:40px;}
+  .eyebrow{font-size:11px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  h1{font-family:'DM Serif Display',serif;font-size:clamp(28px,6vw,44px);line-height:1.1;margin-bottom:8px;}
+  .subtitle{color:var(--muted);font-size:13px;}
+  .content{max-width:700px;margin:0 auto;display:flex;flex-direction:column;gap:32px;}
+  .section-label{font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--rule);}
+  .card{background:var(--surface);border:1px solid var(--rule);border-radius:var(--radius);overflow:hidden;}
+  .card-title{background:var(--surface2);padding:11px 18px;font-family:'DM Mono',monospace;font-size:12px;color:var(--accent);letter-spacing:0.05em;border-bottom:1px solid var(--rule);}
+  .card-body{padding:14px 18px;}
+  .row{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--rule);font-size:13px;}
+  .row:last-child{border-bottom:none;}
+  .ri{font-size:13px;width:18px;text-align:center;flex-shrink:0;margin-top:1px;}
+  .rt{color:#B8C0CC;flex:1;}
+  .rt strong{color:var(--ink);}
+  .rv{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);white-space:nowrap;}
+  .note{background:var(--accent-light);border-left:3px solid var(--accent);padding:10px 14px;border-radius:0 6px 6px 0;font-size:13px;color:#7DDDE8;margin-top:12px;}
+  .warn{background:#EF444415;border-left:3px solid var(--red);padding:10px 14px;border-radius:0 6px 6px 0;font-size:13px;color:#FCA5A5;margin-top:12px;}
+  .note strong,.warn strong{display:block;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:3px;}
+  .golden{background:linear-gradient(135deg,#F59E0B18,#EF444418);border:1px solid #F59E0B44;border-radius:var(--radius);padding:20px;text-align:center;}
+  .golden-rule{font-family:'DM Serif Display',serif;font-size:20px;color:#FCD34D;margin-bottom:8px;}
+  .golden p{font-size:13px;color:#B8C0CC;}
+  .codec-card{background:var(--surface);border:1px solid var(--rule);border-radius:var(--radius);padding:16px 18px;margin-bottom:12px;}
+  .codec-card:last-child{margin-bottom:0;}
+  .codec-header{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+  .codec-name{font-family:'DM Mono',monospace;font-size:14px;font-weight:500;color:var(--accent);}
+  .codec-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;background:var(--accent-light);color:var(--accent);}
+  .codec-body{font-size:13px;color:#B8C0CC;}
+  table{width:100%;border-collapse:collapse;font-size:13px;background:var(--surface);border-radius:var(--radius);overflow:hidden;border:1px solid var(--rule);}
+  thead th{background:var(--surface2);color:var(--muted);font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:10px 14px;text-align:left;border-bottom:1px solid var(--rule);}
+  tbody tr{border-top:1px solid var(--rule);}
+  tbody tr:hover{background:var(--surface2);}
+  td{padding:10px 14px;vertical-align:top;color:#B8C0CC;}
+  td:first-child{font-family:'DM Mono',monospace;font-size:12px;color:var(--accent);}
+  .checklist{counter-reset:cl;}
+  .cl-item{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--rule);align-items:flex-start;}
+  .cl-item:last-child{border-bottom:none;}
+  .cl-num{font-family:'DM Mono',monospace;font-size:11px;background:var(--accent-light);color:var(--accent);padding:2px 7px;border-radius:4px;flex-shrink:0;margin-top:2px;}
+  .cl-text{font-size:13px;color:#B8C0CC;}
+  .cl-text strong{color:var(--ink);}
+</style>
+</head>
+<body>
+<header>
+  <div class="eyebrow">Audio Guide</div>
+  <h1>Best Audio File<br>Guide</h1>
+  <p class="subtitle">Lossless vs Lossy — what actually matters for your setup.</p>
+</header>
+<div class="content">
+
+  <div class="golden">
+    <div class="golden-rule">The Golden Rule</div>
+    <p>Audio quality is determined by the <strong style="color:#FCD34D">worst step in its history.</strong><br>If a file was ever lossy — it is forever lossy. No format, bitrate, or "hi-res" label can fix that.</p>
+  </div>
+
+  <div>
+    <div class="section-label">Part I — Lossless Files (FLAC / ALAC / WAV / AIFF)</div>
+
+    <div class="card">
+      <div class="card-title">✅ Good Sources (True Lossless)</div>
+      <div class="card-body">
+        <div class="row"><span class="ri">✅</span><div class="rt">Apple Music Lossless</div></div>
+        <div class="row"><span class="ri">✅</span><div class="rt">Amazon Music HD / Ultra HD</div></div>
+        <div class="row"><span class="ri">✅</span><div class="rt">Qobuz</div></div>
+        <div class="row"><span class="ri">✅</span><div class="rt">CD rips (secure ripping)</div></div>
+        <div class="row"><span class="ri">✅</span><div class="rt">Blu-ray / studio masters</div></div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:12px">
+      <div class="card-title">❌ Fake Lossless Sources</div>
+      <div class="card-body">
+        <div class="row"><span class="ri">❌</span><div class="rt">YouTube / YouTube mirrors</div></div>
+        <div class="row"><span class="ri">❌</span><div class="rt">DatPiff-era mixtapes</div></div>
+        <div class="row"><span class="ri">❌</span><div class="rt">Spotify rips</div></div>
+        <div class="row"><span class="ri">❌</span><div class="rt">Any FLAC/WAV sourced from MP3/AAC</div></div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:12px">
+      <div class="card-title">Sample Rate &amp; Bit Depth</div>
+      <div class="card-body">
+        <div class="row"><span class="ri">✅</span><div class="rt"><strong>44.1 kHz / 16-bit</strong> — CD quality, perfect</div></div>
+        <div class="row"><span class="ri">✅</span><div class="rt"><strong>48 kHz / 24-bit</strong> — film / modern masters</div></div>
+        <div class="row"><span class="ri">⚠️</span><div class="rt">Be skeptical of 96 kHz / 192 kHz / 32-bit / "Studio Master" labels</div></div>
+      </div>
+    </div>
+    <div class="note"><strong>High numbers ≠ better sound</strong>A "Studio Master" at 192 kHz sourced from a lossy file is still lossy.</div>
+
+    <div class="card" style="margin-top:12px">
+      <div class="card-title">Spectrogram — The Truth Test</div>
+      <div class="card-body">
+        <div class="row"><span class="ri">✅</span><div class="rt"><strong>True lossless:</strong> High frequencies fade gradually · grainy/noisy texture above ~18 kHz · no hard cutoff</div></div>
+        <div class="row"><span class="ri">❌</span><div class="rt"><strong>Fake lossless:</strong> Straight horizontal cutoff · empty space above it · smooth, flat ceiling</div></div>
+        <div class="row"><span class="ri">📏</span><div class="rt"><strong>Rule:</strong> Wall = lossy · Fade + noise = lossless</div></div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:12px">
+      <div class="card-title">Lossless Bitrate Sanity Check</div>
+      <div class="card-body">
+        <div class="row"><div class="rt">FLAC (CD quality)</div><span class="rv">~700–1,100 kbps</span></div>
+        <div class="row"><div class="rt">WAV / AIFF</div><span class="rv">1,411 kbps</span></div>
+        <div class="row"><div class="rt">Hi-Res FLAC</div><span class="rv">2,000–4,000 kbps</span></div>
+        <div class="row"><span class="ri">🚩</span><div class="rt">"FLAC" at 300–400 kbps → fake</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="section-label">Part II — Lossy Files (AAC / MP3 / Opus)</div>
+
+    <div class="codec-card">
+      <div class="codec-header"><span class="codec-name">AAC (M4A)</span><span class="codec-badge">BEST OVERALL</span></div>
+      <div class="codec-body">Modern codec · optimized for Apple devices · best sound per kbps<br><strong style="color:var(--ink)">Target: AAC 256 kbps</strong></div>
+    </div>
+    <div class="codec-card">
+      <div class="codec-header"><span class="codec-name">Opus</span></div>
+      <div class="codec-body">Very efficient · used by YouTube · great at low bitrates<br><span style="color:var(--red)">Poor Apple ecosystem support</span></div>
+    </div>
+    <div class="codec-card">
+      <div class="codec-header"><span class="codec-name">MP3</span></div>
+      <div class="codec-body">Old but universal · inferior to AAC at same bitrate<br><strong style="color:var(--ink)">If unavoidable: MP3 320 kbps</strong></div>
+    </div>
+
+    <div class="card" style="margin-top:12px">
+      <div class="card-title">What to Avoid</div>
+      <div class="card-body">
+        <div class="row"><span class="ri">❌</span><div class="rt">MP3 &lt; 256 kbps</div></div>
+        <div class="row"><span class="ri">❌</span><div class="rt">AAC &lt; 192 kbps</div></div>
+        <div class="row"><span class="ri">❌</span><div class="rt">Converting MP3 → AAC or AAC → MP3</div></div>
+        <div class="row"><span class="ri">❌</span><div class="rt">Multiple re-encodes — each conversion causes cumulative damage</div></div>
+      </div>
+    </div>
+    <div class="note"><strong>Key Truth</strong>A good AAC 256 kbps from a clean source beats a fake FLAC every time. Never choose format over source quality.</div>
+  </div>
+
+  <div>
+    <div class="section-label">Part III — Device Rules</div>
+    <div class="card">
+      <div class="card-body">
+        <div class="row"><span class="ri">📱</span><div class="rt"><strong>iPhone + Bluetooth (Bose, AirPods, Car)</strong><br><span style="color:#B8C0CC">Bluetooth is always lossy. AAC 256 kbps is ideal. Lossless offers no audible benefit.</span></div></div>
+        <div class="row"><span class="ri">🎧</span><div class="rt"><strong>Wired headphones / DAC</strong><br><span style="color:#B8C0CC">Lossless matters here. Prefer FLAC / ALAC.</span></div></div>
+        <div class="row"><span class="ri">📦</span><div class="rt"><strong>Archival / Library</strong><br><span style="color:#B8C0CC">Keep true lossless only. Delete fake FLACs. Keep lossy only if original was lossy.</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="section-label">Quick Decision Table</div>
+    <table>
+      <thead><tr><th>Situation</th><th>Best Choice</th></tr></thead>
+      <tbody>
+        <tr><td>Original album</td><td>FLAC / ALAC</td></tr>
+        <tr><td>Mixtape-era music</td><td>AAC 256</td></tr>
+        <tr><td>YouTube-sourced</td><td>AAC 256</td></tr>
+        <tr><td>Apple Music download</td><td>Lossless</td></tr>
+        <tr><td>Bluetooth listening</td><td>AAC 256</td></tr>
+        <tr><td>Storage limited</td><td>AAC 256</td></tr>
+        <tr><td>Archival collection</td><td>True lossless only</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div>
+    <div class="section-label">Final Mental Checklist</div>
+    <div class="card">
+      <div class="card-body checklist">
+        <div class="cl-item"><span class="cl-num">1</span><div class="cl-text"><strong>Was the source ever lossy?</strong></div></div>
+        <div class="cl-item"><span class="cl-num">2</span><div class="cl-text"><strong>Is the format appropriate for my device?</strong></div></div>
+        <div class="cl-item"><span class="cl-num">3</span><div class="cl-text"><strong>Does the spectrogram show a wall or a fade?</strong></div></div>
+        <div class="cl-item"><span class="cl-num">4</span><div class="cl-text"><strong>Is this a mastering difference or a codec difference?</strong></div></div>
+        <div class="cl-item"><span class="cl-num">5</span><div class="cl-text"><strong>Am I keeping this for sound or for archiving?</strong></div></div>
+      </div>
+    </div>
+    <div class="note" style="margin-top:12px"><strong>Bottom Line</strong>Lossless is about integrity. Lossy is about efficiency. The best file is the one that respects the source and your playback chain.</div>
+  </div>
+
+</div>
+</body>
+</html>
