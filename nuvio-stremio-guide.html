@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Nuvio / Stremio Format &amp; Stream Guide</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
+  :root {
+    --bg: #0E0E10;
+    --surface: #1A1A1E;
+    --surface2: #242428;
+    --ink: #F0F0F0;
+    --muted: #888;
+    --accent: #7C5CFC;
+    --accent-light: #7C5CFC22;
+    --green: #2ECC71;
+    --red: #E74C3C;
+    --yellow: #F1C40F;
+    --rule: #2A2A2E;
+    --radius: 10px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--ink); font-family: 'Inter', sans-serif; font-size: 14px; line-height: 1.65; padding: 0 16px 60px; }
+  header { max-width: 700px; margin: 0 auto; padding: 48px 0 32px; border-bottom: 1px solid var(--rule); margin-bottom: 40px; }
+  .eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+  h1 { font-family: 'DM Serif Display', serif; font-size: clamp(28px, 6vw, 44px); line-height: 1.1; color: var(--ink); margin-bottom: 10px; }
+  header p { color: var(--muted); font-size: 13px; }
+  .content { max-width: 700px; margin: 0 auto; display: flex; flex-direction: column; gap: 32px; }
+  .section-label { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid var(--rule); }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; background: var(--surface); border-radius: var(--radius); overflow: hidden; border: 1px solid var(--rule); }
+  thead th { background: var(--surface2); color: var(--muted); font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--rule); }
+  tbody tr { border-top: 1px solid var(--rule); }
+  tbody tr:hover { background: var(--surface2); }
+  td { padding: 11px 14px; vertical-align: top; color: #CCC; }
+  td:first-child { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--accent); white-space: nowrap; }
+  .badge { display: inline-block; font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 4px; margin-right: 4px; }
+  .badge-green { background: #2ECC7122; color: var(--green); }
+  .badge-red { background: #E74C3C22; color: var(--red); }
+  .badge-yellow { background: #F1C40F22; color: var(--yellow); }
+  .card { background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius); padding: 18px 20px; }
+  .card h3 { font-family: 'DM Serif Display', serif; font-size: 17px; margin-bottom: 10px; color: var(--ink); }
+  .item { display: flex; align-items: flex-start; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--rule); font-size: 13px; }
+  .item:last-child { border-bottom: none; }
+  .item-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+  .item-text { color: #CCC; }
+  .item-text strong { color: var(--ink); }
+  .note { background: var(--accent-light); border-left: 3px solid var(--accent); padding: 10px 14px; border-radius: 0 6px 6px 0; font-size: 13px; color: #B8A8FF; margin-top: 14px; }
+  .hierarchy { counter-reset: hier; }
+  .hier-item { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--rule); align-items: flex-start; }
+  .hier-item:last-child { border-bottom: none; }
+  .hier-num { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent); background: var(--accent-light); padding: 2px 7px; border-radius: 4px; flex-shrink: 0; margin-top: 2px; }
+  .hier-text { font-size: 13px; color: #CCC; }
+  .hier-text strong { color: var(--ink); display: block; margin-bottom: 2px; }
+</style>
+</head>
+<body>
+<header>
+  <div class="eyebrow">Reference Guide</div>
+  <h1>Nuvio / Stremio<br>Format &amp; Stream Guide</h1>
+  <p>Video resolutions, HDR formats, audio codecs, and device compatibility for your setup.</p>
+</header>
+<div class="content">
+
+  <div>
+    <div class="section-label">Video Resolution Tiers</div>
+    <table>
+      <thead><tr><th>Label</th><th>Resolution</th><th>Pixels</th><th>Use Case</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>4K / 2160p</td><td>3840×2160</td><td>8.3M</td><td>Premium home theater</td><td>Native on S90D. Largest files. Best 55"+</td></tr>
+        <tr><td>1440p / 2K</td><td>2560×1440</td><td>3.7M</td><td>Mid-tier HD</td><td>Rare for movies; mostly gaming</td></tr>
+        <tr><td>1080p / FHD</td><td>1920×1080</td><td>2.1M</td><td>Standard HD</td><td>Sweet spot — great quality, manageable size</td></tr>
+        <tr><td>720p / HD</td><td>1280×720</td><td>0.9M</td><td>Light streaming</td><td>OK under 42". Visible loss on large TVs</td></tr>
+        <tr><td>480p / SD</td><td>854×480</td><td>0.4M</td><td>Mobile / low bandwidth</td><td>Phone/tablet only. Avoid on TV</td></tr>
+      </tbody>
+    </table>
+    <div class="note">4K has 4× the pixels of 1080p. Your S90D displays it natively. 1080p is the practical sweet spot for most content.</div>
+  </div>
+
+  <div>
+    <div class="section-label">HDR Formats</div>
+    <table>
+      <thead><tr><th>Standard</th><th>Bit Depth</th><th>Dynamic Range</th><th>S90D Support</th></tr></thead>
+      <tbody>
+        <tr><td>SDR</td><td>8-bit</td><td>Fixed</td><td><span class="badge badge-green">✓ Yes</span></td></tr>
+        <tr><td>HDR10</td><td>10-bit</td><td>Static metadata</td><td><span class="badge badge-green">✓ Yes</span></td></tr>
+        <tr><td>HDR10+</td><td>10-bit</td><td>Dynamic per-frame</td><td><span class="badge badge-green">✓ Yes</span></td></tr>
+        <tr><td>Dolby Vision</td><td>12-bit</td><td>Highest (frame-by-frame)</td><td><span class="badge badge-red">✗ No</span></td></tr>
+        <tr><td>HLG</td><td>10-bit</td><td>High (no metadata)</td><td><span class="badge badge-yellow">Rare</span></td></tr>
+      </tbody>
+    </table>
+    <div class="note">S90D supports HDR10 and HDR10+ only. Dolby Vision falls back to HDR10. If Shield outputs DV, disable it in Shield settings and force HDR10 to avoid washed-out colors.</div>
+  </div>
+
+  <div>
+    <div class="section-label">Device Compatibility</div>
+    <table>
+      <thead><tr><th>Device</th><th>Best Use</th><th>Limitations</th></tr></thead>
+      <tbody>
+        <tr><td>PS5 Slim</td><td>Streaming, gaming, Blu-ray</td><td>DTS-HD MA stripped via TV eARC — connect directly to soundbar HDMI IN for DTS</td></tr>
+        <tr><td>Shield TV Pro</td><td>Plex remuxes, lossless audio — connect to soundbar HDMI IN</td><td>AV1 unsupported; no HDR10+</td></tr>
+        <tr><td>Google TV Streamer</td><td>WEB-DL, streaming apps, DD+ Atmos</td><td>No TrueHD or DTS-HD MA passthrough. DD+ Atmos is the ceiling.</td></tr>
+        <tr><td>MacBook Pro M2 (Plex)</td><td>Plex server — use SRT/ASS subtitles</td><td>PGS subtitles trigger transcoding, breaking TrueHD passthrough</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div>
+    <div class="section-label">Quality Hierarchy — Best → Worst</div>
+    <div class="card">
+      <div class="hierarchy">
+        <div class="hier-item"><span class="hier-num">#1</span><div class="hier-text"><strong>4K Remux</strong> H.265 · HDR10+ · TrueHD 7.1.4 Atmos — Perfect fidelity, largest files. Use Shield TV Pro via soundbar HDMI IN.</div></div>
+        <div class="hier-item"><span class="hier-num">#2</span><div class="hier-text"><strong>4K High-Quality Encode</strong> H.265 · HDR10+ · TrueHD Atmos · &lt;20 GB — 95% of remux quality, reasonable size.</div></div>
+        <div class="hier-item"><span class="hier-num">#3</span><div class="hier-text"><strong>4K WEB-DL</strong> H.264/H.265 · HDR10+ · EAC-3 Atmos · 8–20 GB — Best choice for Google TV chain.</div></div>
+        <div class="hier-item"><span class="hier-num">#4</span><div class="hier-text"><strong>1080p Remux</strong> H.265 · TrueHD · 10–25 GB — Excellent quality. Use Shield for lossless audio.</div></div>
+        <div class="hier-item"><span class="hier-num">#5</span><div class="hier-text"><strong>1080p High-Quality Encode</strong> H.265 · TrueHD or DD+ · 3–8 GB — Very good, practical size.</div></div>
+        <div class="hier-item"><span class="hier-num">#6</span><div class="hier-text"><strong>Screener / TS</strong> — Watermarks, audio sync issues. Avoid unless desperate.</div></div>
+        <div class="hier-item"><span class="hier-num">#7</span><div class="hier-text"><strong>CAM</strong> — Unwatchable. Never recommended.</div></div>
+      </div>
+      <div class="note">TrueHD Atmos remuxes are only as good as their audio chain. Use the Shield TV Pro (soundbar HDMI IN) to actually benefit. On the Google TV chain, DD+ Atmos is the ceiling regardless of file quality.</div>
+    </div>
+  </div>
+
+  <!-- STREAM INFO -->
+  <div>
+    <div class="section-label">Understanding Stream Information View</div>
+
+    <div class="card">
+      <div style="padding:16px 20px 4px;">
+        <p style="font-size:13px;color:#3A3A3A;margin-bottom:16px;">Every stream listing in Nuvio/Stremio shows a compact block of icons and labels. Here's what each one means so you can evaluate quality at a glance before tapping play.</p>
+      </div>
+
+      <!-- Main Line -->
+      <div style="padding:0 20px 4px;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--rule);">Main Line</div>
+      </div>
+      <table style="width:100%;border-collapse:collapse;font-size:13px;">
+        <tbody>
+          <tr style="border-top:1px solid var(--rule);">
+            <td style="padding:10px 20px;width:44%;font-family:monospace;font-size:13px;color:var(--ink);vertical-align:top;">⚡ / ⏳</td>
+            <td style="padding:10px 20px;color:#3A3A3A;vertical-align:top;"><strong>Debrid Cache Status</strong><br><span style="color:var(--muted);font-size:12px;">⚡ = Cached (instant playback) · ⏳ = Not cached (may take longer to start)</span></td>
+          </tr>
+          <tr style="border-top:1px solid var(--rule);">
+            <td style="padding:10px 20px;font-family:monospace;font-size:13px;color:var(--ink);vertical-align:top;">🧲 / 🌐 / 📺</td>
+            <td style="padding:10px 20px;color:#3A3A3A;vertical-align:top;"><strong>Stream Source Type</strong><br><span style="color:var(--muted);font-size:12px;">🧲 = Torrent (P2P) · 🌐 = Direct HTTP · 📺 = Live stream</span></td>
+          </tr>
+          <tr style="border-top:1px solid var(--rule);">
+            <td style="padding:10px 20px;font-family:monospace;font-size:13px;color:var(--ink);vertical-align:top;">▶️ / 🗄️ / ↗️ / 📊 / ℹ️ / ⛔</td>
+            <td style="padding:10px 20px;color:#3A3A3A;vertical-align:top;"><strong>Special Stream Type</strong><br><span style="color:var(--muted);font-size:12px;">YouTube · Archive · External · Statistics · Information · Error</span></td>
+          </tr>
+          <tr style="border-top:1px solid var(--rule);">
+            <td style="padding:10px 20px;font-family:monospace;font-size:13px;color:var(--ink);vertical-align:top;">UHD ⁴ᴷ / QHD ²ᴷ / FHD / 720P</td>
+            <td style="padding:10px 20px;color:#3A3A3A;vertical-align:top;"><strong>Resolution</strong><br><span style="color:var(--muted);font-size:12px;">UHD 4K &gt; QHD 2K &gt; FHD 1080p &gt; 720p</span></td>
+          </tr>
+          <tr style="border-top:1px solid var(--rule);">
+            <td style="padding:10px 20px;font-family:monospace;font-size:13px;color:var(--ink);vertical-align:top;">⌜QUALITY⌟</td>
+            <td style="padding:10px 20px;color:#3A3A3A;vertical-align:top;"><strong>Source Quality Tag</strong><br><span style="color:var(--muted);font-size:12px;">Remux · WEB · WEB-DL · BluRay · HDTV · etc.</span></td>
+          </tr>
+          <tr style="border-top:1px solid var(--rule);">
+            <td style="padding:10px 20px;font-family:monospace;font-size:14px;color:var(--ink);vertical-align:top;">◆◆⬖◇◇</td>
+            <td style="padding:10px 20px;color:#3A3A3A;vertical-align:top;"><strong>Release Quality Score</strong><br><span style="color:var(--muted);font-size:12px;">Based on Vidhin's Ranked Regexes — sorted by quality &amp; resolution. More filled diamonds = better release.</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Technical Details -->
+      <div style="padding:16px 20px 4px;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--rule);">Technical Details</div>
+      </div>
+      <table style="width:100%;border-collapse:collapse;font-size:13px;">
+        <tbody>
+          <tr style="border-top:1px solid var(--rule);">
+            <td style="padding:10px 20px;width:44%;font-family:monospace;font-size:13px;color:var(--ink);vertical-align:top;">▶︎ / 🎬</td>
+            <td style="padding:10px 20px;color:#3A3A3A;vertical-align:top;"><strong>Edition</strong><br><span style="color:var(--muted);font-size:12px;">Director's Cut · Extended · IMAX · Theatrical · etc.</span></td>
+          </tr>
+          <tr style="border-top:1px solid var(--rule);">
+            <td style="padding:10px 20px;font-family:monospace;font-size:13px;color:var(--ink);vertical-align:top;">▣ / 📼</td>
+            <td style="padding:10px 20px;color:#3A3A3A;vertical-align:top;"><strong>Video Encoding</strong><br><span style="color:var(--muted);font-size:12px;">x264 · x265 · HEVC · AV1 · etc. H.265/HEVC is preferred — better quality at smaller file size.</span></td>
+          </tr>
+          <tr style="border-top:1px solid var(--rule);">
+            <td style="padding:10px 20px;font-family:monospace;font-size:13px;color:var(--ink);vertical-align:top;">✦ / 🎥</td>
+            <td style="padding:10px 20px;color:#3A3A3A;vertical-align:top;"><strong>Visual Features</strong><br><span style="color:var(--muted);font-size:12px;">HDR · HDR10+ · Dolby Vision · 10-bit · etc. S90D supports HDR10 and HDR10+ — not Dolby Vision.</span></td>
+          </tr>
+          <tr style="border-top:1px solid var(--rule);">
+            <td style="padding:10px 20px;font-family:monospace;font-size:13px;color:var(--ink);vertical-align:top;">♬ / 🎵</td>
+            <td style="padding:10px 20px;color:#3A3A3A;vertical-align:top;"><strong>Audio Format</strong><br><span style="color:var(--muted);font-size:12px;">TrueHD · DTS-HD MA · DD+ Atmos · EAC-3 · AC3 · AAC — see Audio section below.</span></td>
+          </tr>
+          <tr style="border-top:1px solid var(--rule);">
+            <td style="padding:10px 20px;font-family:monospace;font-size:13px;color:var(--ink);vertical-align:top;">☊ / 🎧</td>
+            <td style="padding:10px 20px;color:#3A3A3A;vertical-align:top;"><strong>Audio Channels</strong><br><span style="color:var(--muted);font-size:12px;">2.0 · 5.1 · 7.1 · 7.1.4 — more channels = more immersive if your system supports it.</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- File & Availability -->
+      <div style="padding:16px 20px 4px;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--rule);">File &amp; Availability</div>
+      </div>
+      <table style="width:100%;border-collapse:collapse;font-size:13px;">
+        <tbody>
+          <tr style="border-top:1px solid var(--rule);">
+            <td style="padding:10px 20px;width:44%;font-family:monospace;font-size:13px;color:var(--ink);vertical-align:top;">◧ / 💾 or ⧉ / 📚</td>
+            <td style="padding:10px 20px;color:#3A3A3A;vertical-align:top;"><strong>File Scope</strong><br><span style="color:var(--muted);font-size:12px;">Single file · Season pack — season packs contain all episodes in one torrent.</span></td>
+          </tr>
+          <tr style="border-top:1px solid var(--rule);">
+            <td style="padding:10px 20px;font-family:monospace;font-size:13px;color:var(--ink);vertical-align:top;">Size · Bitrateᴹᵇᵖˢ</td>
+            <td style="padding:10px 20px;color:#3A3A3A;vertical-align:top;"><strong>File Size &amp; Bitrate</strong><br><span style="color:var(--muted);font-size:12px;">Helps estimate quality vs. bandwidth. Higher bitrate = more data = better quality (usually). Remuxes are largest; encodes compress down.</span></td>
+          </tr>
+          <tr style="border-top:1px solid var(--rule);">
+            <td style="padding:10px 20px;font-family:monospace;font-size:13px;color:var(--ink);vertical-align:top;">⟳ / 🕒</td>
+            <td style="padding:10px 20px;color:#3A3A3A;vertical-align:top;"><strong>Upload Age</strong><br><span style="color:var(--muted);font-size:12px;">When the torrent or file was uploaded. Newer releases are often better seeded and more likely to have current encodes.</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Provider & Delivery -->
+      <div style="padding:16px 20px 4px;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--rule);">Provider &amp; Delivery</div>
+      </div>
+      <table style="width:100%;border-collapse:collapse;font-size:13px;">
+        <tbody>
+          <tr style="border-top:1px solid var(--rule);">
+            <td style="padding:10px 20px;width:44%;font-family:monospace;font-size:13px;color:var(--ink);vertical-align:top;">⛊ / ⛉ or 🔐 / 🔧 [Provider]</td>
+            <td style="padding:10px 20px;color:#3A3A3A;vertical-align:top;"><strong>Debrid Service &amp; Scraper</strong><br><span style="color:var(--muted);font-size:12px;">Which debrid (e.g. RealDebrid) and which addon scraped the result. Proxied vs. unproxied affects routing.</span></td>
+          </tr>
+          <tr style="border-top:1px solid var(--rule);">
+            <td style="padding:10px 20px;font-family:monospace;font-size:13px;color:var(--ink);vertical-align:top;">TYPE</td>
+            <td style="padding:10px 20px;color:#3A3A3A;vertical-align:top;"><strong>Stream Type Label</strong><br><span style="color:var(--muted);font-size:12px;">P2P · HTTP · LIVE · USENET · NNTP · YOUTUBE · ARCHIVE · EXTERNAL · STATISTIC · INFO · ERROR</span></td>
+          </tr>
+          <tr style="border-top:1px solid var(--rule);">
+            <td style="padding:10px 20px;font-family:monospace;font-size:13px;color:var(--ink);vertical-align:top;">⇋ Seeders 𖧧 / 🌱</td>
+            <td style="padding:10px 20px;color:#3A3A3A;vertical-align:top;"><strong>Seeder Count</strong><br><span style="color:var(--muted);font-size:12px;">P2P only. Higher seeders = more reliable download / stream start. On debrid with ⚡, seeders matter less since the file is already cached.</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Languages -->
+      <div style="padding:16px 20px 4px;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--rule);">Languages</div>
+      </div>
+      <table style="width:100%;border-collapse:collapse;font-size:13px;">
+        <tbody>
+          <tr style="border-top:1px solid var(--rule);">
+            <td style="padding:10px 20px;width:44%;font-family:monospace;font-size:13px;color:var(--ink);vertical-align:top;">⚐ / 🔊</td>
+            <td style="padding:10px 20px;color:#3A3A3A;vertical-align:top;"><strong>Available Audio Languages</strong><br><span style="color:var(--muted);font-size:12px;">Flag icons or audio speaker icon shows which dub languages are included in the file.</span></td>
+          </tr>
+          <tr style="border-top:1px solid var(--rule);">
+            <td style="padding:10px 20px;font-family:monospace;font-size:13px;color:var(--ink);vertical-align:top;">☰ / 💬</td>
+            <td style="padding:10px 20px;color:#3A3A3A;vertical-align:top;"><strong>Available Subtitle Languages</strong><br><span style="color:var(--muted);font-size:12px;">Which subtitle tracks are embedded or available.</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Anime -->
+      <div style="padding:16px 20px 4px;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--rule);">Anime Curated Releases</div>
+      </div>
+      <table style="width:100%;border-collapse:collapse;font-size:13px;">
+        <tbody>
+          <tr style="border-top:1px solid var(--rule);">
+            <td style="padding:10px 20px;width:44%;font-family:monospace;font-size:13px;color:var(--ink);vertical-align:top;">»</td>
+            <td style="padding:10px 20px;color:#3A3A3A;vertical-align:top;"><strong>SeaDex Indexed Release</strong><br><span style="color:var(--muted);font-size:12px;">This release appears in the SeaDex anime quality index.</span></td>
+          </tr>
+          <tr style="border-top:1px solid var(--rule);">
+            <td style="padding:10px 20px;font-family:monospace;font-size:13px;color:var(--ink);vertical-align:top;">[BEST]</td>
+            <td style="padding:10px 20px;color:#3A3A3A;vertical-align:top;"><strong>Highest-Ranked Release</strong><br><span style="color:var(--muted);font-size:12px;">SeaDex's top pick for this title.</span></td>
+          </tr>
+          <tr style="border-top:1px solid var(--rule);">
+            <td style="padding:10px 20px;font-family:monospace;font-size:13px;color:var(--ink);vertical-align:top;">[ALT]</td>
+            <td style="padding:10px 20px;color:#3A3A3A;vertical-align:top;"><strong>Strong Alternative</strong><br><span style="color:var(--muted);font-size:12px;">A reliable backup if the [BEST] release isn't available or fails to load.</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Additional -->
+      <div style="padding:16px 20px 4px;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--rule);">Additional</div>
+      </div>
+      <table style="width:100%;border-collapse:collapse;font-size:13px;">
+        <tbody>
+          <tr style="border-top:1px solid var(--rule);">
+            <td style="padding:10px 20px;width:44%;font-family:monospace;font-size:13px;color:var(--ink);vertical-align:top;">✎ / ✏️ FILENAME</td>
+            <td style="padding:10px 20px;color:#3A3A3A;vertical-align:top;"><strong>Filename</strong><br><span style="color:var(--muted);font-size:12px;">The actual torrent or file name — useful for identifying the exact release group.</span></td>
+          </tr>
+          <tr style="border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);">
+            <td style="padding:10px 20px;font-family:monospace;font-size:13px;color:var(--ink);vertical-align:top;">ⓘ / ℹ️ MESSAGE</td>
+            <td style="padding:10px 20px;color:#3A3A3A;vertical-align:top;"><strong>Informational Message</strong><br><span style="color:var(--muted);font-size:12px;">Additional context from the addon — e.g. content warnings, availability notes.</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Quick Tip -->
+      <div style="margin:16px 20px 20px;background:var(--accent-light);border-left:3px solid var(--accent);padding:12px 14px;border-radius:0 6px 6px 0;font-size:13px;color:var(--ink);">
+        <strong style="display:block;font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);margin-bottom:6px;">👉 Quick Pick Guide</strong>
+        <strong>With debrid:</strong> Prioritize ⚡ cached streams first, then highest resolution, then strongest ◆ score, then reasonable file size.<br>
+        <strong style="margin-top:6px;display:block;">On P2P (no debrid):</strong> Prioritize high seeder count (⇋), then resolution, then ◆ score. Uncached or low-seeder streams may buffer or fail to start.
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
