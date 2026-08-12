@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paycheck Calculator — Ochsner Biweekly</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#EAF1EA;
+    --paper-line:#C3D6C8;
+    --card:#FBFAF5;
+    --ink:#1F2D24;
+    --ink-soft:#4C5C51;
+    --brass:#8A6D3B;
+    --stamp:#B23A2E;
+    --stamp-soft:#B23A2E22;
+    --net-green:#1E5E45;
+    --border:#CBD9CD;
+    --radius:10px;
+  }
+
+  * { box-sizing: border-box; }
+
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(
+        var(--paper) 0px, var(--paper) 27px,
+        var(--paper-line) 27px, var(--paper-line) 28px
+      );
+    background-color: var(--paper);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', sans-serif;
+    padding: 28px 16px 60px;
+    min-height: 100vh;
+  }
+
+  .wrap{
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  header{
+    margin-bottom: 22px;
+  }
+
+  .eyebrow{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--brass);
+    font-weight: 600;
+  }
+
+  h1{
+    font-family: 'IBM Plex Serif', serif;
+    font-weight: 700;
+    font-size: clamp(26px, 6vw, 34px);
+    margin: 4px 0 6px;
+    letter-spacing: -0.01em;
+  }
+
+  .sub{
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    max-width: 52ch;
+  }
+
+  .card{
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: 0 1px 2px rgba(31,45,36,0.05), 0 6px 18px rgba(31,45,36,0.06);
+    padding: 22px 20px;
+    margin-bottom: 18px;
+  }
+
+  .card h2{
+    font-family: 'IBM Plex Serif', serif;
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0 0 4px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .card h2 .num{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--brass);
+    border: 1px solid var(--brass);
+    border-radius: 50%;
+    width: 18px; height: 18px;
+    display:flex; align-items:center; justify-content:center;
+    flex: none;
+  }
+
+  .card .hint{
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    margin: 0 0 16px;
+    line-height: 1.5;
+  }
+
+  .grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 16px;
+  }
+  .grid.single{ grid-template-columns: 1fr; }
+
+  .field{
+    display:flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .field.span2{ grid-column: 1 / -1; }
+
+  label{
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink-soft);
+  }
+
+  .inputbox{
+    position: relative;
+    display:flex;
+    align-items:center;
+  }
+  .inputbox .prefix{
+    position:absolute;
+    left:10px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 14px;
+    color: var(--ink-soft);
+    pointer-events:none;
+  }
+  .inputbox.dollar input{ padding-left: 24px; }
+  .inputbox.hrs input{ padding-right: 34px; }
+  .inputbox .suffix{
+    position:absolute;
+    right:10px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-soft);
+    pointer-events:none;
+  }
+
+  input[type=number]{
+    width: 100%;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--ink);
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 9px 10px;
+    -moz-appearance: textfield;
+  }
+  input[type=number]::-webkit-outer-spin-button,
+  input[type=number]::-webkit-inner-spin-button{
+    -webkit-appearance: none; margin:0;
+  }
+  input[type=number]:focus-visible{
+    outline: 2px solid var(--net-green);
+    outline-offset: 1px;
+    border-color: var(--net-green);
+  }
+
+  details{
+    margin-top: 4px;
+  }
+  details summary{
+    cursor: pointer;
+    font-size: 12.5px;
+    color: var(--brass);
+    font-weight: 600;
+    list-style: none;
+    display:flex;
+    align-items:center;
+    gap:6px;
+  }
+  details summary::-webkit-details-marker{ display:none; }
+  details summary::before{
+    content: "▸";
+    font-size: 10px;
+    transition: transform 0.15s ease;
+  }
+  details[open] summary::before{ transform: rotate(90deg); }
+  details .grid{ margin-top: 14px; }
+
+  button.reset{
+    margin-top: 16px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--ink-soft);
+    border-radius: 6px;
+    padding: 8px 12px;
+    cursor: pointer;
+  }
+  button.reset:hover{ border-color: var(--brass); color: var(--brass); }
+  button.reset:focus-visible{ outline: 2px solid var(--net-green); outline-offset: 1px; }
+
+  /* perforation divider */
+  .perf{
+    display:flex;
+    align-items:center;
+    gap: 6px;
+    margin: -4px 0 18px;
+    padding: 0 4px;
+  }
+  .perf::before, .perf::after{
+    content:"";
+    flex:1;
+    height: 0;
+    border-top: 1.5px dashed var(--border);
+  }
+  .perf span{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-soft);
+    letter-spacing: 0.1em;
+  }
+
+  /* results ledger */
+  .ledger{
+    position: relative;
+    overflow: visible;
+  }
+
+  .summary-row{
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin: 4px 0 18px;
+  }
+  .summary-cell{
+    text-align:left;
+  }
+  .summary-cell .k{
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-soft);
+    margin-bottom: 3px;
+  }
+  .summary-cell .v{
+    font-family:'IBM Plex Mono', monospace;
+    font-weight: 600;
+    font-size: clamp(13px, 3.4vw, 15.5px);
+  }
+
+  table.ledger-table{
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+  }
+  table.ledger-table th{
+    text-align:left;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--brass);
+    font-weight: 600;
+    border-bottom: 1px solid var(--border);
+    padding: 6px 4px 8px;
+  }
+  table.ledger-table th:last-child, table.ledger-table td:last-child{ text-align:right; }
+  table.ledger-table td{
+    padding: 7px 4px;
+    border-bottom: 1px dotted var(--border);
+  }
+  table.ledger-table td.label{ color: var(--ink); }
+  table.ledger-table td.amt{
+    font-family:'IBM Plex Mono', monospace;
+    font-variant-numeric: tabular-nums;
+  }
+  table.ledger-table tr.subtotal td{
+    font-weight:600;
+    border-bottom: 1px solid var(--ink-soft);
+    padding-top: 9px;
+  }
+  table.ledger-table .note{
+    font-size: 11px;
+    color: var(--ink-soft);
+    font-family: 'IBM Plex Sans', sans-serif;
+    display:block;
+    margin-top: 1px;
+  }
+
+  .net-block{
+    margin-top: 20px;
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .stamp{
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--stamp);
+    border: 2.5px dashed var(--stamp);
+    border-radius: 50%;
+    width: 128px;
+    height: 128px;
+    flex: none;
+    display:flex;
+    flex-direction: column;
+    align-items:center;
+    justify-content:center;
+    transform: rotate(-7deg);
+    text-align:center;
+    background: var(--stamp-soft);
+    mix-blend-mode: multiply;
+  }
+  .stamp .label{
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    font-weight: 700;
+  }
+  .stamp .amt{
+    font-size: 17px;
+    font-weight: 700;
+    line-height:1.15;
+    margin-top: 2px;
+  }
+
+  .net-caption{
+    flex: 1;
+    min-width: 180px;
+  }
+  .net-caption .k{
+    font-family: 'IBM Plex Serif', serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--net-green);
+    margin-bottom: 4px;
+  }
+  .net-caption .d{
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    line-height:1.5;
+  }
+
+  footer{
+    margin-top: 24px;
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+    border-top: 1px dashed var(--border);
+    padding-top: 14px;
+  }
+  footer strong{ color: var(--ink); }
+
+  @media (max-width: 420px){
+    .grid{ grid-template-columns: 1fr; }
+    .summary-row{ grid-template-columns: 1fr 1fr; row-gap: 14px; }
+    .net-block{ flex-direction: column; align-items: flex-start; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    details summary::before{ transition: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">Ochsner Clinic Foundation · Biweekly Payroll</div>
+    <h1>Paycheck Calculator</h1>
+    <p class="sub">Calibrated against your actual 07/17 and 07/31 2026 paystubs — federal withholding uses the real 2026 IRS Pub. 15-T percentage method, not a flat guess.</p>
+  </header>
+
+  <div class="card">
+    <h2><span class="num">1</span>Regular pay</h2>
+    <p class="hint">Defaults match your most recent check (80 hrs @ $68.5591).</p>
+    <div class="grid">
+      <div class="field">
+        <label for="hours">Regular hours</label>
+        <div class="inputbox hrs">
+          <input type="number" id="hours" value="80" step="0.5" min="0">
+          <span class="suffix">hrs</span>
+        </div>
+      </div>
+      <div class="field">
+        <label for="rate">Hourly rate</label>
+        <div class="inputbox dollar">
+          <span class="prefix">$</span>
+          <input type="number" id="rate" value="68.5591" step="0.0001" min="0">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">2</span>Extra earnings</h2>
+    <p class="hint">Moonlighting and stipend show as $0 unless a period actually includes them.</p>
+    <div class="grid">
+      <div class="field">
+        <label for="moonlighting">Moonlighting</label>
+        <div class="inputbox dollar">
+          <span class="prefix">$</span>
+          <input type="number" id="moonlighting" value="0" step="1" min="0">
+        </div>
+      </div>
+      <div class="field">
+        <label for="stipend">Stipend</label>
+        <div class="inputbox dollar">
+          <span class="prefix">$</span>
+          <input type="number" id="stipend" value="0" step="1" min="0">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">3</span>Deductions</h2>
+    <p class="hint">Defaults are your standing Health (pre-tax) and Lifestyle Benefits (post-tax) amounts.</p>
+    <div class="grid">
+      <div class="field">
+        <label for="pretax">Pre-tax (Health)</label>
+        <div class="inputbox dollar">
+          <span class="prefix">$</span>
+          <input type="number" id="pretax" value="224.00" step="0.01" min="0">
+        </div>
+      </div>
+      <div class="field">
+        <label for="posttax">Post-tax (Lifestyle Benefits)</label>
+        <div class="inputbox dollar">
+          <span class="prefix">$</span>
+          <input type="number" id="posttax" value="9.30" step="0.01" min="0">
+        </div>
+      </div>
+    </div>
+
+    <details>
+      <summary>Advanced — year-to-date wage caps</summary>
+      <div class="grid">
+        <div class="field span2">
+          <label for="ytdOasdi">YTD OASDI taxable wages (before this check)</label>
+          <div class="inputbox dollar">
+            <span class="prefix">$</span>
+            <input type="number" id="ytdOasdi" value="44447.19" step="0.01" min="0">
+          </div>
+        </div>
+        <div class="field span2">
+          <label for="ytdMedicare">YTD Medicare taxable wages (before this check)</label>
+          <div class="inputbox dollar">
+            <span class="prefix">$</span>
+            <input type="number" id="ytdMedicare" value="44447.19" step="0.01" min="0">
+          </div>
+        </div>
+      </div>
+      <p class="hint" style="margin-top:10px; margin-bottom:0;">Only matters once YTD wages near $184,500 (OASDI cap) or $200,000 (0.9% Additional Medicare Tax). Update these from your latest paystub's "Taxable Wages" table as the year goes on.</p>
+    </details>
+
+    <button class="reset" id="resetBtn" type="button">Reset to last paycheck (07/12–07/25)</button>
+  </div>
+
+  <div class="perf"><span>✂ ⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯ ESTIMATE BELOW</span></div>
+
+  <div class="card ledger">
+    <h2 style="margin-bottom:14px;">Estimated Paycheck</h2>
+
+    <div class="summary-row">
+      <div class="summary-cell">
+        <div class="k">Gross Pay</div>
+        <div class="v" id="sumGross">$0.00</div>
+      </div>
+      <div class="summary-cell">
+        <div class="k">Pre-Tax Ded.</div>
+        <div class="v" id="sumPretax">$0.00</div>
+      </div>
+      <div class="summary-cell">
+        <div class="k">Taxes</div>
+        <div class="v" id="sumTax">$0.00</div>
+      </div>
+      <div class="summary-cell">
+        <div class="k">Post-Tax Ded.</div>
+        <div class="v" id="sumPosttax">$0.00</div>
+      </div>
+    </div>
+
+    <table class="ledger-table">
+      <thead>
+        <tr><th>Employee Taxes</th><th>Amount</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="label">OASDI <span class="note">6.2%, capped at $184,500 YTD wages</span></td>
+          <td class="amt" id="rowOasdi">$0.00</td>
+        </tr>
+        <tr>
+          <td class="label">Medicare <span class="note">1.45% + 0.9% above $200k YTD</span></td>
+          <td class="amt" id="rowMedicare">$0.00</td>
+        </tr>
+        <tr>
+          <td class="label">Federal Withholding <span class="note">2026 IRS Pub. 15-T · Single/MFS · Std. ded. $16,100</span></td>
+          <td class="amt" id="rowFederal">$0.00</td>
+        </tr>
+        <tr>
+          <td class="label">State Tax – LA <span class="note">≈3.09%, calibrated from your paystubs</span></td>
+          <td class="amt" id="rowState">$0.00</td>
+        </tr>
+        <tr class="subtotal">
+          <td class="label">Total Employee Taxes</td>
+          <td class="amt" id="rowTaxTotal">$0.00</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="net-block">
+      <div class="net-caption">
+        <div class="k">Net Pay</div>
+        <div class="d">Deposited to SoFi Checking ······5364, based on the figures entered above.</div>
+      </div>
+      <div class="stamp">
+        <div class="label">Net Pay</div>
+        <div class="amt" id="stampNet">$0.00</div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <strong>How this is calibrated:</strong> Federal withholding is computed exactly from the official 2026 IRS annual tax brackets for Single/MFS filers (10–37%), applied via the same annualized percentage method your employer's payroll system uses — verified to match your actual paystubs within a few cents. OASDI and Medicare are the statutory 6.2% / 1.45% rates. LA state tax uses a flat ≈3.09% rate derived from your last two checks; Louisiana's real formula is graduated, so this may drift slightly at very different income levels. Assumes no changes to your W-4 or health deduction.
+  </footer>
+
+</div>
+
+<script>
+  const STD_DEDUCTION = 16100;      // 2026 Single / Married filing separately
+  const PAY_PERIODS = 26;           // biweekly
+  const OASDI_RATE = 0.062;
+  const OASDI_CAP = 184500;         // 2026 wage base
+  const MEDICARE_RATE = 0.0145;
+  const ADDL_MEDICARE_RATE = 0.009;
+  const ADDL_MEDICARE_THRESHOLD = 200000;
+  const LA_STATE_RATE = 0.030902;   // calibrated from actual paystubs
+
+  // 2026 federal brackets: taxable income upper limit, rate, cumulative base tax, lower limit
+  const FEDERAL_BRACKETS = [
+    { limit: 12400,     rate: 0.10, base: 0,          prev: 0 },
+    { limit: 50400,     rate: 0.12, base: 1240,       prev: 12400 },
+    { limit: 105700,    rate: 0.22, base: 5800,       prev: 50400 },
+    { limit: 201775,    rate: 0.24, base: 17966,      prev: 105700 },
+    { limit: 256225,    rate: 0.32, base: 41024,      prev: 201775 },
+    { limit: 640600,    rate: 0.35, base: 58448,      prev: 256225 },
+    { limit: Infinity,  rate: 0.37, base: 192979.25,  prev: 640600 }
+  ];
+
+  function annualFederalTax(taxableIncome){
+    if (taxableIncome <= 0) return 0;
+    for (const b of FEDERAL_BRACKETS){
+      if (taxableIncome <= b.limit){
+        return b.base + b.rate * (taxableIncome - b.prev);
+      }
+    }
+    return 0;
+  }
+
+  function num(id){
+    const v = parseFloat(document.getElementById(id).value);
+    return isNaN(v) ? 0 : v;
+  }
+
+  function fmt(n){
+    return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  function calculate(){
+    const hours = num('hours');
+    const rate = num('rate');
+    const moonlighting = num('moonlighting');
+    const stipend = num('stipend');
+    const pretax = num('pretax');
+    const posttax = num('posttax');
+    const ytdOasdi = num('ytdOasdi');
+    const ytdMedicare = num('ytdMedicare');
+
+    const grossPay = (hours * rate) + moonlighting + stipend;
+    const taxableWages = Math.max(0, grossPay - pretax);
+
+    // OASDI with wage-base cap
+    const oasdiTaxable = Math.max(0, Math.min(taxableWages, OASDI_CAP - ytdOasdi));
+    const oasdi = oasdiTaxable * OASDI_RATE;
+
+    // Medicare + Additional Medicare Tax
+    const medicare = taxableWages * MEDICARE_RATE;
+    const newYtdMedicare = ytdMedicare + taxableWages;
+    const addlTaxable = Math.max(0, Math.min(taxableWages, newYtdMedicare - ADDL_MEDICARE_THRESHOLD));
+    const addlMedicare = addlTaxable * ADDL_MEDICARE_RATE;
+    const medicareTotal = medicare + addlMedicare;
+
+    // Federal withholding — annualized percentage method
+    const annualWage = taxableWages * PAY_PERIODS;
+    const taxableIncome = Math.max(0, annualWage - STD_DEDUCTION);
+    const annualTax = annualFederalTax(taxableIncome);
+    const federalWH = annualTax / PAY_PERIODS;
+
+    // State
+    const stateWH = taxableWages * LA_STATE_RATE;
+
+    const totalTax = oasdi + medicareTotal + federalWH + stateWH;
+    const netPay = grossPay - pretax - totalTax - posttax;
+
+    document.getElementById('sumGross').textContent = fmt(grossPay);
+    document.getElementById('sumPretax').textContent = fmt(pretax);
+    document.getElementById('sumTax').textContent = fmt(totalTax);
+    document.getElementById('sumPosttax').textContent = fmt(posttax);
+
+    document.getElementById('rowOasdi').textContent = fmt(oasdi);
+    document.getElementById('rowMedicare').textContent = fmt(medicareTotal);
+    document.getElementById('rowFederal').textContent = fmt(federalWH);
+    document.getElementById('rowState').textContent = fmt(stateWH);
+    document.getElementById('rowTaxTotal').textContent = fmt(totalTax);
+
+    document.getElementById('stampNet').textContent = fmt(netPay);
+  }
+
+  const defaults = {
+    hours: 80, rate: 68.5591, moonlighting: 0, stipend: 0,
+    pretax: 224.00, posttax: 9.30, ytdOasdi: 44447.19, ytdMedicare: 44447.19
+  };
+
+  document.getElementById('resetBtn').addEventListener('click', () => {
+    for (const [id, val] of Object.entries(defaults)){
+      document.getElementById(id).value = val;
+    }
+    calculate();
+  });
+
+  document.querySelectorAll('input[type=number]').forEach(el => {
+    el.addEventListener('input', calculate);
+  });
+
+  calculate();
+</script>
+</body>
+</html>

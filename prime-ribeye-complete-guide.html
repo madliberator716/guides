@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prime Ribeye — Complete Cooking Guide</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --char:   #1a1008;
+    --ember:  #c0392b;
+    --gold:   #d4a017;
+    --cream:  #f5f0e8;
+    --smoke:  #7a6a5a;
+    --muted:  #a09080;
+    --card:   #221508;
+    --border: #2e1f10;
+    --white:  #fdfaf6;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background: var(--char);
+    color: var(--cream);
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    line-height: 1.75;
+    font-size: 15px;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    background: linear-gradient(155deg, #2c1606 0%, #1a1008 55%);
+    padding: 64px 24px 52px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 50% at 50% 80%, rgba(192,57,43,.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .eyebrow {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 14px;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(38px, 9vw, 68px);
+    font-weight: 900;
+    line-height: 1.05;
+    color: var(--white);
+    margin-bottom: 14px;
+  }
+  .hero h1 em { color: var(--ember); font-style: normal; }
+  .hero-sub {
+    font-size: 14px;
+    color: var(--muted);
+    max-width: 440px;
+    margin: 0 auto 36px;
+    line-height: 1.6;
+  }
+  .specs {
+    display: flex;
+    justify-content: center;
+    gap: 36px;
+    flex-wrap: wrap;
+  }
+  .spec-val {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--gold);
+  }
+  .spec-lbl {
+    font-size: 10px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--smoke);
+  }
+
+  /* ─── LAYOUT ─── */
+  .wrap { max-width: 700px; margin: 0 auto; padding: 0 22px; }
+
+  .section {
+    padding: 52px 0 36px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section:last-child { border-bottom: none; }
+
+  .sec-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: var(--ember);
+    margin-bottom: 10px;
+  }
+  .section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 22px;
+  }
+
+  p { color: var(--muted); margin-bottom: 13px; }
+  p:last-child { margin-bottom: 0; }
+  strong { color: var(--cream); font-weight: 500; }
+  em { color: var(--gold); font-style: normal; }
+
+  /* ─── INGREDIENT TABLE ─── */
+  .ing-group { margin-bottom: 28px; }
+  .ing-group-title {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--border);
+  }
+  .ing-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 9px 0;
+    border-bottom: 1px solid rgba(46,31,16,.5);
+    gap: 16px;
+  }
+  .ing-row:last-child { border-bottom: none; }
+  .ing-name { font-size: 14px; color: var(--cream); font-weight: 500; }
+  .ing-amt { font-family: 'Playfair Display', serif; font-size: 14px; color: var(--gold); white-space: nowrap; }
+  .ing-note { font-size: 12px; color: var(--smoke); margin-top: 2px; }
+
+  /* ─── GEAR GRID ─── */
+  .gear-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .gear-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .gear-name { font-size: 14px; font-weight: 500; color: var(--cream); margin-bottom: 3px; }
+  .gear-why { font-size: 12px; color: var(--smoke); line-height: 1.5; }
+
+  /* ─── STEPS ─── */
+  .step {
+    display: flex;
+    gap: 22px;
+    margin-bottom: 36px;
+    align-items: flex-start;
+  }
+  .step-n {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    font-weight: 900;
+    color: #2e1f10;
+    line-height: 1;
+    min-width: 44px;
+    user-select: none;
+    flex-shrink: 0;
+  }
+  .step-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+  .step-body { font-size: 14px; color: var(--muted); line-height: 1.7; }
+
+  /* ─── TIP BOX ─── */
+  .tip {
+    margin-top: 12px;
+    background: #1c1005;
+    border-left: 3px solid var(--gold);
+    padding: 10px 14px;
+    border-radius: 0 6px 6px 0;
+    font-size: 13px;
+    color: #a08060;
+    line-height: 1.6;
+  }
+  .tip strong { color: var(--gold); }
+
+  /* ─── WARN / SUCCESS ─── */
+  .warn-box {
+    background: #1c0a0a;
+    border: 1px solid #5a1f1f;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 14px;
+  }
+  .warn-box:last-child { margin-bottom: 0; }
+  .box-title {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .warn-box .box-title { color: var(--ember); }
+  .ok-box {
+    background: #0c180c;
+    border: 1px solid #2a4a2a;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 14px;
+  }
+  .ok-box .box-title { color: #5cb85c; }
+  ul.plain { padding-left: 18px; }
+  ul.plain li { font-size: 14px; color: #b09898; margin-bottom: 7px; line-height: 1.6; }
+  .ok-box ul.plain li { color: #88b888; }
+
+  /* ─── TEMP TABLE ─── */
+  .temp-table {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 6px;
+  }
+  .temp-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 11px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .temp-row:last-child { border-bottom: none; }
+  .temp-row.target { background: #2a1005; border-left: 3px solid var(--ember); }
+  .dot { width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0; }
+  .t-name { font-size: 13px; font-weight: 500; color: var(--cream); min-width: 110px; }
+  .t-range { font-family: 'Playfair Display', serif; font-size: 13px; color: var(--gold); min-width: 85px; }
+  .t-desc { font-size: 12px; color: var(--smoke); }
+  .t-badge {
+    margin-left: auto;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--ember);
+    white-space: nowrap;
+  }
+
+  /* ─── TIMELINE ─── */
+  .tl { margin-top: 6px; }
+  .tl-item { display: flex; gap: 14px; margin-bottom: 6px; align-items: flex-start; }
+  .tl-time {
+    font-family: 'Playfair Display', serif;
+    font-size: 12px;
+    color: var(--gold);
+    font-weight: 700;
+    min-width: 90px;
+    padding-top: 2px;
+  }
+  .tl-desc { font-size: 14px; color: var(--muted); }
+  .tl-divider { height: 10px; border-left: 1px dashed var(--border); margin: 0 0 6px 90px; }
+
+  /* ─── MISTAKE TABLE ─── */
+  .mistake {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 18px;
+    margin-bottom: 10px;
+  }
+  .mistake:last-child { margin-bottom: 0; }
+  .m-title { font-size: 14px; font-weight: 600; color: var(--ember); margin-bottom: 6px; }
+  .m-row { display: flex; gap: 8px; margin-bottom: 4px; font-size: 13px; }
+  .m-label { color: var(--gold); font-weight: 600; min-width: 60px; flex-shrink: 0; }
+  .m-text { color: var(--muted); }
+
+  /* ─── QUICK MEMORY ─── */
+  .memory-box {
+    background: linear-gradient(135deg, #2c1606, #1a1008);
+    border: 1px solid #5a3010;
+    border-radius: 12px;
+    padding: 28px 24px;
+    text-align: center;
+  }
+  .memory-box p {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    color: var(--cream);
+    line-height: 1.6;
+    margin: 0;
+  }
+  .memory-box p em { color: var(--gold); }
+
+  /* ─── TIMER ─── */
+  .timer-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 13px;
+    background: #1e1005;
+    border: 1px solid #4a3020;
+    border-radius: 6px;
+    padding: 7px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--gold);
+    cursor: pointer;
+    transition: all .18s;
+    font-family: 'Inter', sans-serif;
+  }
+  .timer-btn:hover { background: #2e1808; border-color: var(--gold); }
+  .timer-btn.running { color: var(--ember); border-color: var(--ember); }
+  .timer-btn.done { color: #5cb85c; border-color: #5cb85c; }
+
+  /* ─── DIVIDER ─── */
+  .hr { height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 4px 0 20px; }
+
+  .footer {
+    text-align: center;
+    padding: 44px 24px;
+    font-size: 13px;
+    color: var(--smoke);
+  }
+  .footer span { font-size: 28px; display: block; margin-bottom: 10px; }
+
+  @media(max-width:520px){
+    .gear-grid { grid-template-columns: 1fr; }
+    .specs { gap: 20px; }
+    .t-desc { display: none; }
+    .t-name { min-width: 80px; }
+    .step-n { font-size: 32px; min-width: 36px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="eyebrow">Complete Cooking Guide</div>
+  <h1>USDA Prime<br><em>Ribeye</em></h1>
+  <p class="hero-sub">1.4 lb boneless or bone-in ribeye · Cooked to medium · Cast iron sear method · Built for beginners, grounded in professional technique</p>
+  <div class="specs">
+    <div><span class="spec-val">1.4 lb</span><span class="spec-lbl">Weight</span></div>
+    <div><span class="spec-val">140–145°F</span><span class="spec-lbl">Target Temp</span></div>
+    <div><span class="spec-val">133–135°F</span><span class="spec-lbl">Pull Temp</span></div>
+    <div><span class="spec-val">~50 min</span><span class="spec-lbl">Total Time</span></div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- ─── INGREDIENTS ─── -->
+<div class="section">
+  <div class="sec-label">🛒 Section 1</div>
+  <h2>Ingredients</h2>
+
+  <div class="ing-group">
+    <div class="ing-group-title">Protein</div>
+    <div class="ing-row">
+      <div>
+        <div class="ing-name">USDA Prime boneless ribeye</div>
+        <div class="ing-note">1.25–1.5" thick. Prime grade only — the marbling is the entire point of this cook.</div>
+      </div>
+      <div class="ing-amt">1.4 lb</div>
+    </div>
+  </div>
+
+  <div class="ing-group">
+    <div class="ing-group-title">Dry Seasonings</div>
+    <div class="ing-row">
+      <div>
+        <div class="ing-name">Kosher salt (Diamond Crystal preferred)</div>
+        <div class="ing-note">For dry brine. Diamond Crystal is less dense than Morton — if using Morton, reduce by ~25%.</div>
+      </div>
+      <div class="ing-amt">¾ tsp per side</div>
+    </div>
+    <div class="ing-row">
+      <div>
+        <div class="ing-name">Coarse black pepper</div>
+        <div class="ing-note">Added right before the pan — not during brining. Freshly cracked is noticeably better.</div>
+      </div>
+      <div class="ing-amt">½ tsp per side</div>
+    </div>
+  </div>
+
+  <div class="ing-group">
+    <div class="ing-group-title">Cooking Fats & Aromatics</div>
+    <div class="ing-row">
+      <div>
+        <div class="ing-name">Avocado oil (or grapeseed oil)</div>
+        <div class="ing-note">Smoke point ~520°F. Required for the initial sear. Do not use EVOO or butter here.</div>
+      </div>
+      <div class="ing-amt">1 tsp</div>
+    </div>
+    <div class="ing-row">
+      <div>
+        <div class="ing-name">Unsalted butter</div>
+        <div class="ing-note">Added only during basting, not at sear. Burns below 300°F — never use for initial sear.</div>
+      </div>
+      <div class="ing-amt">2 tbsp</div>
+    </div>
+    <div class="ing-row">
+      <div>
+        <div class="ing-name">Garlic cloves, lightly crushed (unpeeled is fine)</div>
+        <div class="ing-note">Whole cloves infuse the butter without burning. Do not mince.</div>
+      </div>
+      <div class="ing-amt">2 cloves</div>
+    </div>
+    <div class="ing-row">
+      <div>
+        <div class="ing-name">Fresh thyme or rosemary sprigs</div>
+        <div class="ing-note">A sprig = a short stem, 3–4", with leaves still attached. Toss in whole. Discard after cooking.</div>
+      </div>
+      <div class="ing-amt">2–3 sprigs</div>
+    </div>
+  </div>
+
+  <div class="ing-group">
+    <div class="ing-group-title">Optional Finishing</div>
+    <div class="ing-row">
+      <div>
+        <div class="ing-name">Flaky salt (Maldon)</div>
+        <div class="ing-note">Applied after resting, not during cooking. Adds texture and a final burst of salinity. Worth it.</div>
+      </div>
+      <div class="ing-amt">Small pinch</div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── KNIVES & EQUIPMENT ─── -->
+<div class="section">
+  <div class="sec-label">🔪 Section 2</div>
+  <h2>Knives & Equipment</h2>
+
+  <div class="gear-grid">
+    <div class="gear-card">
+      <div class="gear-name">10–12" Cast Iron Skillet</div>
+      <div class="gear-why">The only pan that gets hot enough, stays hot when the steak hits it, and retains that heat evenly. Non-negotiable for this method.</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-name">Instant-Read Thermometer</div>
+      <div class="gear-why">The single most important tool. ThermoWorks ThermoPop (~$35) or Thermapen (~$105). Medium vs. medium well is a 5°F window — guessing will cost you the steak.</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-name">Metal Tongs (12")</div>
+      <div class="gear-why">For flipping and holding the steak on its edges. Never pierce the steak with a fork — you lose juice every time.</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-name">Large Spoon (metal)</div>
+      <div class="gear-why">For basting. You need to be able to scoop pooled butter from the pan edge and pour it continuously over the steak.</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-name">Wire Rack + Rimmed Baking Sheet</div>
+      <div class="gear-why">For dry brining. Elevating the steak allows air to circulate underneath, drying the surface more thoroughly for a better crust.</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-name">Heavy Oven Mitt</div>
+      <div class="gear-why">Cast iron handles become as hot as the cooking surface. Do not grab the handle bare — it will reach 400–500°F.</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-name">Paper Towels</div>
+      <div class="gear-why">For drying the steak twice: before salting and again before the pan. Surface moisture is the enemy of crust.</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-name">8–10" Sharp Chef's Knife</div>
+      <div class="gear-why">For slicing at the table if you choose to plate in strips. Dull knives tear the meat fibers and cause juice loss. Sharp blade, single smooth stroke.</div>
+    </div>
+  </div>
+
+  <div class="tip" style="margin-top:16px;"><strong>Knife note:</strong> You do not need to prep this cut at all before cooking — it goes into the pan whole. The chef's knife is only needed at the end if you slice it. A 1.4 lb ribeye can also be served whole and carved at the table.</div>
+</div>
+
+<!-- ─── INGREDIENT PREP ─── -->
+<div class="section">
+  <div class="sec-label">🔪 Section 3</div>
+  <h2>Ingredient Preparation</h2>
+
+  <div class="step">
+    <div class="step-n">A</div>
+    <div>
+      <div class="step-title">The Steak</div>
+      <div class="step-body">Remove from packaging. Pat <strong>completely dry</strong> on all sides with paper towels — top, bottom, and all four edges. Press firmly; you want zero surface moisture. Do not rinse it under water. Do not trim the fat cap — that rendered fat is flavor.</div>
+      <div class="tip"><strong>Common mistake:</strong> Rinsing the steak, then patting it dry and thinking you're done. Rinsing introduces bacteria risk and moisture simultaneously. Just pat dry from the package.</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">B</div>
+    <div>
+      <div class="step-title">Garlic</div>
+      <div class="step-body">Take 2 cloves. Place them on a cutting board. Press the flat side of a knife down on each clove with the heel of your hand until it lightly crushes — you'll hear a crack. Leave the peel on. <strong>Do not mince, slice, or peel.</strong> You want slow, controlled flavor infusion into the butter — minced garlic burns in seconds at sear temperatures.</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">C</div>
+    <div>
+      <div class="step-title">Herbs</div>
+      <div class="step-body">Grab 2–3 short stems (sprigs) from a bundle of fresh thyme or rosemary. Each stem is 3–4 inches long with leaves still attached. Use them whole — no stripping, no chopping. They go into the pan as-is and are discarded when you plate.</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">D</div>
+    <div>
+      <div class="step-title">Everything Else</div>
+      <div class="step-body">Measure butter, salt, pepper, and oil ahead of time. Stage them all on the counter near the stove before the pan goes on heat. Once that cast iron is screaming hot, there is no time to search for anything. <strong>Mise en place</strong> — everything in its place before you cook.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── SEASONING ─── -->
+<div class="section">
+  <div class="sec-label">🧂 Section 4</div>
+  <h2>Seasoning & Dry Brine</h2>
+
+  <p>A USDA Prime ribeye at 1.4 lbs needs only salt and pepper — the cut's own marbling and beefiness carries the flavor. Do not add steak seasoning blends, garlic powder, or anything else. The aromatics come from the butter baste, not the crust.</p>
+
+  <div class="step">
+    <div class="step-n">1</div>
+    <div>
+      <div class="step-title">Apply the dry brine — 45 min to 8 hours before cooking</div>
+      <div class="step-body">Pat steak dry. Hold your hand 6–8 inches above the steak and sprinkle <em>¾ tsp kosher salt</em> evenly across each flat side, plus a light dusting on all four edges. It should look like more salt than feels right — that's correct. Place on a wire rack over a sheet pan, uncovered. Leave at room temperature if cooking within 45–60 min. Refrigerate uncovered if brining for longer.</div>
+      <div class="tip">
+        <strong>The science (Serious Eats / AmazingRibs):</strong> Salt draws moisture to the surface within the first few minutes via osmosis. Within 40–60 minutes, that brine is reabsorbed into the meat, carrying salt deep into the interior and leaving the surface drier than before. The result: seasoning that penetrates past just the crust, and a drier exterior that browns faster and harder.
+      </div>
+      <button class="timer-btn" onclick="startTimer(this,45,'Dry Brine')">⏱ Start 45 min brine timer</button>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">2</div>
+    <div>
+      <div class="step-title">Black pepper — applied right before the pan</div>
+      <div class="step-body">Season both sides with <em>½ tsp coarse black pepper per side</em> just before cooking — not during brining. Pepper can turn bitter if left on too long before high heat. Freshly cracked from a mill is meaningfully better than pre-ground.</div>
+    </div>
+  </div>
+
+  <div class="hr"></div>
+  <p style="font-size:13px; color:var(--smoke);">No marinade is needed or recommended for Prime ribeye. Marinades are for tougher or leaner cuts that benefit from acid tenderization. A Prime ribeye already has superior tenderness and fat content — marinating it dilutes the flavor and softens a texture that should be firm and juicy.</p>
+</div>
+
+<!-- ─── COOKING METHOD ─── -->
+<div class="section">
+  <div class="sec-label">🔥 Section 5</div>
+  <h2>Cooking Method</h2>
+
+  <p><strong>Method: Cast iron sear + butter baste.</strong> At 1.4 lbs and roughly 1.25–1.5" thick, this steak is well-suited to a high-heat stovetop sear. This is the same method used by Kenji López-Alt (Serious Eats / The Food Lab) for bone-in and boneless ribeyes of this profile.</p>
+
+  <div class="tip" style="margin-bottom:20px;"><strong>Why not the grill?</strong> A grill works well for this steak, but cast iron gives you more control over internal temperature, allows for butter basting (which you cannot do on a grill), and produces a more consistent crust for a first-time cook. Master this first.</div>
+
+  <div class="gear-grid" style="margin-bottom:20px;">
+    <div class="gear-card">
+      <div class="gear-name">Stove Heat Level</div>
+      <div class="gear-why">High — 8–9 out of 10. You want the pan screaming. If your stove runs hot, 7–8 may suffice; watch for smoking.</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-name">Preheat Time</div>
+      <div class="gear-why">4–5 minutes, dry (no oil). The pan needs to reach ~450–500°F before anything touches it.</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-name">Pan-Ready Visual Cue</div>
+      <div class="gear-why">A drop of water flicked into the pan should flash-evaporate instantly with a sharp sizzle. Slight wisps of smoke rising from the surface. Not just warm — genuinely hot.</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-name">Cooking Times</div>
+      <div class="gear-why">Side 1: 3 min. Side 2: 2.5 min. Edges: 30–45 sec each. Baste: 60–90 sec. Total pan time: ~9–10 min.</div>
+    </div>
+  </div>
+
+  <div class="tip"><strong>Signs of undercooking:</strong> Interior reads below 130°F; center looks bright red rather than pink when probed. Return to pan, baste another 30–60 sec, check again.<br><br>
+  <strong>Signs of overcooking:</strong> Interior reads above 150°F; center is grayish-brown with little pink. Unfortunately this cannot be undone. Prevention: pull at 133–135°F, not 140°F.</div>
+</div>
+
+<!-- ─── DONENESS REFERENCE ─── -->
+<div class="section">
+  <div class="sec-label">🌡️ Temperature Reference</div>
+  <h2>Doneness Chart</h2>
+
+  <p>Your pull temperature is <em>133–135°F</em>. Carryover heat during the rest period will raise it to 140–145°F (medium). If you wait until the thermometer reads 140°F, you will overshoot to ~148–152°F (medium-well).</p>
+
+  <div class="temp-table">
+    <div class="temp-row">
+      <div class="dot" style="background:#8b1a1a;"></div>
+      <div class="t-name">Rare</div>
+      <div class="t-range">120–125°F</div>
+      <div class="t-desc">Cool red center</div>
+    </div>
+    <div class="temp-row">
+      <div class="dot" style="background:#b52a2a;"></div>
+      <div class="t-name">Medium Rare</div>
+      <div class="t-range">130–135°F</div>
+      <div class="t-desc">Warm red center</div>
+    </div>
+    <div class="temp-row target">
+      <div class="dot" style="background:#c8603a;"></div>
+      <div class="t-name">Medium</div>
+      <div class="t-range">140–145°F</div>
+      <div class="t-desc">Warm pink center</div>
+      <div class="t-badge">← Your target</div>
+    </div>
+    <div class="temp-row">
+      <div class="dot" style="background:#c08060;"></div>
+      <div class="t-name">Medium Well</div>
+      <div class="t-range">150–155°F</div>
+      <div class="t-desc">Slightly pink</div>
+    </div>
+    <div class="temp-row">
+      <div class="dot" style="background:#a07050;"></div>
+      <div class="t-name">Well Done</div>
+      <div class="t-range">160°F+</div>
+      <div class="t-desc">No pink, firm</div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── STEP BY STEP ─── -->
+<div class="section">
+  <div class="sec-label">🍳 Section 6</div>
+  <h2>Step-by-Step Cooking Instructions</h2>
+
+  <div class="step">
+    <div class="step-n">1</div>
+    <div>
+      <div class="step-title">Preparation — 45–60 min before cooking</div>
+      <div class="step-body">Pat steak dry. Apply dry brine (salt only, ¾ tsp per side). Place on wire rack, uncovered. If cooking in 45–60 min, leave at room temperature. If brining longer, refrigerate. Pull from fridge 30 min before cooking. Stage all equipment and ingredients on the counter.</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">2</div>
+    <div>
+      <div class="step-title">Preheat the cast iron — 4–5 minutes</div>
+      <div class="step-body">Place dry cast iron on largest burner, heat on high. No oil yet. Let it heat a full 4–5 minutes. It will begin to smoke lightly — that's your signal. Open a window or turn on the range hood now. This smoke is from any residual seasoning in the pan burning off — it's normal and stops quickly.</div>
+      <button class="timer-btn" onclick="startTimer(this,4.5,'Pan Preheat')">⏱ Start 4.5 min timer</button>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">3</div>
+    <div>
+      <div class="step-title">Final dry and season</div>
+      <div class="step-body">Pat the steak bone-dry one final time — even if it already looks dry, do it again. Add ½ tsp black pepper per side. Add 1 tsp avocado oil to the pan, swirl immediately to coat. It will smoke on contact. Move fast.</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">4</div>
+    <div>
+      <div class="step-title">Sear — Side 1: 3 minutes</div>
+      <div class="step-body">Lay the steak into the pan away from you. Press it down gently with tongs to ensure full contact. <strong>Do not move it.</strong> Set timer for 3 minutes. The sizzle should be loud and aggressive. If it's quiet, the pan isn't hot enough. There will be significant smoke — this is expected.</div>
+      <div class="tip"><strong>What to look for:</strong> At ~2 min, you'll see the color change creeping up the side of the steak from the bottom — the gray-brown cooked zone rising. At 3 min, the crust should be dark mahogany. If it looks pale or blond, give it another 30 seconds.</div>
+      <button class="timer-btn" onclick="startTimer(this,3,'Sear Side 1')">⏱ Start 3 min timer</button>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">5</div>
+    <div>
+      <div class="step-title">Flip and sear — Side 2: 2.5 minutes</div>
+      <div class="step-body">Flip with tongs. The first side should be a deep mahogany-brown. If it looks pale, leave it 30 more seconds before flipping. Sear the second side 2–2.5 min without touching it.</div>
+      <div class="tip"><strong>Why shorter?</strong> The steak is now internally warmer from the first side's cook, so heat penetrates faster. The second side will cook quicker than the first.</div>
+      <button class="timer-btn" onclick="startTimer(this,2.5,'Sear Side 2')">⏱ Start 2.5 min timer</button>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">6</div>
+    <div>
+      <div class="step-title">Sear the edges — 30–45 sec each</div>
+      <div class="step-body">Grip the steak with tongs and hold it upright on its fat cap (the thick white edge). Press it firmly into the pan for 30–45 seconds. Repeat for the other edges. This renders the fat cap and builds crust on surfaces that would otherwise go uncooked.</div>
+      <button class="timer-btn" onclick="startTimer(this,0.67,'Edge Sear')">⏱ Start 40 sec timer</button>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">7</div>
+    <div>
+      <div class="step-title">Butter baste — 60–90 seconds</div>
+      <div class="step-body">Reduce heat to medium. Add 2 tbsp butter, garlic cloves, and herb sprigs to the pan. As butter melts and foams, tilt the pan toward you so butter pools near the handle. Use the metal spoon to scoop the foaming butter and pour it continuously over the top surface of the steak. Don't stop. Keep basting the entire time — especially any pale spots. The butter will turn golden and smell nutty (beurre noisette).</div>
+      <div class="tip"><strong>What's happening:</strong> The hot butter, now infused with garlic and herb oils, simultaneously cooks the top surface and coats it in aromatic fat. This is the technique that gives steakhouse flavor at home. If butter starts smoking black, reduce heat immediately.</div>
+      <button class="timer-btn" onclick="startTimer(this,1.25,'Butter Baste')">⏱ Start 75 sec timer</button>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">8</div>
+    <div>
+      <div class="step-title">Check temperature — pull at 133–135°F</div>
+      <div class="step-body">Insert thermometer probe from the side into the thickest part of the steak. Tip should be in the dead center — not near the fat cap, not near the bone. Read the temp. <strong>Pull when it reads 133–135°F.</strong> If it's at 125–130°F, continue basting 30–45 more sec and check again. Do not wait for 140°F.</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">9</div>
+    <div>
+      <div class="step-title">Rest — 8 minutes minimum. Non-negotiable.</div>
+      <div class="step-body">Transfer steak to a plate or wooden cutting board. Spoon any pan butter over the top. Lay a piece of foil loosely over it — don't wrap tight. Set a timer for 8 minutes. Walk away. Do not check it, cut it, or poke it. Internal temperature will rise to 140–145°F on its own during this window.</div>
+      <div class="tip"><strong>The science:</strong> During cooking, muscle fibers contract and push fluids toward the center. Resting allows fibers to relax and reabsorb those juices. Cut too early and they flood the cutting board — the steak will be noticeably drier.</div>
+      <button class="timer-btn" onclick="startTimer(this,8,'Rest')">⏱ Start 8 min rest timer</button>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">10</div>
+    <div>
+      <div class="step-title">Verify and finish</div>
+      <div class="step-body">After resting, probe one final time if uncertain. It should read 140–145°F. Sprinkle a small pinch of flaky Maldon salt over the surface. Serve whole at the table, or slice against the grain into ½" strips. Either approach is correct for a ribeye.</div>
+      <div class="tip"><strong>Against the grain</strong> = cut perpendicular to the lines of muscle fiber you can see running across the steak. Cutting this way shortens the fibers and makes each bite perceptibly more tender.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── VEGETABLES & SIDES ─── -->
+<div class="section">
+  <div class="sec-label">🥦 Section 7</div>
+  <h2>Vegetables & Side Components</h2>
+
+  <p>A heavily marbled Prime ribeye is rich and fatty. The best sides contrast that richness — cut through the fat, refresh the palate, or provide textural contrast. Avoid competing flavors; let the steak lead.</p>
+
+  <div class="step">
+    <div class="step-n">A</div>
+    <div>
+      <div class="step-title">Garlic butter mushrooms (stovetop — make first, keep warm)</div>
+      <div class="step-body">Cremini or shiitake mushrooms, halved. Medium-high heat, 1 tbsp butter + 1 tbsp oil. Don't crowd the pan or they'll steam instead of brown. Cook 4–5 min undisturbed, flip, cook another 3 min. Add crushed garlic and thyme the last minute. Season with salt and pepper. <strong>Desired texture:</strong> deep golden-brown exterior, meaty interior. Their natural umami doubles down on the steak's savoriness beautifully.</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">B</div>
+    <div>
+      <div class="step-title">Asparagus (oven-roasted — time to finish with the steak rest)</div>
+      <div class="step-body">Oven at 425°F. Snap off woody ends. Toss with olive oil, salt, pepper. Spread on sheet pan, single layer. Roast 10–12 min until edges begin to char lightly. Finish with lemon juice and optional Parmesan. <strong>Desired texture:</strong> tender but with slight resistance — not limp. The acidity of the lemon cuts directly through ribeye fat and refreshes the palate between bites.</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">C</div>
+    <div>
+      <div class="step-title">Creamed spinach (classic steakhouse — can be made ahead)</div>
+      <div class="step-body">Wilt fresh spinach in a dry pan. In a separate saucepan: sauté minced shallot in butter, add heavy cream, reduce by half, add Parmesan and a pinch of nutmeg, fold in spinach. Season aggressively. <strong>The contrast:</strong> the richness of cream against the steak sounds like doubling up on fat, but the slight bitterness of spinach and the fresh dairy flavor cleanse between bites in a way potatoes cannot.</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">D</div>
+    <div>
+      <div class="step-title">Cooking order if making all three</div>
+      <div class="step-body">Start creamed spinach first (can hold warm). Put asparagus in oven 12 min before steak goes in the pan. Mushrooms in a second pan simultaneously with the steak sear, or done first and kept warm in a low oven (200°F). Plate everything as steak rests.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── FINISHING ─── -->
+<div class="section">
+  <div class="sec-label">🔄 Section 8</div>
+  <h2>Finishing Steps</h2>
+
+  <div class="step">
+    <div class="step-n">1</div>
+    <div>
+      <div class="step-title">Pan sauce (optional, restaurant-level — uses the fond)</div>
+      <div class="step-body">After removing the steak to rest, the pan has brown bits stuck to the bottom — this is called <strong>fond</strong>, and it's pure concentrated beef flavor. With the pan still over medium heat, pour in 2 oz cognac or red wine and scrape the bottom with a wooden spoon. The liquid will immediately deglaze all those bits. Reduce 30 sec, add 2 tbsp butter, swirl until glossy. Pour directly over the steak at plating. This is a professional finishing technique called <em>au jus</em> in its simplest form.</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">2</div>
+    <div>
+      <div class="step-title">Compound butter (make ahead, keep in freezer)</div>
+      <div class="step-body">Mix 4 tbsp softened butter with 1 tsp minced fresh thyme, ½ tsp garlic powder, ½ tsp lemon zest, salt. Roll in plastic wrap into a log, freeze. Slice a round and place it on the hot rested steak at plating — it melts slowly across the surface. This is the signature move of French brasseries and American chophouses alike.</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">3</div>
+    <div>
+      <div class="step-title">Final seasoning</div>
+      <div class="step-body">After resting, taste a small piece before adding anything. If it needs more salt, use flaky Maldon — never kosher at this stage. Do not add more pepper. A few drops of good-quality red wine vinegar or a squeeze of lemon can brighten an overly rich steak without masking the beef flavor.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── SERVING ─── -->
+<div class="section">
+  <div class="sec-label">🍽️ Section 9</div>
+  <h2>Serving Suggestions</h2>
+
+  <p>A 1.4 lb ribeye feeds 1–2 people depending on appetite. Plate on a warmed plate — a cold plate drops steak temperature fast.</p>
+
+  <div class="gear-grid">
+    <div class="gear-card">
+      <div class="gear-name">Starches</div>
+      <div class="gear-why">Garlic mashed potatoes (classic, soak up pan sauce), salt-crusted baked potato (steakhouse staple), or pommes frites. Avoid anything too sweet or acidic.</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-name">Vegetables</div>
+      <div class="gear-why">Asparagus with lemon, garlic butter mushrooms, roasted Brussels sprouts, or creamed spinach. All cut through the fat effectively.</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-name">Salads</div>
+      <div class="gear-why">Wedge salad with blue cheese dressing (classic steakhouse palate cleanser) or arugula with shaved Parmesan and lemon vinaigrette — the pepper bite of arugula is ideal against a fatty ribeye.</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-name">Sauces</div>
+      <div class="gear-why">Compound butter (on top), pan sauce/au jus (poured around), or horseradish cream (alongside). Avoid heavy cream sauces — the steak already provides richness.</div>
+    </div>
+  </div>
+
+  <div class="tip" style="margin-top:16px;"><strong>Steakhouse tip:</strong> Warm your plates in a 200°F oven for 5 minutes before plating. A cold plate is one of the most common reasons a perfectly cooked steak arrives at the table lukewarm.</div>
+</div>
+
+<!-- ─── TIMELINE ─── -->
+<div class="section">
+  <div class="sec-label">⏱️ Section 10</div>
+  <h2>Complete Timeline</h2>
+
+  <div class="tl">
+    <div class="tl-item"><div class="tl-time">T – 45 min</div><div class="tl-desc">Pat steak dry. Apply dry brine. Place on rack, uncovered.</div></div>
+    <div class="tl-divider"></div>
+    <div class="tl-item"><div class="tl-time">T – 10 min</div><div class="tl-desc">Stage all ingredients. Pre-salt plates in warm oven. Start asparagus if making.</div></div>
+    <div class="tl-divider"></div>
+    <div class="tl-item"><div class="tl-time">T – 5 min</div><div class="tl-desc">Preheat cast iron on high. Pat steak dry one more time. Add pepper.</div></div>
+    <div class="tl-divider"></div>
+    <div class="tl-item"><div class="tl-time">T = 0</div><div class="tl-desc">Add oil to pan. Sear Side 1 — 3 minutes.</div></div>
+    <div class="tl-divider"></div>
+    <div class="tl-item"><div class="tl-time">T + 3 min</div><div class="tl-desc">Flip. Sear Side 2 — 2.5 minutes.</div></div>
+    <div class="tl-divider"></div>
+    <div class="tl-item"><div class="tl-time">T + 5.5 min</div><div class="tl-desc">Sear edges — 30–45 sec each side.</div></div>
+    <div class="tl-divider"></div>
+    <div class="tl-item"><div class="tl-time">T + 7 min</div><div class="tl-desc">Reduce heat. Add butter, garlic, herbs. Baste 60–90 sec continuously.</div></div>
+    <div class="tl-divider"></div>
+    <div class="tl-item"><div class="tl-time">T + 8.5 min</div><div class="tl-desc">Probe temp. Pull at 133–135°F. Transfer to plate with pan juices poured over.</div></div>
+    <div class="tl-divider"></div>
+    <div class="tl-item"><div class="tl-time">T + 9 min</div><div class="tl-desc">Tent loosely with foil. Rest 8 minutes. Plate vegetables during this window.</div></div>
+    <div class="tl-divider"></div>
+    <div class="tl-item"><div class="tl-time">T + 17 min</div><div class="tl-desc">Remove foil. Final probe (should read 140–145°F). Flaky salt. Serve immediately.</div></div>
+  </div>
+
+  <div class="gear-grid" style="margin-top:20px;">
+    <div class="gear-card"><div class="gear-name">Active prep</div><div class="gear-why">5 min</div></div>
+    <div class="gear-card"><div class="gear-name">Dry brine</div><div class="gear-why">45 min (hands-off)</div></div>
+    <div class="gear-card"><div class="gear-name">Active cook time</div><div class="gear-why">9–10 min</div></div>
+    <div class="gear-card"><div class="gear-name">Rest</div><div class="gear-why">8 min</div></div>
+  </div>
+</div>
+
+<!-- ─── COMMON MISTAKES ─── -->
+<div class="section">
+  <div class="sec-label">🚫 Section 11</div>
+  <h2>Common Mistakes</h2>
+
+  <div class="mistake">
+    <div class="m-title">Pan not hot enough</div>
+    <div class="m-row"><span class="m-label">Cause:</span><span class="m-text">Putting the steak in before the pan reaches temperature, or skipping the preheat stage.</span></div>
+    <div class="m-row"><span class="m-label">Result:</span><span class="m-text">Gray, steamed exterior with no crust. Pale, unappetizing surface.</span></div>
+    <div class="m-row"><span class="m-label">Fix:</span><span class="m-text">Preheat a full 4–5 minutes until smoking. When oil hits the pan, it should smoke immediately.</span></div>
+  </div>
+
+  <div class="mistake">
+    <div class="m-title">Wet surface before searing</div>
+    <div class="m-row"><span class="m-label">Cause:</span><span class="m-text">Not drying the steak, or rinsing it before cooking.</span></div>
+    <div class="m-row"><span class="m-label">Result:</span><span class="m-text">Surface moisture converts to steam, dropping pan temperature and preventing browning.</span></div>
+    <div class="m-row"><span class="m-label">Fix:</span><span class="m-text">Pat completely dry twice — once before salting, once right before the pan.</span></div>
+  </div>
+
+  <div class="mistake">
+    <div class="m-title">Pulling at the target temperature (140°F)</div>
+    <div class="m-row"><span class="m-label">Cause:</span><span class="m-text">Not accounting for carryover cooking during the rest period.</span></div>
+    <div class="m-row"><span class="m-label">Result:</span><span class="m-text">Steak overshoots to ~148–152°F — medium-well. Less pink, drier.</span></div>
+    <div class="m-row"><span class="m-label">Fix:</span><span class="m-text">Always pull at 133–135°F. Carryover adds 7–10°F over the 8-min rest. This is non-negotiable.</span></div>
+  </div>
+
+  <div class="mistake">
+    <div class="m-title">Moving the steak constantly</div>
+    <div class="m-row"><span class="m-label">Cause:</span><span class="m-text">Checking, poking, or repositioning the steak during the sear.</span></div>
+    <div class="m-row"><span class="m-label">Result:</span><span class="m-text">Heat dissipates, surface doesn't build a continuous crust, meat sticks inconsistently.</span></div>
+    <div class="m-row"><span class="m-label">Fix:</span><span class="m-text">Put it down, set the timer, don't touch it. The steak releases naturally from the pan when it's ready.</span></div>
+  </div>
+
+  <div class="mistake">
+    <div class="m-title">Cutting immediately after cooking</div>
+    <div class="m-row"><span class="m-label">Cause:</span><span class="m-text">Impatience — the steak smells incredible.</span></div>
+    <div class="m-row"><span class="m-label">Result:</span><span class="m-text">Juice floods the cutting board instead of staying in the meat. Noticeably drier first bites.</span></div>
+    <div class="m-row"><span class="m-label">Fix:</span><span class="m-text">8 minutes minimum. Use the time to plate vegetables and sauce.</span></div>
+  </div>
+
+  <div class="mistake">
+    <div class="m-title">Using butter for the initial sear</div>
+    <div class="m-row"><span class="m-label">Cause:</span><span class="m-text">Adding butter to the pan at the sear stage because it sounds good.</span></div>
+    <div class="m-row"><span class="m-label">Result:</span><span class="m-text">Butter burns at ~300°F — produces black, acrid smoke and burnt flavor on the crust.</span></div>
+    <div class="m-row"><span class="m-label">Fix:</span><span class="m-text">Sear in avocado/grapeseed oil only. Add butter only after reducing heat for the baste.</span></div>
+  </div>
+
+  <div class="mistake">
+    <div class="m-title">Not using a thermometer</div>
+    <div class="m-row"><span class="m-label">Cause:</span><span class="m-text">Relying on the finger/touch test or visual cues alone.</span></div>
+    <div class="m-row"><span class="m-label">Result:</span><span class="m-text">Inconsistent doneness. Medium vs. medium well is a 5°F window — touch testing is ±15°F.</span></div>
+    <div class="m-row"><span class="m-label">Fix:</span><span class="m-text">Buy a ThermoWorks ThermoPop. $35. Use it every time, no exceptions.</span></div>
+  </div>
+</div>
+
+<!-- ─── QUICK MEMORY ─── -->
+<div class="section">
+  <div class="sec-label">🧠 Section 12</div>
+  <h2>Quick Memory Version</h2>
+
+  <div class="memory-box">
+    <p>
+      Salt 45 min out, pat bone dry, pepper before pan →
+      <em>screaming-hot cast iron 4 min</em> →
+      sear 3 min / flip 2.5 min / edges 40 sec →
+      reduce heat, <em>butter + garlic + thyme</em>, baste 75 sec →
+      pull at <em>133–135°F</em> →
+      rest 8 min loose foil →
+      flaky salt, serve immediately.
+    </p>
+  </div>
+
+  <div class="ok-box" style="margin-top:16px;">
+    <div class="box-title">✓ Signs you nailed it</div>
+    <ul class="plain">
+      <li>Deep mahogany crust — no gray patches, slight char at the very edges</li>
+      <li>Warm pink center throughout when cut — not red, not gray-brown</li>
+      <li>Juices stay in the meat; only a small pool on the plate, not flooding the board</li>
+      <li>Rendered, silky fat cap — golden, translucent, not white and waxy</li>
+      <li>Nutty brown butter aroma with garlic and herb notes in the crust</li>
+    </ul>
+  </div>
+</div>
+
+</div><!-- /wrap -->
+
+<div class="footer">
+  <span>🔥</span>
+  You have everything you need. Go cook it.
+</div>
+
+<script>
+function startTimer(btn, minutes, label) {
+  if (btn.dataset.tid) {
+    clearInterval(parseInt(btn.dataset.tid));
+    delete btn.dataset.tid;
+    btn.classList.remove('running','done');
+    btn.textContent = `⏱ Start ${label} timer`;
+    return;
+  }
+  let s = Math.round(minutes * 60);
+  btn.classList.add('running');
+  const fmt = n => `${Math.floor(n/60)}:${(n%60).toString().padStart(2,'0')}`;
+  btn.textContent = `${label} — ${fmt(s)}`;
+  const id = setInterval(() => {
+    s--;
+    if (s <= 0) {
+      clearInterval(id); delete btn.dataset.tid;
+      btn.classList.remove('running'); btn.classList.add('done');
+      btn.textContent = `${label} — Done ✓`;
+      if ('Notification' in window && Notification.permission === 'granted')
+        new Notification(`Timer done: ${label}`);
+    } else {
+      btn.textContent = `${label} — ${fmt(s)}`;
+    }
+  }, 1000);
+  btn.dataset.tid = id;
+}
+if ('Notification' in window && Notification.permission === 'default')
+  Notification.requestPermission();
+</script>
+</body>
+</html>
