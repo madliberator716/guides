@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notification Guide — All Apps</title>
+<style>
+  :root{
+    --bg:#000000;
+    --card:#1c1c1e;
+    --card-elevated:#2c2c2e;
+    --sep:#38383a;
+    --label:#ffffff;
+    --label2:#98989d;
+    --label3:#636366;
+
+    --c-financial:#32d74b;
+    --c-shopping:#ff9f0a;
+    --c-food:#ff6482;
+    --c-betting:#ff453a;
+    --c-social:#0a84ff;
+    --c-news:#64d2ff;
+    --c-entertainment:#bf5af2;
+    --c-medical:#5e5ce6;
+    --c-travel:#40c8e0;
+    --c-smarthome:#ffd60a;
+    --c-fitness:#ff375f;
+    --c-system:#8e8e93;
+  }
+
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html{background:var(--bg);}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--label);
+    font-family:-apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:80px;
+  }
+
+  .status-fake{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:10px 22px 4px;
+    font-size:14px; font-weight:600; color:var(--label);
+  }
+
+  header.hero{
+    padding:8px 20px 18px;
+  }
+  header.hero h1{
+    font-size:34px;
+    font-weight:800;
+    letter-spacing:-0.02em;
+    margin:6px 0 4px;
+  }
+  header.hero p.sub{
+    color:var(--label2);
+    font-size:15px;
+    line-height:1.45;
+    margin:0;
+    max-width:640px;
+  }
+  header.hero .meta{
+    margin-top:14px;
+    font-size:12px;
+    color:var(--label3);
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    font-weight:600;
+  }
+
+  /* search */
+  .search-wrap{
+    position:sticky; top:0; z-index:50;
+    background:rgba(0,0,0,0.86);
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+    padding:10px 20px 12px;
+    border-bottom:1px solid var(--sep);
+  }
+  .search-box{
+    background:var(--card-elevated);
+    border-radius:11px;
+    padding:9px 14px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .search-box svg{flex:none; opacity:0.55;}
+  .search-box input{
+    background:transparent;
+    border:none;
+    outline:none;
+    color:var(--label);
+    font-size:16px;
+    width:100%;
+    font-family:inherit;
+  }
+  .search-box input::placeholder{color:var(--label3);}
+  #search-count{
+    font-size:11px; color:var(--label3); margin-top:8px; padding-left:4px;
+    display:none;
+  }
+
+  /* nav pills */
+  nav.jump{
+    display:flex; gap:8px; overflow-x:auto;
+    padding:14px 20px 4px;
+    scrollbar-width:none;
+  }
+  nav.jump::-webkit-scrollbar{display:none;}
+  nav.jump a{
+    flex:none;
+    font-size:12.5px; font-weight:600;
+    color:var(--label);
+    background:var(--card-elevated);
+    border-radius:20px;
+    padding:7px 13px;
+    text-decoration:none;
+    white-space:nowrap;
+    border:1px solid var(--sep);
+  }
+  nav.jump a .dot{
+    display:inline-block; width:7px; height:7px; border-radius:50%;
+    margin-right:6px; position:relative; top:-1px;
+  }
+
+  section.block{padding:26px 20px 6px;}
+  .section-label{
+    font-size:13px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:0.05em;
+    color:var(--label2);
+    padding:0 4px 8px;
+  }
+
+  /* legend */
+  .legend{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:10px;
+    background:var(--card);
+    border-radius:14px;
+    padding:14px 16px;
+    border:1px solid var(--sep);
+  }
+  .legend-row{display:flex; align-items:flex-start; gap:10px;}
+  .legend-chip{
+    flex:none;
+    font-size:10.5px; font-weight:800;
+    letter-spacing:0.03em;
+    padding:4px 8px;
+    border-radius:6px;
+    white-space:nowrap;
+    margin-top:1px;
+  }
+  .legend-text{font-size:13.5px; color:var(--label2); line-height:1.4;}
+  .legend-text b{color:var(--label); font-weight:600;}
+
+  .chip-allow{background:rgba(50,215,75,0.16); color:#32d74b;}
+  .chip-ts{background:rgba(10,132,255,0.16); color:#0a84ff;}
+  .chip-summary{background:rgba(255,214,10,0.16); color:#ffd60a;}
+  .chip-badge{background:rgba(142,142,147,0.2); color:#c7c7cc;}
+  .chip-off{background:rgba(255,69,58,0.16); color:#ff453a;}
+
+  /* how-to card */
+  .howto{
+    background:var(--card);
+    border-radius:14px;
+    padding:4px 0;
+    border:1px solid var(--sep);
+    overflow:hidden;
+  }
+  .howto-step{
+    display:flex; gap:12px;
+    padding:13px 16px;
+    border-bottom:1px solid var(--sep);
+  }
+  .howto-step:last-child{border-bottom:none;}
+  .howto-num{
+    flex:none; width:24px; height:24px; border-radius:7px;
+    background:var(--c-system); opacity:0.9;
+    color:#000; font-weight:800; font-size:13px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .howto-body b{display:block; font-size:14.5px; margin-bottom:2px;}
+  .howto-body span{font-size:13.5px; color:var(--label2); line-height:1.42;}
+
+  /* category card */
+  .cat{
+    background:var(--card);
+    border-radius:14px;
+    border:1px solid var(--sep);
+    margin-bottom:16px;
+    overflow:hidden;
+    scroll-margin-top:140px;
+  }
+  .cat-head{
+    display:flex; align-items:center; gap:10px;
+    padding:15px 16px 12px;
+  }
+  .cat-swatch{
+    flex:none; width:34px; height:34px; border-radius:9px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:16px;
+  }
+  .cat-title{font-size:17px; font-weight:700;}
+  .cat-count{font-size:12.5px; color:var(--label3); font-weight:500;}
+
+  .cat-reco{
+    margin:0 16px 12px;
+    padding:10px 12px;
+    border-radius:10px;
+    background:var(--card-elevated);
+    font-size:13.5px; line-height:1.48; color:var(--label2);
+  }
+  .cat-reco b{color:var(--label);}
+
+  .cat-exceptions{margin:0 16px 12px; padding:0;}
+  .exc-row{
+    display:flex; gap:8px; padding:6px 0;
+    font-size:13px; line-height:1.4;
+  }
+  .exc-row .exc-app{flex:none; color:var(--label); font-weight:600; min-width:118px;}
+  .exc-row .exc-note{color:var(--label2);}
+
+  .chips{
+    display:flex; flex-wrap:wrap; gap:7px;
+    padding:0 16px 16px;
+  }
+  .app-chip{
+    font-size:12.5px;
+    padding:5px 10px;
+    border-radius:8px;
+    background:rgba(255,255,255,0.06);
+    color:var(--label);
+    border:1px solid rgba(255,255,255,0.05);
+  }
+  .app-chip.dim{opacity:0.5;}
+
+  footer{
+    padding:28px 20px 40px;
+    color:var(--label3);
+    font-size:12px;
+    line-height:1.6;
+    text-align:center;
+  }
+
+  .hide{display:none !important;}
+
+  @media (min-width:720px){
+    header.hero h1{font-size:40px;}
+    .chips{gap:8px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="meta">Notification Reference · iPhone</div>
+  <h1>Quiet Your Phone</h1>
+  <p class="sub">Every app in your library, sorted into 12 groups by what kind of notification it actually sends — with a recommended setting for each group and the specific apps that should be handled differently.</p>
+</header>
+
+<div class="search-wrap">
+  <div class="search-box">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="#98989d" stroke-width="2"/><path d="M21 21l-4.35-4.35" stroke="#98989d" stroke-width="2" stroke-linecap="round"/></svg>
+    <input type="text" id="search" placeholder="Find an app…" oninput="filterApps()">
+  </div>
+  <div id="search-count"></div>
+</div>
+
+<nav class="jump">
+  <a href="#howto"><span class="dot" style="background:var(--c-system)"></span>How-to</a>
+  <a href="#financial"><span class="dot" style="background:var(--c-financial)"></span>Money</a>
+  <a href="#shopping"><span class="dot" style="background:var(--c-shopping)"></span>Shopping</a>
+  <a href="#food"><span class="dot" style="background:var(--c-food)"></span>Food</a>
+  <a href="#betting"><span class="dot" style="background:var(--c-betting)"></span>Betting/Sports</a>
+  <a href="#social"><span class="dot" style="background:var(--c-social)"></span>Social</a>
+  <a href="#news"><span class="dot" style="background:var(--c-news)"></span>News</a>
+  <a href="#entertainment"><span class="dot" style="background:var(--c-entertainment)"></span>Streaming</a>
+  <a href="#medical"><span class="dot" style="background:var(--c-medical)"></span>Work/Medical</a>
+  <a href="#travel"><span class="dot" style="background:var(--c-travel)"></span>Travel</a>
+  <a href="#smarthome"><span class="dot" style="background:var(--c-smarthome)"></span>Home/Utilities</a>
+  <a href="#fitness"><span class="dot" style="background:var(--c-fitness)"></span>Fitness</a>
+  <a href="#system"><span class="dot" style="background:var(--c-system)"></span>System</a>
+</nav>
+
+<!-- LEGEND -->
+<section class="block">
+  <div class="section-label">The 5 settings you're choosing between</div>
+  <div class="legend">
+    <div class="legend-row"><span class="legend-chip chip-allow">ALLOW</span><span class="legend-text"><b>Full notifications.</b> Lock Screen + Banners + Sounds all on. Reserve this for things that need your attention in real time.</span></div>
+    <div class="legend-row"><span class="legend-chip chip-ts">TIME-SENSITIVE</span><span class="legend-text"><b>Interrupts Focus modes, no sound by default.</b> Good for order updates, DMs, and anything with a short shelf life.</span></div>
+    <div class="legend-row"><span class="legend-chip chip-summary">SCHEDULED SUMMARY</span><span class="legend-text"><b>Batched once or twice a day.</b> iOS collects these and delivers them together instead of one at a time — great for anything you want to see but not be interrupted by.</span></div>
+    <div class="legend-row"><span class="legend-chip chip-badge">BADGE ONLY</span><span class="legend-text"><b>Just the red number on the icon.</b> No lock screen, no banner, no sound. You check it when you open the app.</span></div>
+    <div class="legend-row"><span class="legend-chip chip-off">OFF</span><span class="legend-text"><b>Don't Allow Notifications.</b> The app can't push anything to you at all.</span></div>
+  </div>
+</section>
+
+<!-- HOW TO -->
+<section class="block" id="howto">
+  <div class="section-label">How to actually change it</div>
+  <div class="howto">
+    <div class="howto-step">
+      <div class="howto-num">1</div>
+      <div class="howto-body"><b>Settings → Notifications → [app name]</b><span>Every app's toggle lives in the same place. Alphabetical list, tap in.</span></div>
+    </div>
+    <div class="howto-step">
+      <div class="howto-num">2</div>
+      <div class="howto-body"><b>For SCHEDULED SUMMARY apps</b><span>Leave "Allow Notifications" on, then turn off "Immediate Delivery" and tap "Scheduled Summary" to add the app. Set summary times under Settings → Notifications → Scheduled Summary (try 8am and 6pm).</span></div>
+    </div>
+    <div class="howto-step">
+      <div class="howto-num">3</div>
+      <div class="howto-body"><b>For BADGE ONLY apps</b><span>Turn off Lock Screen, Notification Center, Banners, and Sounds — leave "Badges" checked. The app still shows a red dot but never interrupts you.</span></div>
+    </div>
+    <div class="howto-step">
+      <div class="howto-num">4</div>
+      <div class="howto-body"><b>Faster bulk pass</b><span>Settings → Notifications shows a small preview under every app name ("Banners, Sounds" etc.) so you can spot the loud ones without opening each one individually.</span></div>
+    </div>
+    <div class="howto-step">
+      <div class="howto-num">5</div>
+      <div class="howto-body"><b>Even faster: Focus mode</b><span>Rather than reconfiguring 200+ apps individually, set up a Work or Sleep Focus (Settings → Focus) that only allows your Medical/Work group + Phone/Messages through. Everything else queues silently until you check it.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- FINANCIAL -->
+<section class="block cat" id="financial">
+  <div class="cat-head">
+    <div class="cat-swatch" style="background:rgba(50,215,75,0.16)">💳</div>
+    <div><div class="cat-title" style="color:var(--c-financial)">Money &amp; Banking</div><div class="cat-count">29 apps</div></div>
+  </div>
+  <div class="cat-reco"><b>Default: ALLOW</b> for fraud/security alerts — these are the one category where a delayed notification can cost you money. Kill marketing push inside each app's own settings (most banks separate "Alerts" from "Offers"), but leave the account-alert toggle itself on.</div>
+  <div class="cat-exceptions">
+    <div class="exc-row"><span class="exc-app">Affirm / Afterpay / Klarna</span><span class="exc-note">Keep payment-due reminders ALLOW — missing one has a real cost. Turn off anything promotional.</span></div>
+    <div class="exc-row"><span class="exc-app">Coinbase / Robinhood</span><span class="exc-note">Price-alert push gets loud fast — SCHEDULED SUMMARY unless you're actively trading that day.</span></div>
+  </div>
+  <div class="chips">
+    <span class="app-chip">Chase</span><span class="app-chip">Amex</span><span class="app-chip">Wells Fargo</span><span class="app-chip">Fidelity</span><span class="app-chip">SoFi</span><span class="app-chip">Prosperity</span><span class="app-chip">Park Avenue</span><span class="app-chip">Pioneer Mutual FCU</span><span class="app-chip">Nationwide</span><span class="app-chip">Progressive</span><span class="app-chip">NetBenefits</span><span class="app-chip">Credit Karma</span><span class="app-chip">CardPointers</span><span class="app-chip">LifeLock Identity</span><span class="app-chip">YNAB</span><span class="app-chip">The Living Balance Sheet</span><span class="app-chip">Splitwise</span><span class="app-chip">Stocks</span><span class="app-chip">Wallet</span><span class="app-chip">PayPal</span><span class="app-chip">Venmo</span><span class="app-chip">Cash App</span><span class="app-chip">Coinbase</span><span class="app-chip">CoinStats</span><span class="app-chip">Robinhood</span><span class="app-chip">Base App</span><span class="app-chip">Phantom</span><span class="app-chip">Affirm</span><span class="app-chip">Afterpay</span><span class="app-chip">Klarna</span><span class="app-chip">HYPE</span><span class="app-chip">Lightning Bolt</span>
+  </div>
+</section>
+
+<!-- SHOPPING -->
+<section class="block cat" id="shopping">
+  <div class="cat-head">
+    <div class="cat-swatch" style="background:rgba(255,159,10,0.16)">🛍️</div>
+    <div><div class="cat-title" style="color:var(--c-shopping)">Shopping &amp; Retail</div><div class="cat-count">24 apps</div></div>
+  </div>
+  <div class="cat-reco"><b>Default: BADGE ONLY.</b> This group exists to sell you things — deal alerts, price drops, "items in your cart." Order-and-shipping updates are the only part worth keeping, and most retailers file those under a separate "Order Updates" toggle inside their own app settings, not the iOS one.</div>
+  <div class="cat-exceptions">
+    <div class="exc-row"><span class="exc-app">GOAT / StockX / SNKRS / Supreme / PALACE / Nice Kicks / CONFIRMED</span><span class="exc-note">Drop-alert apps by design — the whole point is FOMO. OFF unless you're actively chasing a release; turn to ALLOW only during a known drop window.</span></div>
+    <div class="exc-row"><span class="exc-app">Parcel</span><span class="exc-note">Flip this one — TIME-SENSITIVE. It exists purely for "package arriving today" alerts.</span></div>
+  </div>
+  <div class="chips">
+    <span class="app-chip">Amazon</span><span class="app-chip">Best Buy</span><span class="app-chip">Costco</span><span class="app-chip">Sam's Club</span><span class="app-chip">Target</span><span class="app-chip">Walmart</span><span class="app-chip">eBay</span><span class="app-chip">GOAT</span><span class="app-chip">StockX</span><span class="app-chip">Nike</span><span class="app-chip">SNKRS</span><span class="app-chip">Nice Kicks</span><span class="app-chip">Supreme</span><span class="app-chip">PALACE</span><span class="app-chip">CONFIRMED</span><span class="app-chip">Duffy</span><span class="app-chip">PetSmart</span><span class="app-chip">Petlibro</span><span class="app-chip">StubHub</span><span class="app-chip">Chrono24</span><span class="app-chip">Booksy</span><span class="app-chip">Yelp</span><span class="app-chip">Parcel</span><span class="app-chip">Parades</span>
+  </div>
+</section>
+
+<!-- FOOD -->
+<section class="block cat" id="food">
+  <div class="cat-head">
+    <div class="cat-swatch" style="background:rgba(255,100,130,0.16)">🍔</div>
+    <div><div class="cat-title" style="color:var(--c-food)">Food, Dining &amp; Delivery</div><div class="cat-count">15 apps</div></div>
+  </div>
+  <div class="cat-reco"><b>Default: TIME-SENSITIVE.</b> "Your driver is 3 minutes away" is genuinely useful in the moment. Turn off the separate promo/deal push each of these sends — DoorDash and Uber Eats in particular split "order status" from "% off today only" as different toggles in-app.</div>
+  <div class="chips">
+    <span class="app-chip">DoorDash</span><span class="app-chip">Uber Eats</span><span class="app-chip">InstaEat</span><span class="app-chip">OpenTable</span><span class="app-chip">Resy</span><span class="app-chip">Toast Local</span><span class="app-chip">Domino's</span><span class="app-chip">Papa Johns</span><span class="app-chip">Zalat Pizza</span><span class="app-chip">Wingstop</span><span class="app-chip">Chick-fil-A</span><span class="app-chip">Chipotle</span><span class="app-chip">Taco Bell</span><span class="app-chip">Starbucks</span><span class="app-chip">GasBuddy</span>
+  </div>
+</section>
+
+<!-- BETTING / SPORTS -->
+<section class="block cat" id="betting">
+  <div class="cat-head">
+    <div class="cat-swatch" style="background:rgba(255,69,58,0.16)">🏈</div>
+    <div><div class="cat-title" style="color:var(--c-betting)">Sports Betting, Fantasy &amp; Scores</div><div class="cat-count">10 apps</div></div>
+  </div>
+  <div class="cat-reco"><b>Default: OFF</b> for the sportsbooks, <b>SCHEDULED SUMMARY</b> for scores/fantasy. DraftKings, FanDuel, and Caesars are built around push-driven urgency ("odds boosted," "your bet is close") — there's no version of that notification that's doing you a favor. Turn it off entirely rather than trying to tune it.</div>
+  <div class="chips">
+    <span class="app-chip">DraftKings</span><span class="app-chip">FanDuel</span><span class="app-chip">Caesars Sportsbook</span><span class="app-chip">Fantasy (Yahoo)</span><span class="app-chip">Sports (Yahoo)</span><span class="app-chip">Sports</span><span class="app-chip">Sports Alerts</span><span class="app-chip">ESPN</span><span class="app-chip">Bleacher Report</span><span class="app-chip">18Birdies</span>
+  </div>
+</section>
+
+<!-- SOCIAL -->
+<section class="block cat" id="social">
+  <div class="cat-head">
+    <div class="cat-swatch" style="background:rgba(10,132,255,0.16)">💬</div>
+    <div><div class="cat-title" style="color:var(--c-social)">Social &amp; Messaging</div><div class="cat-count">13 apps</div></div>
+  </div>
+  <div class="cat-reco"><b>Split this one in half.</b> Direct messages and calls are TIME-SENSITIVE — a real person is trying to reach you. Everything algorithmic (likes, "X posted," suggested content, streaks) is BADGE ONLY or OFF. Almost every app in this list lets you separate the two inside its own notification settings — do that instead of an all-or-nothing toggle.</div>
+  <div class="cat-exceptions">
+    <div class="exc-row"><span class="exc-app">Messages / WhatsApp / Telegram / GroupMe / FaceTime</span><span class="exc-note">ALLOW — these are how actual people reach you, not algorithmic engagement bait.</span></div>
+    <div class="exc-row"><span class="exc-app">Instagram / Snapchat / TikTok / X / Bluesky / Reddit</span><span class="exc-note">In-app, turn off everything except Direct Messages. iOS-side, BADGE ONLY covers what's left.</span></div>
+  </div>
+  <div class="chips">
+    <span class="app-chip">Messages</span><span class="app-chip">WhatsApp</span><span class="app-chip">Telegram</span><span class="app-chip">GroupMe</span><span class="app-chip">FaceTime</span><span class="app-chip">Discord</span><span class="app-chip">Instagram</span><span class="app-chip">Snapchat</span><span class="app-chip">TikTok</span><span class="app-chip">X</span><span class="app-chip">Bluesky</span><span class="app-chip">LinkedIn</span><span class="app-chip">Reddit</span><span class="app-chip">Reeel</span>
+  </div>
+</section>
+
+<!-- NEWS -->
+<section class="block cat" id="news">
+  <div class="cat-head">
+    <div class="cat-swatch" style="background:rgba(100,210,255,0.16)">📰</div>
+    <div><div class="cat-title" style="color:var(--c-news)">News &amp; Reading</div><div class="cat-count">6 apps</div></div>
+  </div>
+  <div class="cat-reco"><b>Default: SCHEDULED SUMMARY.</b> Breaking news is the one exception worth keeping ALLOW — most news apps let you specifically flag "Breaking News" as its own alert type separate from general headlines.</div>
+  <div class="chips">
+    <span class="app-chip">News</span><span class="app-chip">Guardian</span><span class="app-chip">Politics</span><span class="app-chip">Complex</span><span class="app-chip">Genius</span><span class="app-chip">NYT Games</span>
+  </div>
+</section>
+
+<!-- ENTERTAINMENT -->
+<section class="block cat" id="entertainment">
+  <div class="cat-head">
+    <div class="cat-swatch" style="background:rgba(191,90,242,0.16)">🎬</div>
+    <div><div class="cat-title" style="color:var(--c-entertainment)">Streaming &amp; Entertainment</div><div class="cat-count">21 apps</div></div>
+  </div>
+  <div class="cat-reco"><b>Default: OFF.</b> "New season available" isn't time-sensitive by definition — you'll see it next time you open the app looking for something to watch. If you want to know when a specific show drops, most of these let you follow/notify per-title inside the app instead of a blanket toggle.</div>
+  <div class="chips">
+    <span class="app-chip">Netflix</span><span class="app-chip">Disney+</span><span class="app-chip">Paramount+</span><span class="app-chip">Peacock</span><span class="app-chip">Prime Video</span><span class="app-chip">YouTube</span><span class="app-chip">YouTube Music</span><span class="app-chip">YouTube TV</span><span class="app-chip">Spotify</span><span class="app-chip">SoundCloud</span><span class="app-chip">Plex</span><span class="app-chip">Stremio</span><span class="app-chip">Nuvio</span><span class="app-chip">Infuse</span><span class="app-chip">Roon</span><span class="app-chip">Trakt</span><span class="app-chip">TV</span><span class="app-chip">AMC Theatres</span><span class="app-chip">GIPHY</span><span class="app-chip">iSTB</span><span class="app-chip">Sudoku</span>
+  </div>
+</section>
+
+<!-- MEDICAL / WORK -->
+<section class="block cat" id="medical">
+  <div class="cat-head">
+    <div class="cat-swatch" style="background:rgba(94,92,230,0.16)">🩺</div>
+    <div><div class="cat-title" style="color:var(--c-medical)">Work &amp; Medical</div><div class="cat-count">39 apps</div></div>
+  </div>
+  <div class="cat-reco"><b>Default: ALLOW.</b> This is the one group where I'd push back on limiting much — these are the apps that page you, tell you a resident swapped shifts, or carry a patient result. The instinct with a "reduce notifications" guide is to turn things down everywhere; here, the cost of missing one is a lot higher than the annoyance of getting it.</div>
+  <div class="cat-exceptions">
+    <div class="exc-row"><span class="exc-app">Doximity / MyChart / MyOchsner / Inside Ochsner / Resident Center / New Innov</span><span class="exc-note">Keep full ALLOW — scheduling, paging, and patient-facing tools.</span></div>
+    <div class="exc-row"><span class="exc-app">AMBOSS / MKSAP / UpToDate / Pyrls / OpenEvidence / IBCC</span><span class="exc-note">These rarely push anything unprompted — safe to leave ALLOW, won't generate noise.</span></div>
+    <div class="exc-row"><span class="exc-app">Teams / Outlook / SharePoint / Workday</span><span class="exc-note">If these get noisy outside work hours, SCHEDULED SUMMARY in the evening is a reasonable trim — everything else in this group, leave alone.</span></div>
+  </div>
+  <div class="chips">
+    <span class="app-chip">Doximity</span><span class="app-chip">MyChart</span><span class="app-chip">MyOchsner</span><span class="app-chip">Inside Ochsner</span><span class="app-chip">Resident Center</span><span class="app-chip">New Innov</span><span class="app-chip">DeepScribe</span><span class="app-chip">Haiku</span><span class="app-chip">ClinicalKeyAI</span><span class="app-chip">UpToDate</span><span class="app-chip">UpToDate AI</span><span class="app-chip">AMBOSS QBank</span><span class="app-chip">AMBOSS Knowledge</span><span class="app-chip">MDCalc</span><span class="app-chip">Pyrls</span><span class="app-chip">OpenEvidence</span><span class="app-chip">IBCC</span><span class="app-chip">Guideline Central</span><span class="app-chip">MKSAP 19</span><span class="app-chip">USPSTF</span><span class="app-chip">Vaccine Schedules</span><span class="app-chip">AHA ACLS</span><span class="app-chip">On-The-Go</span><span class="app-chip">Anki</span><span class="app-chip">SonoSim</span><span class="app-chip">Thalamus</span><span class="app-chip">Eko</span><span class="app-chip">Digital Med</span><span class="app-chip">BOARDS</span><span class="app-chip">BrowZine</span><span class="app-chip">PingID</span><span class="app-chip">Duo Mobile</span><span class="app-chip">Workday</span><span class="app-chip">Keka</span><span class="app-chip">Teams</span><span class="app-chip">M365 Copilot</span><span class="app-chip">SharePoint</span><span class="app-chip">Outlook</span><span class="app-chip">Proton Mail</span><span class="app-chip">Spark</span>
+  </div>
+</section>
+
+<!-- TRAVEL -->
+<section class="block cat" id="travel">
+  <div class="cat-head">
+    <div class="cat-swatch" style="background:rgba(64,200,224,0.16)">✈️</div>
+    <div><div class="cat-title" style="color:var(--c-travel)">Travel &amp; Transit</div><div class="cat-count">24 apps</div></div>
+  </div>
+  <div class="cat-reco"><b>Default: TIME-SENSITIVE.</b> Gate changes and rideshare status are exactly what this setting is for — useful when it happens, invisible the other 355 days a year. Nothing here needs sound or full lock-screen takeover except a genuine flight delay.</div>
+  <div class="cat-exceptions">
+    <div class="exc-row"><span class="exc-app">Flighty</span><span class="exc-note">Worth ALLOW with sound if you fly often — this is a delay/gate-change specialist app, not a general airline app.</span></div>
+    <div class="exc-row"><span class="exc-app">Hyatt / Marriott / IHG</span><span class="exc-note">Mostly promotional outside an active stay — BADGE ONLY unless you have a trip booked.</span></div>
+  </div>
+  <div class="chips">
+    <span class="app-chip">Flighty</span><span class="app-chip">Fly Delta</span><span class="app-chip">American</span><span class="app-chip">United</span><span class="app-chip">Southwest</span><span class="app-chip">Uber</span><span class="app-chip">Lyft</span><span class="app-chip">Waymo</span><span class="app-chip">Robotaxi</span><span class="app-chip">Jump</span><span class="app-chip">Hyatt</span><span class="app-chip">Marriott</span><span class="app-chip">IHG</span><span class="app-chip">Priority Pass+</span><span class="app-chip">Global Entry</span><span class="app-chip">CLEAR</span><span class="app-chip">MyTSA</span><span class="app-chip">LA Wallet</span><span class="app-chip">Le Pass</span><span class="app-chip">TxT</span><span class="app-chip">Parking</span><span class="app-chip">ParkMobile</span><span class="app-chip">AAA Auto Club</span><span class="app-chip">Flush</span><span class="app-chip">Maps</span><span class="app-chip">Google Maps</span><span class="app-chip">Tesla</span><span class="app-chip">myChevrolet</span><span class="app-chip">My BMW</span><span class="app-chip">Lexus</span>
+  </div>
+</section>
+
+<!-- SMART HOME -->
+<section class="block cat" id="smarthome">
+  <div class="cat-head">
+    <div class="cat-swatch" style="background:rgba(255,214,10,0.16)">🏠</div>
+    <div><div class="cat-title" style="color:var(--c-smarthome)">Home, Bills &amp; Utilities</div><div class="cat-count">26 apps</div></div>
+  </div>
+  <div class="cat-reco"><b>Default: ALLOW for safety/security, BADGE ONLY for everything else.</b> A leak sensor or camera-motion alert should stay loud. Firmware-update nags and "your bill is ready" reminders (unless autopay isn't set up) can go quiet.</div>
+  <div class="cat-exceptions">
+    <div class="exc-row"><span class="exc-app">Smart911 / Whisker (Litter-Robot)</span><span class="exc-note">Keep ALLOW — safety and device-jam alerts respectively, both worth an interruption.</span></div>
+    <div class="exc-row"><span class="exc-app">Direct Energy / Entergy / CenterPoint / AT&T / My Verizon</span><span class="exc-note">BADGE ONLY if autopay is on. ALLOW if it's not — a missed bill alert has a real cost.</span></div>
+  </div>
+  <div class="chips">
+    <span class="app-chip">Google Home</span><span class="app-chip">Home</span><span class="app-chip">SmartThings</span><span class="app-chip">Hue</span><span class="app-chip">Kasa</span><span class="app-chip">LG ThinQ</span><span class="app-chip">VeSync</span><span class="app-chip">Deco</span><span class="app-chip">iComfort Wi-Fi</span><span class="app-chip">Smart Home Manager</span><span class="app-chip">Smart911</span><span class="app-chip">Alula</span><span class="app-chip">Whisker</span><span class="app-chip">MyDyson</span><span class="app-chip">HP</span><span class="app-chip">Bose</span><span class="app-chip">Bose Connect</span><span class="app-chip">Samsung Sound</span><span class="app-chip">Sound Connect</span><span class="app-chip">Tether</span><span class="app-chip">Nespresso</span><span class="app-chip">Nespresso Smart</span><span class="app-chip">Weather</span><span class="app-chip">Direct Energy</span><span class="app-chip">Entergy</span><span class="app-chip">CenterPoint Energy</span><span class="app-chip">AT&T</span><span class="app-chip">My Verizon</span>
+  </div>
+</section>
+
+<!-- FITNESS -->
+<section class="block cat" id="fitness">
+  <div class="cat-head">
+    <div class="cat-swatch" style="background:rgba(255,55,95,0.16)">🏃</div>
+    <div><div class="cat-title" style="color:var(--c-fitness)">Fitness &amp; Health Tracking</div><div class="cat-count">7 apps</div></div>
+  </div>
+  <div class="cat-reco"><b>Default: your call.</b> Streak and goal nudges are the rare case where the notification is the product — if it keeps you consistent, ALLOW is legitimate. If it's turned into guilt-ping noise, drop to SCHEDULED SUMMARY. Nothing here is urgent either way.</div>
+  <div class="chips">
+    <span class="app-chip">WHOOP</span><span class="app-chip">Oura</span><span class="app-chip">Peloton</span><span class="app-chip">Health</span><span class="app-chip">Sonicare</span><span class="app-chip">FITT Lab</span><span class="app-chip">Fit Profile</span><span class="app-chip">Personify Health</span><span class="app-chip">PerkSpot</span>
+  </div>
+</section>
+
+<!-- SYSTEM -->
+<section class="block cat" id="system">
+  <div class="cat-head">
+    <div class="cat-swatch" style="background:rgba(142,142,147,0.18)">⚙️</div>
+    <div><div class="cat-title" style="color:var(--c-system)">System &amp; Utility — leave alone</div><div class="cat-count">48 apps</div></div>
+  </div>
+  <div class="cat-reco">These either don't send push notifications at all (Calculator, Camera, Files) or their notifications only fire when you're actively using a feature you turned on (Find My alerts, Reminders you set). Nothing to change here — going through these individually is wasted effort.</div>
+  <div class="cat-exceptions">
+    <div class="exc-row"><span class="exc-app">Calendar / Reminders</span><span class="exc-note">Worth double-checking these are ALLOW — easy to accidentally silence your own schedule.</span></div>
+    <div class="exc-row"><span class="exc-app">Find My</span><span class="exc-note">Keep ALLOW — this is the one that tells you if a family member's location sharing changed or a device went offline.</span></div>
+  </div>
+  <div class="chips">
+    <span class="app-chip dim">Calculator</span><span class="app-chip dim">Calendar</span><span class="app-chip dim">Camera</span><span class="app-chip dim">Clock</span><span class="app-chip dim">Compass</span><span class="app-chip dim">Contacts</span><span class="app-chip dim">Files</span><span class="app-chip dim">Find My</span><span class="app-chip dim">Magnifier</span><span class="app-chip dim">Measure</span><span class="app-chip dim">Notes</span><span class="app-chip dim">Passwords</span><span class="app-chip dim">Phone</span><span class="app-chip dim">Photos</span><span class="app-chip dim">Reminders</span><span class="app-chip dim">Settings</span><span class="app-chip dim">Voice Memos</span><span class="app-chip dim">Shortcuts</span><span class="app-chip dim">Tips</span><span class="app-chip dim">To Do</span><span class="app-chip dim">Support</span><span class="app-chip dim">App Store</span><span class="app-chip dim">Apple Store</span><span class="app-chip dim">iTunes Store</span><span class="app-chip dim">Safari</span><span class="app-chip dim">Chrome</span><span class="app-chip dim">Translate</span><span class="app-chip dim">Google Translate</span><span class="app-chip dim">Google</span><span class="app-chip dim">VLC</span><span class="app-chip dim">MediaInfo</span><span class="app-chip dim">Tautulli</span><span class="app-chip dim">SongShift</span><span class="app-chip dim">Superwhisper</span><span class="app-chip dim">Speedtest</span><span class="app-chip dim">Surfshark</span><span class="app-chip dim">Mullvad VPN</span><span class="app-chip dim">Tailscale</span><span class="app-chip dim">Wipr</span><span class="app-chip dim">GitHub</span><span class="app-chip dim">TestFlight</span><span class="app-chip dim">Notability</span><span class="app-chip dim">Books</span><span class="app-chip dim">Journal</span><span class="app-chip dim">Games</span><span class="app-chip dim">Guides</span><span class="app-chip dim">Preview</span><span class="app-chip dim">Read</span><span class="app-chip dim">Cryptomator</span><span class="app-chip dim">ChatGPT</span><span class="app-chip dim">Claude</span><span class="app-chip dim">Gemini</span><span class="app-chip dim">Zoom</span><span class="app-chip dim">Podcasts</span><span class="app-chip dim">Shazam</span><span class="app-chip dim">SHIELD TV</span><span class="app-chip dim">PS App</span><span class="app-chip dim">PS Remote Play</span><span class="app-chip dim">XBOX</span><span class="app-chip dim">Microphone</span><span class="app-chip dim">Medical</span><span class="app-chip dim">MedImpact</span><span class="app-chip dim">Docs</span><span class="app-chip dim">Sheets</span><span class="app-chip dim">Slides</span><span class="app-chip dim">Excel</span><span class="app-chip dim">PowerPoint</span><span class="app-chip dim">Word</span><span class="app-chip dim">Drive</span><span class="app-chip dim">OneDrive</span><span class="app-chip dim">OneNote</span>
+  </div>
+</section>
+
+<footer>
+  Built from your App Library screen recording · 260+ apps sorted into 12 groups<br>
+  Everything is grouped by notification behavior, not app category — a few apps landed in a group you might not expect for that reason.
+</footer>
+
+<script>
+function filterApps(){
+  const q = document.getElementById('search').value.trim().toLowerCase();
+  const chips = document.querySelectorAll('.app-chip');
+  const cats = document.querySelectorAll('.cat');
+  const countEl = document.getElementById('search-count');
+
+  if(q === ''){
+    chips.forEach(c => c.classList.remove('hide'));
+    cats.forEach(c => c.classList.remove('hide'));
+    countEl.style.display = 'none';
+    return;
+  }
+
+  let matches = 0;
+  cats.forEach(cat => {
+    const catChips = cat.querySelectorAll('.app-chip');
+    let catHasMatch = false;
+    catChips.forEach(chip => {
+      const text = chip.textContent.toLowerCase();
+      if(text.includes(q)){
+        chip.classList.remove('hide');
+        catHasMatch = true;
+        matches++;
+      } else {
+        chip.classList.add('hide');
+      }
+    });
+    if(catHasMatch){
+      cat.classList.remove('hide');
+    } else {
+      cat.classList.add('hide');
+    }
+  });
+
+  countEl.style.display = 'block';
+  countEl.textContent = matches + (matches === 1 ? ' match' : ' matches');
+}
+</script>
+
+</body>
+</html>
