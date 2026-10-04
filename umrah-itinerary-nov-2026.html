@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Umrah — 7 Nights, November 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Alegreya+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0E2019;
+  --paper:#EAEDE6;
+  --card:#F6F8F3;
+  --rawdah:#3B6B54;
+  --brass:#A8823F;
+  --maroon:#7C3541;
+  --rule:#C8CEC2;
+  --muted:#5A6B62;
+  --display:"Amiri",Georgia,serif;
+  --body:"Alegreya Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+
+*{box-sizing:border-box;}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--body);font-size:17px;line-height:1.62;font-weight:400;
+}
+.wrap{max-width:760px;margin:0 auto;padding:0 22px 90px;}
+
+/* ---------- hero ---------- */
+.hero{background:var(--ink);color:#E9EFE9;padding:64px 22px 52px;border-bottom:3px solid var(--brass);}
+.hero-inner{max-width:760px;margin:0 auto;}
+.eyebrow{font-size:12px;letter-spacing:.22em;text-transform:uppercase;font-weight:500;color:var(--brass);margin:0 0 26px;}
+.talbiyah{font-family:var(--display);font-size:clamp(30px,7.2vw,46px);line-height:1.75;direction:rtl;color:#F2F6F0;margin:0 0 18px;font-weight:400;}
+.translit{font-style:italic;font-size:15px;color:#9FB3A6;margin:0 0 4px;line-height:1.5;}
+.gloss{font-size:15px;color:#9FB3A6;margin:0 0 34px;line-height:1.5;}
+.hero h1{font-family:var(--display);font-size:clamp(30px,6vw,40px);font-weight:700;line-height:1.2;margin:0 0 14px;color:#fff;}
+.hero-meta{font-size:15px;color:#A8BDB0;margin:0;border-top:1px solid rgba(168,130,63,.35);padding-top:16px;}
+.hero-meta b{color:#E9EFE9;font-weight:500;}
+
+/* ---------- structure ---------- */
+h2{font-family:var(--display);font-size:27px;font-weight:700;line-height:1.25;margin:64px 0 6px;padding-top:26px;border-top:1px solid var(--rule);}
+h2 .ar{font-size:20px;color:var(--brass);font-weight:400;margin-inline-start:10px;}
+.dek{color:var(--muted);font-size:16px;margin:0 0 26px;max-width:58ch;}
+h3{font-family:var(--body);font-size:13px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--rawdah);margin:34px 0 10px;}
+p{margin:0 0 14px;}
+a{color:var(--rawdah);text-decoration-thickness:1px;text-underline-offset:2px;}
+ul{margin:0 0 16px;padding-inline-start:20px;}
+li{margin-bottom:8px;}
+strong{font-weight:700;}
+.ar-inline{font-family:var(--display);font-size:1.08em;}
+
+/* ---------- contents ---------- */
+.toc{background:var(--card);border:1px solid var(--rule);padding:20px 24px;margin:36px 0 0;}
+.toc p{font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--muted);margin:0 0 10px;}
+.toc ol{margin:0;padding-inline-start:20px;font-size:16px;}
+.toc li{margin-bottom:5px;}
+
+/* ---------- glance strip ---------- */
+.glance{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);margin:38px 0 0;}
+.glance div{background:var(--card);padding:16px 16px 14px;}
+.glance dt{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:500;margin-bottom:5px;}
+.glance dd{margin:0;font-size:16px;font-weight:500;line-height:1.35;}
+
+/* ---------- spine ---------- */
+.spine{position:relative;margin-top:34px;}
+.spine::before{content:"";position:absolute;left:31px;top:12px;bottom:12px;width:2px;
+  background:linear-gradient(180deg,var(--rawdah) 0%,var(--rawdah) 44%,var(--brass) 50%,var(--ink) 56%,var(--ink) 100%);}
+.day{position:relative;padding-inline-start:74px;margin-bottom:40px;}
+.day-num{position:absolute;left:0;top:0;width:64px;height:64px;display:flex;align-items:center;justify-content:center;
+  border-radius:50%;background:var(--card);border:2px solid var(--rawdah);
+  font-family:var(--display);font-size:26px;font-weight:700;color:var(--rawdah);}
+.day.makkah .day-num{border-color:var(--ink);color:var(--ink);}
+.day-head{padding-top:6px;margin-bottom:16px;}
+.day-city{font-size:11px;letter-spacing:.2em;text-transform:uppercase;font-weight:700;color:var(--rawdah);margin-bottom:3px;}
+.day.makkah .day-city{color:var(--brass);}
+.day-title{font-family:var(--display);font-size:24px;font-weight:700;line-height:1.25;margin:0;}
+.slot{display:grid;grid-template-columns:88px 1fr;gap:18px;padding:13px 0;border-top:1px solid var(--rule);}
+.slot:last-child{border-bottom:1px solid var(--rule);}
+.slot-when{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--muted);padding-top:5px;}
+.slot-what{margin:0;font-size:16px;line-height:1.55;}
+.slot-what em{color:var(--muted);font-style:italic;}
+
+/* miqat break */
+.miqat{position:relative;padding-inline-start:74px;margin:0 0 40px;}
+.miqat::before{content:"";position:absolute;left:19px;top:26px;width:26px;height:26px;border-radius:50%;background:var(--brass);border:4px solid var(--paper);}
+.miqat-box{background:var(--ink);color:#E9EFE9;padding:22px 24px;border-inline-start:3px solid var(--brass);}
+.miqat-box .lbl{font-family:var(--display);font-size:21px;color:var(--brass);margin:0 0 8px;}
+.miqat-box p{margin:0 0 10px;font-size:16px;color:#CBD8CE;line-height:1.55;}
+.miqat-box p:last-child{margin-bottom:0;}
+.miqat-box b{color:#fff;}
+
+/* ---------- cards ---------- */
+.card{background:var(--card);border:1px solid var(--rule);padding:22px 24px;margin:0 0 18px;}
+.card > :first-child{margin-top:0;}
+.card > :last-child{margin-bottom:0;}
+.card h4{font-family:var(--display);font-size:20px;font-weight:700;margin:0 0 8px;}
+.card .sub{font-size:14px;color:var(--muted);margin:-4px 0 12px;}
+.flag{border-inline-start:3px solid var(--maroon);background:#F7F1F0;}
+.flag h4{color:var(--maroon);}
+.note{border-inline-start:3px solid var(--brass);background:#F8F5EC;}
+
+/* explainer */
+.why{border:0;border-inline-start:2px solid var(--rawdah);background:transparent;padding:4px 0 4px 20px;margin:20px 0 22px;}
+.why .tag{font-size:10px;letter-spacing:.2em;text-transform:uppercase;font-weight:700;color:var(--rawdah);display:block;margin-bottom:6px;}
+.why p{font-size:16px;line-height:1.58;margin:0 0 11px;}
+.why p:last-child{margin-bottom:0;}
+
+/* rites */
+ol.rites{list-style:none;counter-reset:r;padding:0;margin:0;}
+ol.rites > li{counter-increment:r;position:relative;padding-inline-start:46px;margin-bottom:30px;}
+ol.rites > li::before{content:counter(r);position:absolute;left:0;top:1px;width:29px;height:29px;border-radius:50%;
+  background:var(--ink);color:var(--brass);font-family:var(--display);font-size:15px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;}
+ol.rites .rite-name{display:block;font-family:var(--display);font-size:20px;font-weight:700;margin-bottom:6px;line-height:1.3;}
+
+/* timeline */
+.when-list{margin:0;padding:0;list-style:none;}
+.when-list li{display:grid;grid-template-columns:118px 1fr;gap:16px;padding:12px 0;border-top:1px solid var(--rule);margin:0;}
+.when-list li:last-child{border-bottom:1px solid var(--rule);}
+.when-list .w{font-size:11px;letter-spacing:.13em;text-transform:uppercase;font-weight:700;color:var(--rawdah);padding-top:4px;}
+.when-list .t{font-size:16px;line-height:1.5;}
+
+/* glossary */
+.gl{margin:0;padding:0;}
+.gl div{display:grid;grid-template-columns:190px 1fr;gap:20px;padding:14px 0;border-top:1px solid var(--rule);}
+.gl div:last-child{border-bottom:1px solid var(--rule);}
+.gl dt{margin:0;}
+.gl .term{font-weight:700;font-size:16px;display:block;line-height:1.3;}
+.gl .arb{font-family:var(--display);font-size:17px;color:var(--brass);display:block;direction:rtl;line-height:1.5;}
+.gl dd{margin:0;font-size:16px;line-height:1.55;}
+
+/* prayers */
+.prayers{margin:0;padding:0;list-style:none;}
+.prayers li{display:grid;grid-template-columns:98px 92px 1fr;gap:14px;padding:11px 0;border-top:1px solid var(--rule);margin:0;align-items:baseline;}
+.prayers li:last-child{border-bottom:1px solid var(--rule);}
+.prayers .nm{font-weight:700;font-size:16px;}
+.prayers .tm{font-size:14px;color:var(--brass);font-weight:500;}
+.prayers .ds{font-size:16px;line-height:1.5;}
+
+.cols{columns:2;column-gap:32px;}
+.cols ul{margin:0;padding-inline-start:19px;}
+.cols li{break-inside:avoid;}
+
+footer{margin-top:70px;padding-top:22px;border-top:1px solid var(--rule);font-size:14px;color:var(--muted);line-height:1.55;}
+
+@media (max-width:560px){
+  body{font-size:16px;}
+  .hero{padding:44px 20px 38px;}
+  .wrap{padding:0 20px 70px;}
+  .spine::before{left:23px;}
+  .day{padding-inline-start:58px;}
+  .day-num{width:48px;height:48px;font-size:21px;}
+  .miqat{padding-inline-start:58px;}
+  .miqat::before{left:13px;top:22px;width:22px;height:22px;}
+  .slot{grid-template-columns:1fr;gap:2px;}
+  .slot-when{padding-top:0;}
+  .when-list li{grid-template-columns:1fr;gap:2px;}
+  .when-list .w{padding-top:0;}
+  .gl div{grid-template-columns:1fr;gap:4px;}
+  .prayers li{grid-template-columns:1fr;gap:1px;}
+  .cols{columns:1;}
+  h2{font-size:24px;margin-top:52px;}
+}
+@media print{
+  body{background:#fff;}
+  .hero{background:#fff;color:#000;border-bottom:2px solid #000;}
+  .hero h1,.talbiyah{color:#000;}
+  .day{break-inside:avoid;}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <p class="eyebrow">First Umrah · November 2026</p>
+    <p class="talbiyah">لَبَّيْكَ اللَّهُمَّ لَبَّيْكَ</p>
+    <p class="translit">Labbayk Allāhumma labbayk, labbayka lā sharīka laka labbayk…</p>
+    <p class="gloss">"Here I am, O Allah, here I am." The words you say the moment you enter the pilgrim state — and keep saying, out loud, until you reach the Kaaba.</p>
+    <h1>Seven nights.<br>Madinah, then Makkah.</h1>
+    <p class="hero-meta"><b>3 nights Madinah</b> · <b>4 nights Makkah</b> · fly into MED, out of JED · written assuming you've never done this before</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+<div class="toc">
+  <p>What's in here</p>
+  <ol>
+    <li><a href="#what">What Umrah actually is</a> — start here</li>
+    <li><a href="#words">The words you'll keep hearing</a></li>
+    <li><a href="#rhythm">How a day works over there</a></li>
+    <li><a href="#shape">Why this trip is shaped this way</a></li>
+    <li><a href="#book">What to book, and when</a></li>
+    <li><a href="#days">The seven days</a></li>
+    <li><a href="#rites">The Umrah itself, step by step</a></li>
+    <li><a href="#ihram">The rules while you're in ihram</a></li>
+    <li><a href="#places">The places, and why they matter</a></li>
+    <li><a href="#noise">Things you'll see that aren't part of it</a></li>
+    <li><a href="#stay">Where to stay</a> · <a href="#practical">Practical</a></li>
+  </ol>
+</div>
+
+<h2 id="what">What Umrah actually is <span class="ar">ما هي العمرة</span></h2>
+<p class="dek">The single most useful thing to understand before you book anything.</p>
+
+<p><b>Umrah is a visit to the Kaaba in Makkah, performed in a specific way.</b> It's often called the "lesser pilgrimage," to distinguish it from Hajj. And here is the fact that surprises almost everyone doing it for the first time:</p>
+
+<div class="card note">
+  <h4>The Umrah itself takes about four hours.</h4>
+  <p>It is four things, in order: <b>enter a state called ihram</b>, <b>walk seven circles around the Kaaba</b>, <b>walk seven times between two hills</b>, and <b>cut some hair</b>. That's the entire rite. There is nothing else you are obliged to do.</p>
+  <p>So a seven-night trip is not seven nights of ritual. It's four hours of ritual on one afternoon, and then a week of praying in two extraordinary mosques, visiting places where things happened, and being somewhere that most Muslims spend a lifetime hoping to reach. The itinerary below is built around that reality.</p>
+</div>
+
+<h3>Umrah is not Hajj</h3>
+<p>People conflate these constantly. They're different obligations.</p>
+<ul>
+  <li><b>Hajj</b> is one of the five pillars of Islam — required once in a lifetime of any Muslim who can physically and financially manage it. It happens on <b>fixed dates</b> in the month of Dhul Hijjah, takes five or six days, involves standing at Arafat and camping at Mina and Muzdalifah, and draws two million people at once. You need a specific Hajj visa. You cannot do it in November.</li>
+  <li><b>Umrah</b> is voluntary and highly rewarded — not one of the five pillars, though a minority of scholars hold it obligatory once. It can be done at almost any time of year, takes an afternoon, and involves only Makkah.</li>
+</ul>
+<p>What you're doing in November 2026 is Umrah. Nothing about Hajj applies to you.</p>
+
+<h3>What the Kaaba is</h3>
+<p>A cube of grey stone, about fifteen metres tall, standing in the middle of an enormous mosque. Muslims hold that <b>Ibrahim (Abraham) and his son Ismail (Ishmael) raised it</b> as the first building on earth dedicated to the worship of one God. It's draped in the <em>kiswah</em> — a black silk cover embroidered with gold Qur'anic calligraphy, replaced every year.</p>
+<p>It is the <b>qibla</b>: the direction every Muslim in the world faces to pray. That's the crucial distinction — it's a <b>direction</b>, a shared point of orientation for a global community, not an object of worship. Nobody prays <em>to</em> it. It's empty inside and pilgrims don't go in.</p>
+
+<div class="why">
+  <span class="tag">Worth internalising</span>
+  <p>Everything you'll do in Makkah is organised around that cube. The mosque was built around it. The circling is around it. Your hotel is priced by its distance from it. And the first time you walk through the gate and see it, most people find it hits considerably harder than they expected. Don't schedule anything for the hour afterwards.</p>
+</div>
+
+<h3>What Madinah has to do with it</h3>
+<p><b>Nothing, technically.</b> Visiting Madinah is not a part of Umrah. There's no ritual there, no ihram, nothing required. It's a separate visit — a <em>ziyarah</em> — that nearly every pilgrim makes because Madinah is the city the Prophet Muhammad ﷺ migrated to, built the first mosque in, established the first Muslim community in, and is buried in.</p>
+<p>You are combining two distinct things into one trip, which is what almost everyone does. It's worth knowing they're separate, because it explains why Madinah has no rules attached and Makkah has many.</p>
+
+<div class="glance">
+  <div><dt>Weather</dt><dd>Makkah 32–34°C day<br>Madinah 29°C day, 17°C night</dd></div>
+  <div><dt>Crowds</dt><dd>Moderate — no Ramadan, no Hajj, no major occasion</dd></div>
+  <div><dt>Currency</dt><dd>Saudi riyal, pegged ≈ 3.75 to the dollar</dd></div>
+  <div><dt>Between cities</dt><dd>Haramain high-speed rail, ~2h20m</dd></div>
+</div>
+
+<h2 id="words">The words you'll keep hearing <span class="ar">المصطلحات</span></h2>
+<p class="dek">Everyone around you will use these constantly and nobody will define them. Here they are once.</p>
+
+<dl class="gl">
+  <div>
+    <dt><span class="term">Ihram</span><span class="arb">إحرام</span></dt>
+    <dd>A <b>state</b>, not a garment — though the two white sheets men wear are also called ihram. You enter it at a boundary point, and while you're in it a set of ordinary permitted things becomes temporarily forbidden. You exit it by cutting your hair.</dd>
+  </div>
+  <div>
+    <dt><span class="term">Miqat</span><span class="arb">ميقات</span></dt>
+    <dd>A boundary station around Makkah. There are five, one for each direction of approach. You cannot cross one heading for Makkah to perform Umrah without already being in ihram. Yours, coming from Madinah, is Dhul Hulayfah.</dd>
+  </div>
+  <div>
+    <dt><span class="term">Talbiyah</span><span class="arb">تلبية</span></dt>
+    <dd>The pilgrim's chant, the phrase in the header above. You start it at the miqat and repeat it until you reach the Kaaba. Hearing thousands of people say it at once is one of the things people remember.</dd>
+  </div>
+  <div>
+    <dt><span class="term">Tawaf</span><span class="arb">طواف</span></dt>
+    <dd>Walking seven circuits around the Kaaba, anticlockwise, with the Kaaba on your left.</dd>
+  </div>
+  <div>
+    <dt><span class="term">Mataf</span><span class="arb">مطاف</span></dt>
+    <dd>The white marble floor immediately around the Kaaba where tawaf happens. When people say "the mataf is packed," this is what they mean.</dd>
+  </div>
+  <div>
+    <dt><span class="term">Sa'i</span><span class="arb">سعي</span></dt>
+    <dd>Walking seven times between two small hills, Safa and Marwa, now enclosed inside the mosque as a long marble corridor.</dd>
+  </div>
+  <div>
+    <dt><span class="term">Halq / Taqsir</span><span class="arb">حلق / تقصير</span></dt>
+    <dd>Shaving the head (halq) or trimming the hair (taqsir). This is what ends the ihram state and completes the Umrah.</dd>
+  </div>
+  <div>
+    <dt><span class="term">Masjid al-Haram</span><span class="arb">المسجد الحرام</span></dt>
+    <dd>The mosque in Makkah built around the Kaaba. The largest in the world; holds well over a million. Usually just "the Haram."</dd>
+  </div>
+  <div>
+    <dt><span class="term">Masjid an-Nabawi</span><span class="arb">المسجد النبوي</span></dt>
+    <dd>The Prophet's Mosque, in Madinah. The green dome you've seen in photographs is over his grave, which sits inside the mosque.</dd>
+  </div>
+  <div>
+    <dt><span class="term">Rawdah</span><span class="arb">الروضة</span></dt>
+    <dd>A small green-carpeted area inside Masjid an-Nabawi that the Prophet ﷺ called "a garden from the gardens of Paradise." Roughly 22 × 15 metres, and millions want in — hence the permit system.</dd>
+  </div>
+  <div>
+    <dt><span class="term">Zamzam</span><span class="arb">زمزم</span></dt>
+    <dd>A well beneath Masjid al-Haram that has run continuously for thousands of years. The water is free everywhere in both mosques.</dd>
+  </div>
+  <div>
+    <dt><span class="term">Ziyarah</span><span class="arb">زيارة</span></dt>
+    <dd>A visit — to Madinah, or to historical sites. Optional, not a rite.</dd>
+  </div>
+  <div>
+    <dt><span class="term">Nusuk</span><span class="arb">نسك</span></dt>
+    <dd>The Saudi government app. Nothing spiritual — it's the booking system for your Umrah permit and your Rawdah slot. You cannot get into either mosque's restricted parts without it.</dd>
+  </div>
+  <div>
+    <dt><span class="term">ﷺ</span><span class="arb">صلى الله عليه وسلم</span></dt>
+    <dd>The symbol written after the Prophet's name, meaning "peace and blessings be upon him." You'll see it everywhere.</dd>
+  </div>
+</dl>
+
+<h2 id="rhythm">How a day works over there <span class="ar">اليوم</span></h2>
+<p class="dek">This itinerary is built on prayer times rather than clock times, which needs explaining if you're not used to living that way.</p>
+
+<p>Muslims pray five times a day at times set by the sun, so the times shift daily and by location. In Makkah and Madinah this isn't a private matter — <b>the entire city stops.</b> Shops shutter for twenty to thirty minutes at each prayer, taxis pull over, restaurants stop serving. The mosques begin filling half an hour beforehand and empty slowly afterwards. Planning a day by clock time there simply doesn't work.</p>
+
+<ul class="prayers">
+  <li><span class="nm">Fajr</span><span class="tm">~5:15 am</span><span class="ds">Before sunrise. The best hour in both mosques — cool, full but not crushed, and the whole day feels different if you make it.</span></li>
+  <li><span class="nm">Dhuhr</span><span class="tm">~12:10 pm</span><span class="ds">Just past midday. The hottest part of the day; most people go back and sleep afterwards.</span></li>
+  <li><span class="nm">Asr</span><span class="tm">~3:20 pm</span><span class="ds">Mid-afternoon. The day starts moving again after this.</span></li>
+  <li><span class="nm">Maghrib</span><span class="tm">~5:45 pm</span><span class="ds">Immediately at sunset, and the window is short. The city is at its busiest.</span></li>
+  <li><span class="nm">Isha</span><span class="tm">~7:10 pm</span><span class="ds">Night. Many people stay in the mosque between Maghrib and Isha rather than leaving and coming back.</span></li>
+</ul>
+<p><em>Approximate for Makkah in November — use a prayer-time app for the real numbers each day.</em></p>
+
+<div class="why">
+  <span class="tag">The practical shape</span>
+  <p>Your usable free time is <b>after Fajr until about 10am</b>, and <b>after Asr until Maghrib</b>. Midday is for sleeping — not out of laziness but because the marble is genuinely too hot and you'll be getting up before 5am every day. Every ziyarah trip in this itinerary sits in one of those two windows.</p>
+</div>
+
+<h2 id="shape">Why this trip is shaped this way <span class="ar">لماذا</span></h2>
+<p class="dek">Three decisions drive everything else. Here's the reasoning, so you can change them knowingly.</p>
+
+<div class="card">
+  <h4>Madinah first</h4>
+  <p class="sub">Fly into Madinah (MED), out of Jeddah (JED) — an open-jaw ticket</p>
+  <p>Madinah is the gentler city: smaller, cooler, calmer, and — because it isn't part of the Umrah — there's no ihram to manage on arrival. You land, sleep off the flight, and ease in. By the time you reach Makkah you're rested, acclimatised, and you've already learned how a mosque holding half a million people actually works.</p>
+  <p>It also solves the hardest logistical problem. Remember that you must be in ihram before you cross the miqat boundary. Coming from Madinah, your miqat is <b>Dhul Hulayfah</b> — an actual mosque ten minutes outside the city, with showers and changing rooms, where you can do this calmly. Flying into Jeddah instead means the boundary is crossed <em>in the air</em>, so you'd be changing into two unstitched sheets in an aircraft lavatory somewhere over the Red Sea. People do it. It's not the way to start.</p>
+  <p><em>The counter-argument:</em> some prefer Makkah first, so that if illness or a delay derails the trip, the Umrah is already done. If either of you is travelling with a health concern that makes that a real risk, flip the order — everything below still works in reverse.</p>
+</div>
+
+<div class="card">
+  <h4>3 nights Madinah / 4 nights Makkah</h4>
+  <p>Madinah's programme is finite: the mosque, the Rawdah, Quba, Uhud. Three nights covers it without padding. Makkah rewards time — the Haram <em>is</em> the trip, and you'll want unhurried days there once the Umrah itself is behind you. Four nights also gives you a spare day if the Umrah takes longer than expected, which for first-timers it usually does, or if it has to be postponed (see the note on her cycle further down — this is a real and common planning issue).</p>
+</div>
+
+<div class="card">
+  <h4>Splurge in Makkah, not Madinah</h4>
+  <p>Rooms beside Masjid an-Nabawi are genuinely affordable — you can be a four-minute walk from the courtyard on a mid-range budget. Makkah is where proximity costs real money, and where it matters most: you'll walk to the Haram five times a day in 33°C heat, and the difference between a 5-minute covered walk and a 20-minute shuttle is the difference between praying there five times and praying there twice.</p>
+  <p><b>Spend the money on distance, not on a Kaaba view.</b> View rooms carry a large premium, and you'll be inside the mosque for most of the hours you'd otherwise spend looking at it.</p>
+</div>
+
+<h2 id="book">What to book, and when <span class="ar">التحضير</span></h2>
+<p class="dek">Two of these have hard deadlines that catch first-timers out: the vaccine and the Rawdah slot. Everything else is flexible.</p>
+
+<ul class="when-list">
+  <li><span class="w">Now</span><span class="t"><b>Flights.</b> Open-jaw: into Madinah, out of Jeddah. Saudia, Emirates, Qatar and Turkish all route there; a Jeddah return has far more options than a Madinah one.</span></li>
+  <li><span class="w">4–5 months out</span><span class="t"><b>Hotels.</b> They must be licensed and documented on a Saudi platform called <b>Nusuk Masar</b> — since June 2025 an unlicensed booking can block your visa outright. Book through Nusuk itself, a licensed agent, or a major international chain that handles the registration for you.</span></li>
+  <li><span class="w">8 weeks out</span><span class="t"><b>Meningococcal ACWY vaccine.</b> Mandatory for both of you — Saudi Arabia requires it of all pilgrims because of the crowding — and it must be given <b>at least 10 days before arrival</b>. Keep the certificate on your phone and on paper.</span></li>
+  <li><span class="w">6 weeks out</span><span class="t"><b>Saudi tourist e-visa</b> at visa.visitsaudi.com. Umrah is an approved purpose on the ordinary tourist visa, so you don't need a special pilgrimage visa. Roughly SAR 535 including mandatory health insurance; valid a year, multiple entry, 90 days per stay. Often approved in minutes.</span></li>
+  <li><span class="w">4 weeks out</span><span class="t"><b>Haramain train tickets</b> for the Madinah–Makkah leg. Booking opens roughly four to five weeks ahead at sar.hhr.sa or in the HHR Train app. Economy SAR 150–200; business SAR 250–300 and worth it when you're wearing two sheets.</span></li>
+  <li><span class="w">10 days out</span><span class="t"><b>Nusuk app — the one that bites.</b> Register with passport and visa number, then book two separate things: an <b>Umrah permit</b> (your timed entry to Masjid al-Haram) and a <b>Rawdah permit</b> (your slot in Madinah). Rawdah slots release about 7–10 days ahead and vanish in seconds. Set an alarm. Book each of yours separately — men's and women's are different services with different hours.</span></li>
+  <li><span class="w">1 week out</span><span class="t"><b>eSIM</b> (STC, Mobily or Zain). You need working data at the mosque gates to load a QR permit. Download Nusuk, HHR Train, Careem, and a prayer-time app.</span></li>
+</ul>
+
+<div class="card flag">
+  <h4>The Rawdah permit is not optional and not recoverable</h4>
+  <p>No permit, no entry — security scans the QR code at the gate and there are no walk-ins, no agent workarounds, no talking your way in. You may be limited to <b>one visit per year</b>, so a missed slot can cost you the whole trip's chance. Screenshot the QR code as a backup; the mobile signal near the mosque is unreliable and the app is slow. There are staffed Nusuk help desks at Madinah airport and in the Nabawi courtyard if something goes wrong.</p>
+</div>
+
+<h2 id="days">The seven days <span class="ar">البرنامج</span></h2>
+<p class="dek">Anchored to prayers rather than clock times, for the reasons above.</p>
+
+<div class="spine">
+
+  <section class="day">
+    <div class="day-num">1</div>
+    <div class="day-head">
+      <div class="day-city">Madinah</div>
+      <p class="day-title">Arrive. Do almost nothing.</p>
+    </div>
+    <div class="slot"><div class="slot-when">On landing</div><p class="slot-what">Clear immigration at MED, pick up an eSIM if you haven't, taxi twenty minutes to the hotel. <em>No ihram needed — Madinah is not a miqat and Umrah hasn't begun.</em></p></div>
+    <div class="slot"><div class="slot-when">Maghrib</div><p class="slot-what">First walk into <b>Masjid an-Nabawi</b>. Enter right foot first, which is the custom for any mosque. Pray two units of prayer as a greeting to the mosque, then go and give <b>salaam to the Prophet ﷺ</b> — you file past his grave inside the mosque, say a brief greeting facing it, and keep moving so others can pass. It takes ninety seconds and the queue does not stop moving.</p></div>
+    <div class="slot"><div class="slot-when">Isha</div><p class="slot-what">Pray, then sit outside under the giant retractable umbrellas. Don't plan anything else tonight. Find which numbered gate is closest to your hotel and photograph the number — every gate looks identical and you will need this every single day.</p></div>
+  </section>
+
+  <section class="day">
+    <div class="day-num">2</div>
+    <div class="day-head">
+      <div class="day-city">Madinah</div>
+      <p class="day-title">The mosque, and the Rawdah</p>
+    </div>
+    <div class="slot"><div class="slot-when">Fajr</div><p class="slot-what">Leave thirty minutes early. Fajr here is the best hour of the day — cool, unhurried, and the mosque is full without being crushed.</p></div>
+    <div class="slot"><div class="slot-when">After Fajr</div><p class="slot-what"><b>Jannat al-Baqi</b>, the cemetery beside the mosque, opens for a window after Fajr — <em>men only.</em> Thousands of the Prophet's Companions and family are buried there in deliberately unmarked graves. Ten quiet minutes of walking. Say a greeting to the dead; don't look for specific graves or touch anything.</p></div>
+    <div class="slot"><div class="slot-when">Your slot</div><p class="slot-what"><b>The Rawdah.</b> Arrive thirty minutes early. Men to <b>Gate 37</b>, women to <b>Gate 25</b>. Have the QR code up and the phone unlocked. You'll get roughly ten minutes standing on the green carpet — pray two units, make whatever du'a you came to make, and don't rush anyone else.</p></div>
+    <div class="slot"><div class="slot-when">Dhuhr → Asr</div><p class="slot-what">Back to the hotel and sleep. You're still on the wrong time zone and the midday sun is punishing. This nap is what makes Fajr possible tomorrow.</p></div>
+    <div class="slot"><div class="slot-when">Maghrib → Isha</div><p class="slot-what">Both prayers in the mosque, staying put during the ninety minutes between them — which is how most people here actually do it. Afterwards, the date souq behind the mosque: <em>ajwa</em>, <em>safawi</em>, <em>sukkari</em>. They'll let you taste before you buy. Do.</p></div>
+  </section>
+
+  <section class="day">
+    <div class="day-num">3</div>
+    <div class="day-head">
+      <div class="day-city">Madinah</div>
+      <p class="day-title">Out to Quba and Uhud</p>
+    </div>
+    <div class="slot"><div class="slot-when">Fajr</div><p class="slot-what">In Nabawi. Then breakfast — and perform your ablutions at the hotel before you leave, specifically for Quba. See below for why.</p></div>
+    <div class="slot"><div class="slot-when">Duha</div><p class="slot-what"><b>Masjid Quba</b>, ten minutes south. The first mosque built in Islam. There's a saying of the Prophet ﷺ that whoever purifies himself at home, comes to Quba and prays two units there, receives the reward of an Umrah — which is why you did wudu at the hotel. Recently expanded and rarely crowded in the morning.</p></div>
+    <div class="slot"><div class="slot-when">Mid-morning</div><p class="slot-what"><b>Uhud</b> — the mountain, the martyrs' cemetery, and Archers' Hill, where a battle in year 3 of Islam turned on a small unit leaving its post. Then <b>Masjid al-Qiblatayn</b>, "the mosque of the two directions," where the direction of prayer changed from Jerusalem to Makkah mid-prayer and the whole congregation turned around where they stood. A Careem driver will do the loop for SAR 120–150; agree the price upfront.</p></div>
+    <div class="slot"><div class="slot-when">Dhuhr</div><p class="slot-what">Back in Nabawi. Afternoon off — this is the last unstructured day before the Umrah.</p></div>
+    <div class="slot"><div class="slot-when">Isha</div><p class="slot-what">Farewell salaam to the Prophet ﷺ. Then pack, and pack deliberately: <b>ihram sheets out and on top</b>, unscented toiletries in the washbag, everything scented sealed away in the suitcase. Tomorrow this matters.</p></div>
+  </section>
+
+  <div class="miqat">
+    <div class="miqat-box">
+      <p class="lbl">الميقات · Dhul Hulayfah</p>
+      <p>This is where the trip changes state. Before you cross this line you are a traveller; after it you are a pilgrim in ihram, and a different set of rules applies until you cut your hair in Makkah.</p>
+      <p><b>The train does not stop at the miqat.</b> It crosses the boundary roughly seven to ten minutes after leaving Madinah, with one announcement that is famously hard to hear. So you handle it on the ground, before boarding: wash and put on the ihram garments at the hotel, taxi ten minutes to <b>Masjid Dhul Hulayfah</b> — everyone calls it <b>Abyar Ali</b> — pray two units there, then make the intention and start the talbiyah. Then straight to the station.</p>
+    </div>
+  </div>
+
+  <section class="day makkah">
+    <div class="day-num">4</div>
+    <div class="day-head">
+      <div class="day-city">Madinah → Makkah</div>
+      <p class="day-title">Ihram, the train, the Umrah</p>
+    </div>
+    <div class="slot"><div class="slot-when">Fajr</div><p class="slot-what">Last prayer in Nabawi. Back to the hotel, check out, leave the bags with the concierge.</p></div>
+    <div class="slot"><div class="slot-when">Before Duha</div><p class="slot-what"><b>Ghusl</b> — a full ritual wash — then into ihram: two white sheets for him, ordinary modest clothing for her. Unscented everything from this moment. Taxi to <b>Abyar Ali</b>, two units of prayer, then the intention and the talbiyah aloud. You are now a pilgrim, and the restrictions are live.</p></div>
+    <div class="slot"><div class="slot-when">Late morning</div><p class="slot-what"><b>Haramain train</b> to Makkah, 2h20m at 300 km/h. Business class is worth the extra SAR 100 in ihram — wider seats, and you can decline the scented hand towel without a scene. Keep the talbiyah going quietly the whole way.</p></div>
+    <div class="slot"><div class="slot-when">On arrival</div><p class="slot-what">Makkah station is ten minutes from the Haram. Drop the bags at the hotel but <b>stay in ihram</b> — no showering with soap, no changing clothes. Eat something light. You have a long few hours ahead and most people badly underestimate them.</p></div>
+    <div class="slot"><div class="slot-when">The Umrah</div><p class="slot-what">Enter through the King Abdulaziz Gate. The first sight of the Kaaba — stop where you are and make du'a; it's a moment people traditionally hold as one where prayers are answered. Then tawaf, sa'i, and cutting the hair. <em>Read the next section before this day, more than once.</em> Allow four hours; first-timers rarely take less.</p></div>
+    <div class="slot"><div class="slot-when">After</div><p class="slot-what">You're out of ihram and every restriction lifts at once. Shower properly, eat properly, sleep properly. You've done it.</p></div>
+  </section>
+
+  <section class="day makkah">
+    <div class="day-num">5</div>
+    <div class="day-head">
+      <div class="day-city">Makkah</div>
+      <p class="day-title">Recover. Learn the building.</p>
+    </div>
+    <div class="slot"><div class="slot-when">Fajr</div><p class="slot-what">In the Haram. Then go back and sleep — yesterday was physically much harder than it felt at the time.</p></div>
+    <div class="slot"><div class="slot-when">Duha</div><p class="slot-what">Deliberately learn the mosque, because it's enormous and confusing. Which numbered gate is yours; where the women's sections are; where the escalators to the first floor and roof are; where the Zamzam coolers stand. Then <b>agree a meeting gate, by number</b>, for when you get separated. You will get separated.</p></div>
+    <div class="slot"><div class="slot-when">Dhuhr → Asr</div><p class="slot-what">Rest through the heat. This is a light day on purpose.</p></div>
+    <div class="slot"><div class="slot-when">After Isha</div><p class="slot-what"><b>A voluntary tawaf, late.</b> Circling the Kaaba isn't only part of Umrah — you can do it any time, as an act of worship on its own, as often as you like. Between roughly 11pm and 2am the mataf thins out and you can walk the ground floor close to the Kaaba instead of being carried along by a crowd. For a lot of people this ends up being the memory of the whole trip.</p></div>
+  </section>
+
+  <section class="day makkah">
+    <div class="day-num">6</div>
+    <div class="day-head">
+      <div class="day-city">Makkah</div>
+      <p class="day-title">Ziyarah, and an optional second Umrah</p>
+    </div>
+    <div class="slot"><div class="slot-when">After Fajr</div><p class="slot-what">The Makkah loop by car. <b>Jabal an-Nur</b>, the mountain holding the cave of Hira where the first revelation came — view it from below unless you're both fit, because the climb is one to two genuinely punishing hours. Then <b>Mina, Muzdalifah and Arafat</b>, the three sites used during Hajj. Driving through an empty Arafat outside the season, seeing the plain where two million people stand for a single afternoon each year, is quietly moving. SAR 200–300 for the circuit.</p></div>
+    <div class="slot"><div class="slot-when">Alternative</div><p class="slot-what">If the heat and crowds have worn you down, skip the tour and go to the <b>Exhibition of the Two Holy Mosques Architecture</b> instead — retired kiswah panels, the original minbar, the historic door of the Kaaba. Air-conditioned, uncrowded, genuinely excellent.</p></div>
+    <div class="slot"><div class="slot-when">Optional</div><p class="slot-what"><b>A second Umrah.</b> Once you're inside Makkah you're past the miqat, so to perform Umrah again you have to leave and re-enter ihram at a nearer boundary — <b>Masjid Aisha</b> at Tan'eem, twenty minutes out. Ihram there, come back, repeat the rites. Many people do this a second time on behalf of a parent or someone who has died. <em>Equally valid to skip it and spend the hours doing tawaf instead; scholars differ on which is better, and there's no wrong answer.</em></p></div>
+    <div class="slot"><div class="slot-when">Maghrib → Isha</div><p class="slot-what">In the Haram. Afterwards, the Abraj al-Bait mall directly underneath the clock tower — prayer mats, attar, gifts, and air conditioning.</p></div>
+  </section>
+
+  <section class="day makkah">
+    <div class="day-num">7</div>
+    <div class="day-head">
+      <div class="day-city">Makkah</div>
+      <p class="day-title">The last full day</p>
+    </div>
+    <div class="slot"><div class="slot-when">Fajr</div><p class="slot-what">In the Haram, and stay there. Don't fill this morning with errands.</p></div>
+    <div class="slot"><div class="slot-when">Duha</div><p class="slot-what">Practicalities. Collect a sealed <b>5-litre Zamzam container</b> from an official distribution point or at the airport — never from a street vendor, where it may not be the real thing. Airlines carry it as checked baggage and most people bring some home for family. Finish the gift shopping.</p></div>
+    <div class="slot"><div class="slot-when">Dhuhr → Asr</div><p class="slot-what">Rest, repack, weigh the bags. Dates and Zamzam are heavier than you think.</p></div>
+    <div class="slot"><div class="slot-when">Maghrib → Isha</div><p class="slot-what">Both prayers in the Haram, staying between them.</p></div>
+    <div class="slot"><div class="slot-when">Late</div><p class="slot-what"><b>A farewell tawaf.</b> For Hajj this is required; for Umrah it isn't, and scholars differ on whether it's even recommended. But ending your trip with seven unhurried circuits at midnight is the right way to leave, whatever the ruling.</p></div>
+  </section>
+
+  <section class="day makkah">
+    <div class="day-num">8</div>
+    <div class="day-head">
+      <div class="day-city">Makkah → Jeddah</div>
+      <p class="day-title">Home</p>
+    </div>
+    <div class="slot"><div class="slot-when">Fajr</div><p class="slot-what">Last prayer in the Haram. A final look at the Kaaba from the gate on your way out.</p></div>
+    <div class="slot"><div class="slot-when">Morning</div><p class="slot-what">Haramain train straight to <b>King Abdulaziz Airport (KAIA)</b> — about an hour, and the station is inside the airport, so it beats the taxi comfortably. <em>Or</em> take an earlier train and spend a long layover in <b>Al-Balad</b>, Jeddah's coral-stone old town, with lunch on the corniche — a soft landing back into ordinary travel.</p></div>
+  </section>
+
+</div>
+
+<div class="card note">
+  <h4>Compressing to seven days flat</h4>
+  <p>If your ticket gives you seven days including the departure day rather than eight, cut <b>Day 5</b> and fold the recovery into the afternoon of Day 4. Don't cut Day 3 — Quba and Uhud are the reason to be in Madinah beyond the mosque. And don't cut the last morning; a rushed departure sours the whole thing.</p>
+</div>
+
+<h2 id="rites">The Umrah itself, step by step <span class="ar">المناسك</span></h2>
+<p class="dek">Read this before Day 4. It's four steps in a fixed order and none of it is complicated. What throws first-timers is the scale, not the ritual — so each step below explains what you do <em>and</em> where it comes from, because knowing why makes it far easier to do calmly.</p>
+
+<ol class="rites">
+  <li>
+    <span class="rite-name">Enter ihram — the state, not just the cloth</span>
+    <p><b>What you do:</b> a full wash (ghusl), then two unstitched white sheets for him — <em>izar</em> wrapped below the waist, <em>rida</em> over the shoulders, no underwear, nothing sewn or fitted, head uncovered, sandals that leave the top of the foot bare. Ordinary modest clothes for her; there is no special garment for women. Two units of prayer at the miqat, then form the intention in your heart and say the talbiyah out loud. Keep repeating it — men audibly, women quietly — until you reach the Kaaba.</p>
+    <div class="why">
+      <span class="tag">Why the sheets</span>
+      <p>The white cloth is deliberately levelling. In ihram a surgeon and a labourer, a Saudi prince and a Bangladeshi factory worker, are visually indistinguishable — you can't tell anyone's nationality, wealth or profession. Everyone arrives at the same place wearing the same two pieces of unsewn cloth, which is also what a Muslim is buried in. That's the entire point, and the restrictions that come with it work the same way: for a few hours you set aside grooming, scent, argument and intimacy, and are stripped down to why you came.</p>
+    </div>
+  </li>
+
+  <li>
+    <span class="rite-name">Tawaf — seven circuits of the Kaaba</span>
+    <p><b>What you do:</b> enter the mosque, and when the Kaaba first comes into view, stop and make du'a. Go to the corner where the <b>Black Stone</b> sits — it's marked by a green light on the opposite wall and a line on the floor. Face it, raise your right hand toward it, say <em>Bismillāh, Allāhu akbar</em>, and start walking with the Kaaba <b>on your left</b>. Seven circuits, ending where you began. Men uncover the right shoulder throughout and walk briskly for the first three circuits; women walk normally.</p>
+    <p>There is <b>no set du'a</b> for the circuits — say whatever you actually want to say, in whatever language. Between the Yemeni corner and the Black Stone, many say the Qur'anic <em>Rabbanā ātinā fid-dunyā ḥasanah…</em></p>
+    <div class="why">
+      <span class="tag">About the Black Stone</span>
+      <p>A dark stone set in a silver frame in one corner of the Kaaba, held to date to Ibrahim's construction. Its job in the rite is simply to mark where each circuit starts and stops. People do fight to reach and kiss it, and you should not join them — it's dangerous in a crowd and pointing at it from a distance is completely valid. The caliph Umar, kissing it, said plainly that he knew it was only a stone that could neither harm nor help anyone, and that he kissed it only because he'd seen the Prophet ﷺ do so. That's the correct attitude to bring.</p>
+    </div>
+    <div class="why">
+      <span class="tag">If the ground floor is impassable</span>
+      <p>The first floor and the roof are entirely valid for tawaf. The circuits are much longer — a lap up there is a serious walk — but the air is calmer, nobody is pushing, and you can see the whole thing. Don't treat the upper levels as second best.</p>
+    </div>
+  </li>
+
+  <li>
+    <span class="rite-name">Two units of prayer, then Zamzam</span>
+    <p><b>What you do:</b> pray two units behind <b>Maqam Ibrahim</b> — a stone in a gold and glass case near the Kaaba, held to bear Ibrahim's footprints from when he built it — if you can get anywhere near it. Anywhere else in the mosque is fine if you can't, and usually you can't. Then drink Zamzam, standing, facing the Kaaba, and make du'a. The coolers are everywhere and the water is free.</p>
+  </li>
+
+  <li>
+    <span class="rite-name">Sa'i — seven trips between Safa and Marwa</span>
+    <p><b>What you do:</b> go up to <b>Safa</b>, face the Kaaba, and begin. Safa to Marwa is one. Marwa back to Safa is two. You finish on the seventh, at Marwa. It's a long enclosed marble corridor, roughly 3.5 km in total, and it takes most people an hour or more. Men jog the short stretch between the two green markers; women walk throughout.</p>
+    <div class="why">
+      <span class="tag">What you're re-enacting</span>
+      <p>Ibrahim left his wife <b>Hajar</b> and their infant son Ismail in a barren valley with almost nothing. When the water ran out and the baby was dying, she climbed one hill to look for help, saw nothing, ran to the other, saw nothing, and did it seven times. When she returned, water was flowing from the ground at the child's feet. That spring is <b>Zamzam</b> — the same well, still running, now under the mosque you're standing in. The valley became Makkah because of that water.</p>
+      <p>So sa'i is a mother's desperate search for water for her child, preserved as an act of worship for four thousand years and performed by millions of people a year. The two hills are still there; the mosque has simply been built around them.</p>
+    </div>
+    <p><em>There are wheelchairs and electric carts available in the corridor. Using one is not a compromise and nobody will think anything of it.</em></p>
+  </li>
+
+  <li>
+    <span class="rite-name">Cut the hair — and it's finished</span>
+    <p><b>What you do:</b> he shaves his head, or trims it evenly all over — shaving carries the greater reward, and plenty of men do it. She gathers her hair and trims a fingertip's length (about 2–3 cm) from the ends, herself or by his hand, in private. Use a licensed barber with a fresh blade rather than a curbside one; shared razors are a real bloodborne-infection risk.</p>
+    <p>That's the whole Umrah. You are out of ihram and every restriction lifts immediately.</p>
+  </li>
+</ol>
+
+<div class="card note">
+  <h4>What's actually required, in case you're worried about getting it wrong</h4>
+  <p>Only four things: <b>ihram entered at the miqat with the intention</b>, <b>tawaf</b>, <b>sa'i</b>, and <b>cutting the hair</b>. Everything else in this guide — Madinah, the Rawdah, Quba, Uhud, extra tawafs, a second Umrah, the farewell tawaf — is optional. If you do those four things in that order, your Umrah is complete, however clumsily it went.</p>
+</div>
+
+<h2 id="ihram">The rules while you're in ihram <span class="ar">المحظورات</span></h2>
+<p class="dek">These apply from the moment you make the intention at Abyar Ali until the moment your hair is cut in Makkah — realistically about eight hours.</p>
+
+<div class="card">
+  <h4>Both of you</h4>
+  <ul>
+    <li>No cutting hair or clipping nails</li>
+    <li><b>No perfume or scented anything.</b> This is the one people break by accident, because scent is in everything. Check your soap, shampoo, deodorant, wet wipes, lip balm and hand sanitiser <em>before you leave Madinah</em>, buy unscented versions at home, and pack them in a separate bag.</li>
+    <li>No marital intimacy, and nothing leading toward it, until after the hair is cut</li>
+    <li>No hunting or killing game, no arguing, no coarse or angry speech</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h4>Him</h4>
+  <ul>
+    <li>Two unstitched sheets only — nothing sewn, nothing fitted, no underwear, no belt with a buckle. A plain money belt is fine and worth having.</li>
+    <li>Head uncovered — no cap, and don't hold an umbrella pressed against your head</li>
+    <li>Sandals leaving the instep and ankle exposed</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h4>Her</h4>
+  <ul>
+    <li>Ordinary modest clothing. There is no ihram garment for women — loose, plain, comfortable, and shoes you can walk five kilometres in. An abaya is customary and easiest, not required.</li>
+    <li>No face veil touching the face and no gloves, on the majority view. A loose drape hung clear of the face when unrelated men are near is widely permitted.</li>
+    <li><b>On menstruation.</b> She can travel, enter ihram, make the intention and say the talbiyah, and do everything except pray and perform tawaf. Since tawaf is a pillar, the Umrah simply waits until she's able. If her cycle is likely to fall across Day 4, that's a conversation to have with her own physician <em>months</em> ahead, not weeks — suppression regimens need lead time to be tolerated, and starting one a few days out generally causes breakthrough bleeding. The alternative is to stay in ihram and complete the Umrah later in the week, which is exactly why four nights in Makkah rather than three is the right call.</li>
+  </ul>
+</div>
+
+<div class="card flag">
+  <h4>If you slip up</h4>
+  <p>Accidental violations — a scented soap, a forgotten cap — generally carry an expiation rather than invalidating anything, and what's owed depends on what happened and whether you knew. Don't spiral about it, and don't take rulings from other pilgrims standing next to you in a queue. There are staffed guidance desks inside both mosques with scholars who answer exactly these questions, in English, all day.</p>
+</div>
+
+<h2 id="places">The places, and why they matter <span class="ar">المواضع</span></h2>
+<p class="dek">Short version of what each site actually is, so you're not standing in front of something significant with no idea why.</p>
+
+<h3>In Madinah</h3>
+<ul>
+  <li><b>Masjid an-Nabawi</b> — the Prophet's Mosque. He built the original in 622 CE when he migrated here from Makkah; his own house adjoined it, and he was buried in that room, which successive expansions eventually enclosed within the mosque. The famous green dome is over it. The mosque now holds hundreds of thousands.</li>
+  <li><b>The Rawdah</b> — the small strip between his grave and the pulpit he preached from, which he described as a garden of Paradise. Green carpet marks it out from the red carpet everywhere else. Physically unremarkable and about the size of a tennis court, which is why access is rationed.</li>
+  <li><b>Jannat al-Baqi</b> — Madinah's main cemetery since the Prophet's lifetime. Thousands of Companions, several of his wives and children. The graves are deliberately unmarked and level, to prevent them becoming shrines. Men only, and only in the windows after Fajr and Asr.</li>
+  <li><b>Masjid Quba</b> — the first mosque in Islam, built the week the Prophet ﷺ arrived. Two units of prayer here, after washing at home, carry the reward of an Umrah.</li>
+  <li><b>Uhud</b> — the mountain outside the city where the second major battle was fought in 625 CE. Seventy Companions died, including the Prophet's uncle Hamza. Archers' Hill, where a unit abandoned its position and turned a victory into a defeat, is one of the most-taught episodes in Islamic history.</li>
+  <li><b>Masjid al-Qiblatayn</b> — "the mosque of the two directions." Muslims originally prayed toward Jerusalem; revelation changed the direction to Makkah, and it arrived <em>during</em> a congregational prayer here, so the whole congregation turned around mid-prayer.</li>
+</ul>
+
+<h3>In Makkah</h3>
+<ul>
+  <li><b>Masjid al-Haram</b> — the mosque around the Kaaba, and the largest in the world. Multiple levels, dozens of numbered gates, and a permanent state of construction.</li>
+  <li><b>Jabal an-Nur</b> — "the mountain of light," holding the cave of Hira where the Prophet ﷺ used to retreat and where the first verses of the Qur'an were revealed to him. The climb is steep and long; there is no ritual attached to it.</li>
+  <li><b>Mina, Muzdalifah, Arafat</b> — the three sites where Hajj takes place. Empty and eerie outside the season. Arafat in particular, a wide plain where two million people stand together for one afternoon a year, is worth driving through even though it has nothing to do with Umrah.</li>
+  <li><b>Masjid Aisha (Tan'eem)</b> — the nearest boundary point for anyone already inside Makkah who wants to enter ihram for another Umrah. Purely functional.</li>
+</ul>
+
+<h2 id="noise">Things you'll see that aren't part of it <span class="ar">تنبيه</span></h2>
+
+<div class="card">
+  <p>You will watch people touch and rub the walls of the Kaaba and the mosque for blessing, pray facing specific pillars, collect earth from Uhud, tie things to railings, or perform sequences nobody can explain. Some of this is cultural, some of it is folk practice, and some of it is actively discouraged. <b>None of it is required and none of it is your problem.</b></p>
+  <p>Do the four steps. Pray. Say what you came to say. Ignore the rest, and don't take instruction from confident strangers — a striking amount of bad information circulates in those crowds.</p>
+  <p>The reverse also applies: <b>nobody is watching you.</b> Everyone there is preoccupied, most people are also doing it for the first time, and the staff have seen every possible mistake. Ask a guidance desk if you're stuck. You will not be the most lost person in the building.</p>
+</div>
+
+<h2 id="stay">Where to stay <span class="ar">السكن</span></h2>
+
+<h3>Madinah — mid-range, and still on the doorstep</h3>
+<ul>
+  <li><b>Anwar Al Madinah Mövenpick</b> — directly on the southern piazza, arguably the best location in the city. Ask for a courtyard-facing room.</li>
+  <li><b>Dar Al Taqwa</b> — a short walk to the main gates, quieter, well run, popular with couples.</li>
+  <li><b>Frontel Al Harithia</b> or <b>Millennium Al Aqeeq</b> — a few minutes further out, noticeably cheaper, still an easy walk for Fajr.</li>
+</ul>
+
+<h3>Makkah — this is where the money goes</h3>
+<ul>
+  <li><b>Address Jabal Omar</b> — the strongest choice for a couple. Resort standard, calm, and a covered five-minute walk down to the King Abdulaziz Gate. Not inside the clock tower, which is a feature.</li>
+  <li><b>Raffles Makkah Palace</b> — all suites, butler service, inside the Abraj al-Bait complex with covered access straight into the Haram. The most sheltered option there is.</li>
+  <li><b>Conrad Makkah</b> or <b>Jabal Omar Hyatt Regency</b> — same Jabal Omar side, a step down in price, still a comfortable walk.</li>
+  <li><b>Fairmont Makkah Clock Royal Tower</b> — only if a Kaaba-view room is genuinely what you want. It's spectacular and it's expensive, and you'll be inside the mosque anyway.</li>
+</ul>
+<p><em>Whatever you book, confirm it's licensed and registered on Nusuk Masar before you pay — the visa depends on it.</em></p>
+
+<h2 id="practical">Practical <span class="ar">تفاصيل</span></h2>
+
+<div class="cols">
+<ul>
+  <li><b>Shoes.</b> You remove them to enter either mosque. Carry a cloth bag rather than using the racks, which fill up and are unnumbered — and always know which gate you came in by.</li>
+  <li><b>Marble burns.</b> Between roughly 10am and 4pm the open courtyards are genuinely too hot for bare feet. Cross in the shade or stay inside.</li>
+  <li><b>Water.</b> Drink far more than feels necessary. Zamzam is free everywhere in both mosques.</li>
+  <li><b>Separate sections.</b> Men and women pray in different areas of both mosques. Agree where to meet afterwards before you go in. During tawaf itself the mataf is mixed.</li>
+  <li><b>Mahram.</b> As her husband you're her mahram, so none of the guardianship rules that complicate solo female pilgrims apply to you.</li>
+  <li><b>Cards</b> work almost everywhere. Carry a couple of hundred riyals for taxis, barbers and the date souq.</li>
+  <li><b>Careem</b> beats Uber locally; both work.</li>
+  <li><b>Crowd illness.</b> Respiratory bugs move fast through the Haram in season — it's common enough to have a nickname. Masks in the mataf, hand hygiene, and pack analgesia, antihistamine, ORS, blister plasters and throat lozenges.</li>
+  <li><b>Feet.</b> You'll do 15–20k steps a day on marble. Break the sandals in at home. Use blister plasters early rather than heroically.</li>
+  <li><b>Phones.</b> Full charge every morning and a power bank each. Your permits, tickets and boarding passes all live there.</li>
+  <li><b>Photos.</b> Fine in the courtyards, discouraged inside and around the mataf. Put it away and just be there.</li>
+  <li><b>Rain.</b> November is one of the wetter months on this coast. Unlikely, not impossible.</li>
+</ul>
+</div>
+
+<h3>Pack for ihram specifically</h3>
+<ul>
+  <li>Two sets of ihram sheets for him — you'll want a clean spare</li>
+  <li>An ihram belt with pockets for phone and cards</li>
+  <li>Unscented soap, shampoo, deodorant, wipes and lip balm, bought at home, in their own bag</li>
+  <li>Flat sandals with the instep exposed, already broken in</li>
+  <li>Two loose plain abayas or equivalent for her, plus a light shawl</li>
+  <li>A small folding prayer mat each</li>
+</ul>
+
+<footer>
+  <p>Saudi entry rules, Nusuk permit mechanics and Rawdah slot policy change often and sometimes at short notice. Reconfirm the visa, vaccination and permit requirements at <b>visitsaudi.com</b> and <b>nusuk.sa</b> in the month before you travel, and check the Nusuk app itself for the current Rawdah booking window.</p>
+  <p>Points of fiqh here follow the most common positions and are simplified for a first trip. Where scholars differ, ask yours.</p>
+  <p style="margin-top:18px;font-family:var(--display);font-size:19px;color:var(--rawdah);">تقبل الله منكم</p>
+</footer>
+
+</div>
+</body>
+</html>
