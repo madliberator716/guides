@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Radarr Release Groups &amp; Unwanted Formats</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
+  :root {
+    --bg: #0E0E10; --surface: #1A1A1E; --surface2: #242428;
+    --ink: #F0F0F0; --muted: #888; --accent: #7C5CFC;
+    --accent-light: #7C5CFC22; --green: #2ECC71; --red: #E74C3C;
+    --rule: #2A2A2E; --radius: 10px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--ink); font-family: 'Inter', sans-serif; font-size: 14px; line-height: 1.65; padding: 0 16px 60px; }
+  header { max-width: 700px; margin: 0 auto; padding: 48px 0 32px; border-bottom: 1px solid var(--rule); margin-bottom: 32px; }
+  .eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+  h1 { font-family: 'DM Serif Display', serif; font-size: clamp(28px, 6vw, 44px); line-height: 1.1; color: var(--ink); margin-bottom: 10px; }
+  header p { color: var(--muted); font-size: 13px; }
+  .content { max-width: 700px; margin: 0 auto; display: flex; flex-direction: column; gap: 32px; }
+  .section-label { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid var(--rule); }
+  .note { background: var(--accent-light); border-left: 3px solid var(--accent); padding: 10px 14px; border-radius: 0 6px 6px 0; font-size: 13px; color: #B8A8FF; }
+  .rg-search { width: 100%; background: var(--surface2); color: var(--ink); border: 1px solid var(--rule); border-radius: var(--radius); padding: 11px 14px; font: inherit; font-size: 14px; }
+  .rg-search:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .rg-sub { font-size: 12px; color: var(--muted); margin-bottom: 12px; }
+  details.rg { background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius); margin-bottom: 8px; overflow: hidden; }
+  details.rg > summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 10px; padding: 13px 16px; font-size: 13px; font-weight: 600; color: var(--ink); -webkit-tap-highlight-color: transparent; }
+  details.rg > summary::-webkit-details-marker { display: none; }
+  details.rg > summary::before { content: ""; width: 7px; height: 7px; border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted); transform: rotate(-45deg); transition: transform .15s; flex: none; }
+  details.rg[open] > summary::before { transform: rotate(45deg); }
+  .rg-title { flex: 1; }
+  .rg-count { font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 400; color: var(--muted); }
+  details.rg.rg-bad { border-left: 3px solid var(--red); }
+  details.rg.rg-bad .rg-count { color: var(--red); }
+  .rg-body { padding: 0 16px 16px; }
+  .rg-rule { font-size: 12px; color: var(--muted); margin: 4px 0 8px; }
+  .rg-tier-title { font-size: 13px; font-weight: 600; color: var(--ink); margin: 14px 0 6px; }
+  .rg-score { font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 400; color: var(--accent); margin-left: 6px; }
+  .rg-score.rg-neg { color: var(--red); }
+  .rg-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .rg-chip { background: var(--surface2); color: #CCC; border-radius: 6px; padding: 4px 9px; font-size: 12px; line-height: 1.3; }
+  .rg-chip.hit { background: var(--accent-light); color: #fff; outline: 1px solid var(--accent); }
+  .rg-note { font-size: 12px; color: var(--muted); margin-top: 12px; }
+  .rg-hide { display: none !important; }
+</style>
+</head>
+<body>
+<header>
+  <div class="eyebrow">Reference Guide</div>
+  <h1>Radarr Release Groups<br>&amp; Unwanted Formats</h1>
+  <p>From the TRaSH Guides Radarr custom formats — HQ groups with scores, 16 unwanted formats, anime groups, and Asian groups. Pulled October 4, 2026.</p>
+</header>
+<div class="content">
+
+  <div>
+    <div class="section-label">Search</div>
+    <input id="rgSearch" class="rg-search" type="search" placeholder="Search a group or tag" autocomplete="off" autocapitalize="off" spellcheck="false">
+    <div class="note" style="margin-top:12px;">Higher score = higher priority. A score of &minus;10000 means Radarr will not grab it. Where this differs from the tiers &amp; trackers list in the Nuvio / Stremio guide, this one reflects the Radarr scores directly.</div>
+  </div>
+
+  <div>
+    <div class="section-label">⭐ HQ Release Groups</div>
+    <p class="rg-sub">Higher tier = higher default score. A group can sit in more than one list (BMF, ATELiER and ZQ are in Remux Tier 01 and HD Bluray Tier 01).</p>
+<details class="rg">
+<summary><span class="rg-title">Remux</span></summary><div class="rg-body">
+<p class="rg-rule">Release must be a Remux.</p>
+<div class="rg-tier">
+<h4 class="rg-tier-title">Remux Tier 01 <span class="rg-score">score 1950</span></h4>
+<div class="rg-chips"><span class="rg-chip">3L</span><span class="rg-chip">ATELiER</span><span class="rg-chip">BiZKiT</span><span class="rg-chip">BLURANiUM</span><span class="rg-chip">BMF</span><span class="rg-chip">CiNEPHiLES</span><span class="rg-chip">FraMeSToR</span><span class="rg-chip">PiRAMiDHEAD</span><span class="rg-chip">PmP</span><span class="rg-chip">WiLDCAT</span><span class="rg-chip">ZQ</span></div>
+</div>
+<div class="rg-tier">
+<h4 class="rg-tier-title">Remux Tier 02 <span class="rg-score">score 1900</span></h4>
+<div class="rg-chips"><span class="rg-chip">NCmt</span><span class="rg-chip">playBD</span><span class="rg-chip">SiCFoI</span><span class="rg-chip">SURFINBIRD</span><span class="rg-chip">TEPES</span></div>
+</div>
+<div class="rg-tier">
+<h4 class="rg-tier-title">Remux Tier 03 <span class="rg-score">score 1850</span></h4>
+<div class="rg-chips"><span class="rg-chip">12GaugeShotgun</span><span class="rg-chip">decibeL</span><span class="rg-chip">EPSiLON</span><span class="rg-chip">HiFi</span><span class="rg-chip">iFT</span><span class="rg-chip">KRaLiMaRKo</span><span class="rg-chip">NTb</span><span class="rg-chip">PTP</span><span class="rg-chip">SumVision</span><span class="rg-chip">TOA</span><span class="rg-chip">TRiToN</span></div>
+</div>
+</div></details>
+<details class="rg">
+<summary><span class="rg-title">UHD Bluray</span></summary><div class="rg-body">
+<p class="rg-rule">2160p Bluray encode. Not Remux, not WEB.</p>
+<div class="rg-tier">
+<h4 class="rg-tier-title">UHD Bluray Tier 01 <span class="rg-score">score 1800</span></h4>
+<div class="rg-chips"><span class="rg-chip">CtrlHD</span><span class="rg-chip">MainFrame</span><span class="rg-chip">DON</span><span class="rg-chip">W4NK3R</span></div>
+</div>
+<div class="rg-tier">
+<h4 class="rg-tier-title">UHD Bluray Tier 02 <span class="rg-score">score 1750</span></h4>
+<div class="rg-chips"><span class="rg-chip">HiDt</span><span class="rg-chip">HQMUX</span><span class="rg-chip">RandomBytes</span></div>
+</div>
+<div class="rg-tier">
+<h4 class="rg-tier-title">UHD Bluray Tier 03 <span class="rg-score">score 1700</span></h4>
+<div class="rg-chips"><span class="rg-chip">BHDStudio</span><span class="rg-chip">hallowed</span><span class="rg-chip">HONE</span><span class="rg-chip">PTer</span><span class="rg-chip">SPHD</span><span class="rg-chip">WEBDV</span></div>
+</div>
+</div></details>
+<details class="rg">
+<summary><span class="rg-title">HD Bluray</span></summary><div class="rg-body">
+<p class="rg-rule">1080p-class Bluray encode. Not Remux, not 2160p.</p>
+<div class="rg-tier">
+<h4 class="rg-tier-title">HD Bluray Tier 01 <span class="rg-score">score 1800</span></h4>
+<div class="rg-chips"><span class="rg-chip">ATELiER</span><span class="rg-chip">BBQ</span><span class="rg-chip">BMF</span><span class="rg-chip">c0kE</span><span class="rg-chip">Chotab</span><span class="rg-chip">CRiSC</span><span class="rg-chip">CtrlHD</span><span class="rg-chip">D-Z0N3</span><span class="rg-chip">Dariush</span><span class="rg-chip">decibeL</span><span class="rg-chip">DON</span><span class="rg-chip">EbP</span><span class="rg-chip">EDPH</span><span class="rg-chip">Geek</span><span class="rg-chip">LolHD</span><span class="rg-chip">NCmt</span><span class="rg-chip">PTer</span><span class="rg-chip">TayTO</span><span class="rg-chip">TDD</span><span class="rg-chip">TnP</span><span class="rg-chip">VietHD</span><span class="rg-chip">ZQ</span><span class="rg-chip">ZoroSenpai</span></div>
+</div>
+<div class="rg-tier">
+<h4 class="rg-tier-title">HD Bluray Tier 02 <span class="rg-score">score 1750</span></h4>
+<div class="rg-chips"><span class="rg-chip">EA</span><span class="rg-chip">HiDt</span><span class="rg-chip">HiSD</span><span class="rg-chip">iFT</span><span class="rg-chip">NTb</span><span class="rg-chip">QOQ</span><span class="rg-chip">SA89</span><span class="rg-chip">sbR</span></div>
+</div>
+<div class="rg-tier">
+<h4 class="rg-tier-title">HD Bluray Tier 03 <span class="rg-score">score 1700</span></h4>
+<div class="rg-chips"><span class="rg-chip">BHDStudio</span><span class="rg-chip">hallowed</span><span class="rg-chip">HiFi</span><span class="rg-chip">HONE</span><span class="rg-chip">LoRD</span><span class="rg-chip">playHD</span><span class="rg-chip">SPHD</span><span class="rg-chip">W4NK3R</span></div>
+</div>
+</div></details>
+<details class="rg">
+<summary><span class="rg-title">WEB</span></summary><div class="rg-body">
+<p class="rg-rule">WEB-DL or WEBRip releases.</p>
+<div class="rg-tier">
+<h4 class="rg-tier-title">WEB Tier 01 <span class="rg-score">score 1700</span></h4>
+<div class="rg-chips"><span class="rg-chip">ABBIE</span><span class="rg-chip">AJP69</span><span class="rg-chip">APEX (+ PAXA, PEXA, XEPA)</span><span class="rg-chip">BLUTONiUM</span><span class="rg-chip">BYNDR</span><span class="rg-chip">CMRG</span><span class="rg-chip">CRFW</span><span class="rg-chip">CRUD</span><span class="rg-chip">FLUX</span><span class="rg-chip">GNOME</span><span class="rg-chip">HONE</span><span class="rg-chip">KiNGS</span><span class="rg-chip">Kitsune</span><span class="rg-chip">MADSKY</span><span class="rg-chip">NOSiViD</span><span class="rg-chip">NTb</span><span class="rg-chip">NTG</span><span class="rg-chip">RAWR</span><span class="rg-chip">SiC</span><span class="rg-chip">TEPES</span><span class="rg-chip">TheFarm</span><span class="rg-chip">ZoroSenpai</span></div>
+</div>
+<div class="rg-tier">
+<h4 class="rg-tier-title">WEB Tier 02 <span class="rg-score">score 1650</span></h4>
+<div class="rg-chips"><span class="rg-chip">dB</span><span class="rg-chip">Flights</span><span class="rg-chip">MiU</span><span class="rg-chip">monkee</span><span class="rg-chip">MZABI</span><span class="rg-chip">PHOENiX</span><span class="rg-chip">playWEB</span><span class="rg-chip">SbR</span><span class="rg-chip">SMURF</span><span class="rg-chip">TOMMY</span><span class="rg-chip">XEBEC (+ 4KBEC, CEBEX)</span></div>
+</div>
+<div class="rg-tier">
+<h4 class="rg-tier-title">WEB Tier 03 <span class="rg-score">score 1600</span></h4>
+<div class="rg-chips"><span class="rg-chip">BLOOM</span><span class="rg-chip">Dooky</span><span class="rg-chip">GNOMiSSiON</span><span class="rg-chip">NINJACENTRAL</span><span class="rg-chip">NPMS</span><span class="rg-chip">ROCCaT</span><span class="rg-chip">SiGMA</span><span class="rg-chip">SLiGNOME</span><span class="rg-chip">SwAgLaNdEr</span></div>
+</div>
+</div></details>
+  </div>
+
+  <div>
+    <div class="section-label">🚫 Unwanted Formats</div>
+    <p class="rg-sub">Each of these is scored -10000 by default, so Radarr will not grab them. Tags are matched against the release title or group.</p>
+<details class="rg rg-bad">
+<summary><span class="rg-title">LQ (release groups)</span><span class="rg-count">101</span></summary><div class="rg-body">
+<p class="rg-rule">Known low-quality release groups. <span class="rg-score rg-neg">score -10000</span></p>
+<div class="rg-tier">
+<div class="rg-chips"><span class="rg-chip">126811</span><span class="rg-chip">24xHD</span><span class="rg-chip">41RGB</span><span class="rg-chip">4K4U</span><span class="rg-chip">AOC</span><span class="rg-chip">AROMA</span><span class="rg-chip">aXXo</span><span class="rg-chip">AZAZE</span><span class="rg-chip">BARC0DE</span><span class="rg-chip">BAUCKLEY</span><span class="rg-chip">BdC</span><span class="rg-chip">beAst</span><span class="rg-chip">BTM</span><span class="rg-chip">C1NEM4</span><span class="rg-chip">C4K</span><span class="rg-chip">CDDHD</span><span class="rg-chip">CHAOS</span><span class="rg-chip">CHD</span><span class="rg-chip">CiNE</span><span class="rg-chip">CLEANUP</span><span class="rg-chip">COLLECTiVE</span><span class="rg-chip">CREATiVE24</span><span class="rg-chip">CrEwSaDe</span><span class="rg-chip">CTFOH</span><span class="rg-chip">d3g</span><span class="rg-chip">DDR</span><span class="rg-chip">DNL</span><span class="rg-chip">DRX</span><span class="rg-chip">E</span><span class="rg-chip">EPiC</span><span class="rg-chip">EuReKA</span><span class="rg-chip">FaNGDiNG0</span><span class="rg-chip">Feranki1980</span><span class="rg-chip">FGT</span><span class="rg-chip">FMD</span><span class="rg-chip">FRDS</span><span class="rg-chip">FS</span><span class="rg-chip">FZHD</span><span class="rg-chip">GalaxyRG</span><span class="rg-chip">GHD</span><span class="rg-chip">GPTHD</span><span class="rg-chip">HDHUB4U</span><span class="rg-chip">HDS</span><span class="rg-chip">HDT</span><span class="rg-chip">HDTime</span><span class="rg-chip">HDWinG</span><span class="rg-chip">iNTENSO</span><span class="rg-chip">iPlanet</span><span class="rg-chip">iVy</span><span class="rg-chip">jennaortega (+ UHD)</span><span class="rg-chip">JFF</span><span class="rg-chip">KC</span><span class="rg-chip">KiNGDOM</span><span class="rg-chip">KIRA</span><span class="rg-chip">L0SERNIGHT</span><span class="rg-chip">LAMA</span><span class="rg-chip">Leffe</span><span class="rg-chip">Liber8</span><span class="rg-chip">LiGaS</span><span class="rg-chip">LUCY</span><span class="rg-chip">MarkII</span><span class="rg-chip">MeGusta</span><span class="rg-chip">Mesc</span><span class="rg-chip">mHD</span><span class="rg-chip">mSD</span><span class="rg-chip">MTeam (+ MT)</span><span class="rg-chip">MySiLU</span><span class="rg-chip">NhaNc3</span><span class="rg-chip">nHD</span><span class="rg-chip">nikt0</span><span class="rg-chip">NoGroup / NoGrp</span><span class="rg-chip">nSD</span><span class="rg-chip">OFT</span><span class="rg-chip">Pahe (+ .ph / .in)</span><span class="rg-chip">PATOMiEL</span><span class="rg-chip">PRODJi</span><span class="rg-chip">PSA</span><span class="rg-chip">PTNK</span><span class="rg-chip">RARBG</span><span class="rg-chip">RBB</span><span class="rg-chip">RDN</span><span class="rg-chip">RiffTrax</span><span class="rg-chip">RU4HD</span><span class="rg-chip">SANTi</span><span class="rg-chip">Scene</span><span class="rg-chip">SHD</span><span class="rg-chip">ShieldBearer</span><span class="rg-chip">STUTTERSHIT</span><span class="rg-chip">SUNSCREEN</span><span class="rg-chip">SyncUP</span><span class="rg-chip">TBS</span><span class="rg-chip">TEKNO3D</span><span class="rg-chip">Tigole</span><span class="rg-chip">TIKO</span><span class="rg-chip">VISIONPLUSHDR (+ -X / 1000)</span><span class="rg-chip">WAF</span><span class="rg-chip">WiKi</span><span class="rg-chip">x0r</span><span class="rg-chip">YIFY</span><span class="rg-chip">YTS (+ .MX / .LT / .AG)</span><span class="rg-chip">Zeus</span></div>
+</div>
+</div></details>
+<details class="rg rg-bad">
+<summary><span class="rg-title">LQ (release title)</span></summary><div class="rg-body">
+<p class="rg-rule">Low-quality tags that show up in the title instead of the group slot. <span class="rg-score rg-neg">score -10000</span></p>
+<div class="rg-tier">
+</div>
+<p class="rg-note">Notes: EVO and PiRaTeS are only flagged when the release is not a WEB-DL. HHWEB is flagged unless it is a Movies Anywhere WEB-DL. UnKn0wn is flagged unless it is a Remux.</p>
+</div></details>
+<details class="rg rg-bad">
+<summary><span class="rg-title">Bad Dual Groups</span><span class="rg-count">37</span></summary><div class="rg-body">
+<p class="rg-rule">Groups that add a second language track badly (dual-audio releases). <span class="rg-score rg-neg">score -10000</span></p>
+<div class="rg-tier">
+<div class="rg-chips"><span class="rg-chip">alfaHD (any alfaHD…)</span><span class="rg-chip">BAT</span><span class="rg-chip">BlackBit</span><span class="rg-chip">BNd</span><span class="rg-chip">C.A.A</span><span class="rg-chip">C76</span><span class="rg-chip">Cory</span><span class="rg-chip">CYPHER</span><span class="rg-chip">EniaHD</span><span class="rg-chip">EXTREME</span><span class="rg-chip">FF</span><span class="rg-chip">FOXX</span><span class="rg-chip">G4RiS</span><span class="rg-chip">GUEIRA</span><span class="rg-chip">LCD</span><span class="rg-chip">MGE (any MGE…)</span><span class="rg-chip">MLH</span><span class="rg-chip">N3G4N</span><span class="rg-chip">OldT</span><span class="rg-chip">ONLYMOViE</span><span class="rg-chip">PD</span><span class="rg-chip">PTHome</span><span class="rg-chip">RiPER</span><span class="rg-chip">RK</span><span class="rg-chip">SiGLA</span><span class="rg-chip">Tars</span><span class="rg-chip">TM</span><span class="rg-chip">tokar86a</span><span class="rg-chip">TURG</span><span class="rg-chip">TvR</span><span class="rg-chip">vnlls</span><span class="rg-chip">WTV</span><span class="rg-chip">XiQUEXiQUE</span><span class="rg-chip">Yatogam1</span><span class="rg-chip">YusukeFLA</span><span class="rg-chip">ZigZag</span><span class="rg-chip">ZNM</span></div>
+</div>
+</div></details>
+<details class="rg rg-bad">
+<summary><span class="rg-title">Generated Dynamic HDR</span><span class="rg-count">9</span></summary><div class="rg-body">
+<p class="rg-rule">Fake DV / HDR10+ layers generated from an HDR10 base. <span class="rg-score rg-neg">score -10000</span></p>
+<div class="rg-tier">
+<div class="rg-chips"><span class="rg-chip">BiTOR</span><span class="rg-chip">DepraveD</span><span class="rg-chip">Flights</span><span class="rg-chip">GuyZo (+ BR-GuyZo)</span><span class="rg-chip">SasukeducK</span><span class="rg-chip">tarunk9c</span><span class="rg-chip">VD0N</span><span class="rg-chip">VECTOR</span><span class="rg-chip">VisionXpert</span></div>
+</div>
+<p class="rg-note">Only matches when the release is from one of these groups AND the title says HDR10+ or DV.</p>
+</div></details>
+<details class="rg rg-bad">
+<summary><span class="rg-title">Obfuscated</span><span class="rg-count">17</span></summary><div class="rg-body">
+<p class="rg-rule">Scrambled or hidden-name releases. Matches any of these tags in the title. <span class="rg-score rg-neg">score -10000</span></p>
+<div class="rg-tier">
+<div class="rg-chips"><span class="rg-chip">-4P</span><span class="rg-chip">-4Planet</span><span class="rg-chip">-AsRequested</span><span class="rg-chip">-BUYMORE</span><span class="rg-chip">-Chamele0n</span><span class="rg-chip">-GEROV</span><span class="rg-chip">-iNC0GNiTO</span><span class="rg-chip">-NZBGeek</span><span class="rg-chip">-Obfuscated</span><span class="rg-chip">-postbot</span><span class="rg-chip">-Rakuv</span><span class="rg-chip">Scrambled</span><span class="rg-chip">-WhiteRev</span><span class="rg-chip">-xpost</span><span class="rg-chip">-WRTEAM</span><span class="rg-chip">-CAPTCHA</span><span class="rg-chip">_nzb</span></div>
+</div>
+</div></details>
+<details class="rg rg-bad">
+<summary><span class="rg-title">Retags</span><span class="rg-count">7</span></summary><div class="rg-body">
+<p class="rg-rule">Re-tagged releases from other sites. <span class="rg-score rg-neg">score -10000</span></p>
+<div class="rg-tier">
+<div class="rg-chips"><span class="rg-chip">[rartv]</span><span class="rg-chip">[rarbg]</span><span class="rg-chip">[eztv]</span><span class="rg-chip">[TGx]</span><span class="rg-chip">.VAV</span><span class="rg-chip">.heb</span><span class="rg-chip">ORARBG</span></div>
+</div>
+</div></details>
+<details class="rg rg-bad">
+<summary><span class="rg-title">Scene</span><span class="rg-count">26</span></summary><div class="rg-body">
+<p class="rg-rule">Scene-style WEB naming (resolution followed by plain &quot;WEB&quot;, not WEB-DL) or one of these scene groups. Skips INFLATE / DEFLATE and GERMAN releases. <span class="rg-score rg-neg">score -10000</span></p>
+<div class="rg-tier">
+<div class="rg-chips"><span class="rg-chip">-CAKES</span><span class="rg-chip">-GGEZ</span><span class="rg-chip">-GGWP</span><span class="rg-chip">-GLHF</span><span class="rg-chip">-GOSSIP</span><span class="rg-chip">-NAISU</span><span class="rg-chip">-KOGI</span><span class="rg-chip">-PECULATE</span><span class="rg-chip">-SLOT</span><span class="rg-chip">-EDITH</span><span class="rg-chip">-ETHEL</span><span class="rg-chip">-ELEANOR</span><span class="rg-chip">-B2B</span><span class="rg-chip">-SPAMnEGGS</span><span class="rg-chip">-FTP</span><span class="rg-chip">-DiRT</span><span class="rg-chip">-SYNCOPY</span><span class="rg-chip">-BAE</span><span class="rg-chip">-SuccessfulCrab</span><span class="rg-chip">-NHTFS</span><span class="rg-chip">-SURCODE</span><span class="rg-chip">-B0MBARDIERS</span><span class="rg-chip">-D3US</span><span class="rg-chip">-BROTHERHOOD</span><span class="rg-chip">-W4K</span><span class="rg-chip">-STRiKES</span></div>
+</div>
+</div></details>
+<details class="rg rg-bad">
+<summary><span class="rg-title">Upscaled</span><span class="rg-count">7</span></summary><div class="rg-body">
+<p class="rg-rule">Fake 4K from lower-res sources. <span class="rg-score rg-neg">score -10000</span></p>
+<div class="rg-tier">
+<div class="rg-chips"><span class="rg-chip">AI upscale (HEVC + &quot;AI&quot; in title)</span><span class="rg-chip">AIUS</span><span class="rg-chip">GuyZo / BR-GuyZo</span><span class="rg-chip">Regrade / Re-graded</span><span class="rg-chip">RW</span><span class="rg-chip">TheUpscaler</span><span class="rg-chip">Upscaled / UPS / UpRez / AI Enhanced</span></div>
+</div>
+</div></details>
+<details class="rg rg-bad">
+<summary><span class="rg-title">Black and White Editions</span><span class="rg-count">9</span></summary><div class="rg-body">
+<p class="rg-rule">Monochrome versions of color films. Only matched after the year in the title. <span class="rg-score rg-neg">score -10000</span></p>
+<div class="rg-tier">
+<div class="rg-chips"><span class="rg-chip">Blackout</span><span class="rg-chip">B&amp;W / Black and White</span><span class="rg-chip">Black &amp; Chrome</span><span class="rg-chip">Monochrome</span><span class="rg-chip">Noir</span><span class="rg-chip">Shush Cut</span><span class="rg-chip">No Color / Minus Color</span><span class="rg-chip">Grayscale / Greyscale</span><span class="rg-chip">Darkness and Light</span></div>
+</div>
+</div></details>
+<details class="rg rg-bad">
+<summary><span class="rg-title">Line/Mic Dubbed</span><span class="rg-count">6</span></summary><div class="rg-body">
+<p class="rg-rule">Audio recorded from a theater or off-mic. <span class="rg-score rg-neg">score -10000</span></p>
+<div class="rg-tier">
+<div class="rg-chips"><span class="rg-chip">LD</span><span class="rg-chip">AC3LD</span><span class="rg-chip">Line Dubbed</span><span class="rg-chip">MD</span><span class="rg-chip">AC3MD</span><span class="rg-chip">Mic Dubbed</span></div>
+</div>
+</div></details>
+<details class="rg rg-bad">
+<summary><span class="rg-title">Extras</span><span class="rg-count">3</span></summary><div class="rg-body">
+<p class="rg-rule">Bonus-content releases, not the film. <span class="rg-score rg-neg">score -10000</span></p>
+<div class="rg-tier">
+<div class="rg-chips"><span class="rg-chip">Extras</span><span class="rg-chip">Bonus</span><span class="rg-chip">Extended Clip</span></div>
+</div>
+</div></details>
+<details class="rg rg-bad">
+<summary><span class="rg-title">3D</span><span class="rg-count">6</span></summary><div class="rg-body">
+<p class="rg-rule">3D releases. <span class="rg-score rg-neg">score -10000</span></p>
+<div class="rg-tier">
+<div class="rg-chips"><span class="rg-chip">3D</span><span class="rg-chip">SBS</span><span class="rg-chip">Half-OU</span><span class="rg-chip">Half-SBS</span><span class="rg-chip">BluRay3D</span><span class="rg-chip">BD3D</span></div>
+</div>
+</div></details>
+<details class="rg rg-bad">
+<summary><span class="rg-title">Sing-Along Versions</span><span class="rg-count">1</span></summary><div class="rg-body">
+<p class="rg-rule">Sing-along cuts, matched after the year in the title. <span class="rg-score rg-neg">score -10000</span></p>
+<div class="rg-tier">
+<div class="rg-chips"><span class="rg-chip">Sing-Along</span></div>
+</div>
+</div></details>
+<details class="rg rg-bad">
+<summary><span class="rg-title">AV1</span><span class="rg-count">1</span></summary><div class="rg-body">
+<p class="rg-rule">Anything with AV1 in the title. Also blocked in the 2160p profiles. <span class="rg-score rg-neg">score -10000</span></p>
+<div class="rg-tier">
+<div class="rg-chips"><span class="rg-chip">AV1</span></div>
+</div>
+</div></details>
+<details class="rg rg-bad">
+<summary><span class="rg-title">BR-DISK</span><span class="rg-count">6</span></summary><div class="rg-body">
+<p class="rg-rule">Full-disc Bluray rips (BDMV / ISO / COMPLETE disc folders) that are not Remuxes. Radarr cannot import these. <span class="rg-score rg-neg">score -10000</span></p>
+<div class="rg-tier">
+<div class="rg-chips"><span class="rg-chip">BDMV</span><span class="rg-chip">ISO</span><span class="rg-chip">COMPLETE disc</span><span class="rg-chip">BR-DISK</span><span class="rg-chip">Full Blu-ray</span><span class="rg-chip">BD 25 / 50 / 66 / 100</span></div>
+</div>
+</div></details>
+<details class="rg rg-bad">
+<summary><span class="rg-title">No-RlsGroup</span></summary><div class="rg-body">
+<p class="rg-rule">Release with no parsed release group, so LQ group checks cannot run on it. Many indexers strip names (a lot of EVO releases end up here). <span class="rg-score rg-neg">score -10000</span></p>
+</div></details>
+  </div>
+
+  <div>
+    <div class="section-label">🎌 Anime Release Groups</div>
+    <p class="rg-sub">255 groups across 8 BD tiers and 6 WEB tiers. Raws and LQ groups are scored -10000.</p>
+<details class="rg">
+<summary><span class="rg-title">Anime BD</span></summary><div class="rg-body">
+<p class="rg-rule">Bluray or DVD source.</p>
+<div class="rg-tier">
+<h4 class="rg-tier-title">Anime BD Tier 01 <span class="rg-score">score 1400</span></h4>
+<p class="rg-rule">Best releases per SeaDex. Most consistent, trump the rest.</p>
+<div class="rg-chips"><span class="rg-chip">DemiHuman</span><span class="rg-chip">FLE</span><span class="rg-chip">Flugel</span><span class="rg-chip">LYS1TH3A</span><span class="rg-chip">Moxie</span><span class="rg-chip">sam</span><span class="rg-chip">smol</span><span class="rg-chip">SoM</span></div>
+</div>
+<div class="rg-tier">
+<h4 class="rg-tier-title">Anime BD Tier 02 <span class="rg-score">score 1300</span></h4>
+<p class="rg-rule">Best releases per SeaDex. Most consistent, trump the rest.</p>
+<div class="rg-chips"><span class="rg-chip">Aergia</span><span class="rg-chip">Arg0</span><span class="rg-chip">Arid</span><span class="rg-chip">BlackRose</span><span class="rg-chip">FateSucks</span><span class="rg-chip">hydes</span><span class="rg-chip">hchcsen</span><span class="rg-chip">JOHNTiTOR</span><span class="rg-chip">JySzE</span><span class="rg-chip">koala</span><span class="rg-chip">Kulot</span><span class="rg-chip">LostYears</span><span class="rg-chip">Lulu</span><span class="rg-chip">Meakes</span><span class="rg-chip">Orphan</span><span class="rg-chip">Vodes</span><span class="rg-chip">WAP</span><span class="rg-chip">YURI</span><span class="rg-chip">ZeroBuild</span></div>
+</div>
+<div class="rg-tier">
+<h4 class="rg-tier-title">Anime BD Tier 03 <span class="rg-score">score 1200</span></h4>
+<p class="rg-rule">Best releases per SeaDex. Most consistent, trump the rest.</p>
+<div class="rg-chips"><span class="rg-chip">ARC</span><span class="rg-chip">BBT-RMX</span><span class="rg-chip">cappybara</span><span class="rg-chip">ChucksMux</span><span class="rg-chip">CRUCiBLE</span><span class="rg-chip">CUNNY</span><span class="rg-chip">Cunnysseur</span><span class="rg-chip">Doc</span><span class="rg-chip">fig</span><span class="rg-chip">Headpatter</span><span class="rg-chip">Inka-Subs</span><span class="rg-chip">LaCroiX</span><span class="rg-chip">Legion</span><span class="rg-chip">Mehul</span><span class="rg-chip">MTBB</span><span class="rg-chip">Mysteria</span><span class="rg-chip">NAN0</span><span class="rg-chip">nekotan</span><span class="rg-chip">Netaro</span><span class="rg-chip">Noiy</span><span class="rg-chip">npz</span><span class="rg-chip">NTRX</span><span class="rg-chip">Okay-Subs</span><span class="rg-chip">P9</span><span class="rg-chip">PMR</span><span class="rg-chip">RUDY</span><span class="rg-chip">RaiN</span><span class="rg-chip">RMX</span><span class="rg-chip">Sekkon</span><span class="rg-chip">Serendipity</span><span class="rg-chip">sgt</span><span class="rg-chip">SubsMix</span><span class="rg-chip">Sylvar</span><span class="rg-chip">uba</span><span class="rg-chip">ZR</span></div>
+</div>
+<div class="rg-tier">
+<h4 class="rg-tier-title">Anime BD Tier 04 <span class="rg-score">score 1100</span></h4>
+<p class="rg-rule">Best releases per SeaDex. Most consistent, trump the rest.</p>
+<div class="rg-chips"><span class="rg-chip">ABdex</span><span class="rg-chip">Afro</span><span class="rg-chip">aRMX</span><span class="rg-chip">BiRJU</span><span class="rg-chip">BKC</span><span class="rg-chip">CBT</span><span class="rg-chip">Chimera</span><span class="rg-chip">derp</span><span class="rg-chip">DIY</span><span class="rg-chip">EXP</span><span class="rg-chip">Foxtrot</span><span class="rg-chip">grimf</span><span class="rg-chip">IK</span><span class="rg-chip">Iznjie Biznjie</span><span class="rg-chip">Kaleido-subs</span><span class="rg-chip">Kametsu</span><span class="rg-chip">Kawatare</span><span class="rg-chip">KH</span><span class="rg-chip">LazyRemux</span><span class="rg-chip">Metal</span><span class="rg-chip">MK</span><span class="rg-chip">neko-kBaraka</span><span class="rg-chip">OZR</span><span class="rg-chip">Pizza</span><span class="rg-chip">pog42</span><span class="rg-chip">Quetzal</span><span class="rg-chip">Reza</span><span class="rg-chip">SCY</span><span class="rg-chip">Shimatta</span><span class="rg-chip">Smoke</span><span class="rg-chip">Spirale</span><span class="rg-chip">UDF</span><span class="rg-chip">UQW</span><span class="rg-chip">Virtuality</span><span class="rg-chip">Vanilla</span><span class="rg-chip">VULCAN</span></div>
+</div>
+<div class="rg-tier">
+<h4 class="rg-tier-title">Anime BD Tier 05 <span class="rg-score">score 1000</span></h4>
+<p class="rg-rule">Consistent groups that do Remuxes.</p>
+<div class="rg-chips"><span class="rg-chip">Animorphs</span><span class="rg-chip">AOmundson</span><span class="rg-chip">ASC</span><span class="rg-chip">Baws</span><span class="rg-chip">Beatrice</span><span class="rg-chip">B00BA</span><span class="rg-chip">Cait-Sidhe</span><span class="rg-chip">CsS</span><span class="rg-chip">CTR</span><span class="rg-chip">D4C</span><span class="rg-chip">deanzel</span><span class="rg-chip">Drag</span><span class="rg-chip">eldon</span><span class="rg-chip">Freehold</span><span class="rg-chip">GHS</span><span class="rg-chip">Hark0N</span><span class="rg-chip">Holomux</span><span class="rg-chip">Judgement</span><span class="rg-chip">MC</span><span class="rg-chip">mottoj</span><span class="rg-chip">NH</span><span class="rg-chip">NTRM</span><span class="rg-chip">o7</span><span class="rg-chip">QM</span><span class="rg-chip">Thighs</span><span class="rg-chip">TTGA</span><span class="rg-chip">UltraRemux</span><span class="rg-chip">WBDP</span><span class="rg-chip">WSE</span><span class="rg-chip">Yuki</span></div>
+</div>
+<div class="rg-tier">
+<h4 class="rg-tier-title">Anime BD Tier 06 <span class="rg-score">score 900</span></h4>
+<p class="rg-rule">Consistent FanSub groups.</p>
+<div class="rg-chips"><span class="rg-chip">ANE</span><span class="rg-chip">Bunny-Apocalypse</span><span class="rg-chip">CyC</span><span class="rg-chip">Datte13</span><span class="rg-chip">EJF</span><span class="rg-chip">GetItTwisted</span><span class="rg-chip">GSK_kun</span><span class="rg-chip">iKaos</span><span class="rg-chip">karios</span><span class="rg-chip">Pookie</span><span class="rg-chip">RASETSU</span><span class="rg-chip">Starbez</span><span class="rg-chip">Tsundere</span><span class="rg-chip">Yoghurt</span><span class="rg-chip">YURASUKA</span></div>
+</div>
+<div class="rg-tier">
+<h4 class="rg-tier-title">Anime BD Tier 07 <span class="rg-score">score 800</span></h4>
+<p class="rg-rule">Known P2P and Scene anime groups.</p>
+<div class="rg-chips"><span class="rg-chip">9volt</span><span class="rg-chip">AC</span><span class="rg-chip">Almighty</span><span class="rg-chip">Asakura</span><span class="rg-chip">Asenshi</span><span class="rg-chip">BlurayDesuYo</span><span class="rg-chip">Bolshevik</span><span class="rg-chip">Brrrrrrr</span><span class="rg-chip">Chihiro</span><span class="rg-chip">Commie</span><span class="rg-chip">Crow</span><span class="rg-chip">Dae</span><span class="rg-chip">Dekinai</span><span class="rg-chip">Dragon-Releases</span><span class="rg-chip">DragsterPS</span><span class="rg-chip">Exiled-Destiny</span><span class="rg-chip">FFF</span><span class="rg-chip">Final8</span><span class="rg-chip">Geonope</span><span class="rg-chip">GJM</span><span class="rg-chip">iAHD</span><span class="rg-chip">inid4c</span><span class="rg-chip">Koten_Gars</span><span class="rg-chip">kuchikirukia</span><span class="rg-chip">LCE</span><span class="rg-chip">NTW</span><span class="rg-chip">orz</span><span class="rg-chip">RAI</span><span class="rg-chip">REVO</span><span class="rg-chip">SCP-2223</span><span class="rg-chip">Senjou</span><span class="rg-chip">SEV</span><span class="rg-chip">THORA</span><span class="rg-chip">Vivid</span></div>
+</div>
+<div class="rg-tier">
+<h4 class="rg-tier-title">Anime BD Tier 08 <span class="rg-score">score 700</span></h4>
+<p class="rg-rule">Known mini-encode groups.</p>
+<div class="rg-chips"><span class="rg-chip">AkihitoSubs</span><span class="rg-chip">Arukoru</span><span class="rg-chip">EDGE</span><span class="rg-chip">EMBER</span><span class="rg-chip">GHOST</span><span class="rg-chip">Judas</span><span class="rg-chip">naiyas</span><span class="rg-chip">Nep_Blanc</span><span class="rg-chip">Prof</span><span class="rg-chip">Shirσ</span></div>
+</div>
+</div></details>
+<details class="rg">
+<summary><span class="rg-title">Anime WEB</span></summary><div class="rg-body">
+<p class="rg-rule">WEB-DL or WEBRip source.</p>
+<div class="rg-tier">
+<h4 class="rg-tier-title">Anime Web Tier 01 <span class="rg-score">score 600</span></h4>
+<p class="rg-rule">Best releases per SeaDex. Most consistent, trump the rest.</p>
+<div class="rg-chips"><span class="rg-chip">Arg0</span><span class="rg-chip">Arid</span><span class="rg-chip">Baws</span><span class="rg-chip">FLE</span><span class="rg-chip">LostYears</span><span class="rg-chip">LYS1TH3A</span><span class="rg-chip">McBalls</span><span class="rg-chip">sam</span><span class="rg-chip">SCY</span><span class="rg-chip">Setsugen</span><span class="rg-chip">smol</span><span class="rg-chip">SoM</span><span class="rg-chip">Vodes</span><span class="rg-chip">Z4ST1N</span><span class="rg-chip">ZeroBuild</span></div>
+</div>
+<div class="rg-tier">
+<h4 class="rg-tier-title">Anime Web Tier 02 <span class="rg-score">score 500</span></h4>
+<p class="rg-rule">Best releases per SeaDex. Most consistent, trump the rest.</p>
+<div class="rg-chips"><span class="rg-chip">0x539</span><span class="rg-chip">Asakura</span><span class="rg-chip">BlackRose</span><span class="rg-chip">Cyan</span><span class="rg-chip">Cytox</span><span class="rg-chip">Dae</span><span class="rg-chip">Foxtrot</span><span class="rg-chip">Gao</span><span class="rg-chip">GSK_kun</span><span class="rg-chip">Half-Baked</span><span class="rg-chip">HatSubs</span><span class="rg-chip">MALD</span><span class="rg-chip">MTBB</span><span class="rg-chip">Not-Vodes</span><span class="rg-chip">Okay-Subs</span><span class="rg-chip">Pizza</span><span class="rg-chip">Reza</span><span class="rg-chip">Slyfox</span><span class="rg-chip">SoLCE</span><span class="rg-chip">Tenshi</span></div>
+</div>
+<div class="rg-tier">
+<h4 class="rg-tier-title">Anime Web Tier 03 <span class="rg-score">score 400</span></h4>
+<p class="rg-rule">Official sub groups. Consistent and fast.</p>
+<div class="rg-chips"><span class="rg-chip">AnoZu</span><span class="rg-chip">Dooky</span><span class="rg-chip">Kitsune</span><span class="rg-chip">SubsPlus+</span><span class="rg-chip">ZR</span></div>
+</div>
+<div class="rg-tier">
+<h4 class="rg-tier-title">Anime Web Tier 04 <span class="rg-score">score 300</span></h4>
+<p class="rg-rule">Official sub groups.</p>
+<div class="rg-chips"><span class="rg-chip">Erai-Raws</span><span class="rg-chip">ToonsHub</span><span class="rg-chip">VARYG</span></div>
+</div>
+<div class="rg-tier">
+<h4 class="rg-tier-title">Anime Web Tier 05 <span class="rg-score">score 200</span></h4>
+<p class="rg-rule">Consistent FanSub groups.</p>
+<div class="rg-chips"><span class="rg-chip">BlueLobster</span><span class="rg-chip">GST</span><span class="rg-chip">HorribleRips</span><span class="rg-chip">HorribleSubs</span><span class="rg-chip">KAN3D2M</span><span class="rg-chip">KiyoshiStar</span><span class="rg-chip">Lia</span><span class="rg-chip">NanDesuKa</span><span class="rg-chip">PlayWeb</span><span class="rg-chip">SobsPlease</span><span class="rg-chip">Some-Stuffs</span><span class="rg-chip">SubsPlease</span><span class="rg-chip">URANIME</span><span class="rg-chip">ZigZag</span></div>
+</div>
+<div class="rg-tier">
+<h4 class="rg-tier-title">Anime Web Tier 06 <span class="rg-score">score 100</span></h4>
+<p class="rg-rule">Consistent FanSub groups.</p>
+<div class="rg-chips"><span class="rg-chip">9volt</span><span class="rg-chip">Asenshi</span><span class="rg-chip">Chihiro</span><span class="rg-chip">Commie</span><span class="rg-chip">DameDesuYo</span><span class="rg-chip">Doki</span><span class="rg-chip">GJM</span><span class="rg-chip">Kaleido</span><span class="rg-chip">Kantai</span><span class="rg-chip">KawaSubs</span><span class="rg-chip">Tsundere</span></div>
+</div>
+</div></details>
+<details class="rg rg-bad">
+<summary><span class="rg-title">Anime Raws</span><span class="rg-count">22</span></summary><div class="rg-body">
+<p class="rg-rule">Known raw-release groups. Matched in the title. <span class="rg-score rg-neg">score -10000</span></p>
+<div class="rg-tier">
+<div class="rg-chips"><span class="rg-chip">AsukaRaws</span><span class="rg-chip">Beatrice-Raws</span><span class="rg-chip">Daddy-Raws</span><span class="rg-chip">Fumi-Raws</span><span class="rg-chip">IrizaRaws</span><span class="rg-chip">Kawaiika-Raws</span><span class="rg-chip">km</span><span class="rg-chip">Koi-Raws</span><span class="rg-chip">Lilith-Raws</span><span class="rg-chip">LowPower-Raws</span><span class="rg-chip">Moozzi2</span><span class="rg-chip">NanakoRaws</span><span class="rg-chip">NC-Raws</span><span class="rg-chip">neko-raws</span><span class="rg-chip">New-raws</span><span class="rg-chip">Ohys-Raws</span><span class="rg-chip">Pandoratv-Raws</span><span class="rg-chip">Raws-Maji</span><span class="rg-chip">ReinForce</span><span class="rg-chip">Scryous-Raws</span><span class="rg-chip">Seicher-Raws</span><span class="rg-chip">Shiniori-Raws</span></div>
+</div>
+</div></details>
+<details class="rg rg-bad">
+<summary><span class="rg-title">Anime LQ Groups</span><span class="rg-count">137</span></summary><div class="rg-body">
+<p class="rg-rule">Known low-quality anime groups. Matched in the title. <span class="rg-score rg-neg">score -10000</span></p>
+<div class="rg-tier">
+<div class="rg-chips"><span class="rg-chip">$tore-Chill</span><span class="rg-chip">0neshot</span><span class="rg-chip">224</span><span class="rg-chip">A-Destiny</span><span class="rg-chip">AceAres</span><span class="rg-chip">AhmadDev</span><span class="rg-chip">Anime Chap</span><span class="rg-chip">Anime Land</span><span class="rg-chip">Anime Time</span><span class="rg-chip">AnimeDynastyEN</span><span class="rg-chip">AnimeKuro</span><span class="rg-chip">AnimeRG</span><span class="rg-chip">Animesubs</span><span class="rg-chip">AnimeTR</span><span class="rg-chip">Anitsu</span><span class="rg-chip">AniVoid</span><span class="rg-chip">ArataEnc</span><span class="rg-chip">AREY</span><span class="rg-chip">Ari</span><span class="rg-chip">ASW</span><span class="rg-chip">BJX</span><span class="rg-chip">BlackLuster</span><span class="rg-chip">bonkai77</span><span class="rg-chip">CameEsp</span><span class="rg-chip">Cat66</span><span class="rg-chip">CBB</span><span class="rg-chip">Cerberus</span><span class="rg-chip">Cleo</span><span class="rg-chip">CuaP</span><span class="rg-chip">DaddySubs</span><span class="rg-chip">DARKFLiX</span><span class="rg-chip">DB</span><span class="rg-chip">DBArabic</span><span class="rg-chip">Deadmau-RAWS</span><span class="rg-chip">DKB</span><span class="rg-chip">DP</span><span class="rg-chip">DsunS</span><span class="rg-chip">Emmid</span><span class="rg-chip">ExREN</span><span class="rg-chip">FAV</span><span class="rg-chip">BakedFish / DeadFish / SpaceFish</span><span class="rg-chip">FunArts</span><span class="rg-chip">GERMini</span><span class="rg-chip">Hakata Ramen</span><span class="rg-chip">Hall_of_C</span><span class="rg-chip">Hatsuyuki</span><span class="rg-chip">HAV1T</span><span class="rg-chip">HENiL</span><span class="rg-chip">Hitoku</span><span class="rg-chip">HollowRoxas</span><span class="rg-chip">HR</span><span class="rg-chip">ICEBLUE</span><span class="rg-chip">iPUNISHER</span><span class="rg-chip">JacobSwaggedUp</span><span class="rg-chip">Johnny-englishsubs</span><span class="rg-chip">Kallango</span><span class="rg-chip">Kanjouteki</span><span class="rg-chip">KEKMASTERS</span><span class="rg-chip">Kirion</span><span class="rg-chip">KQRM</span><span class="rg-chip">KRP</span><span class="rg-chip">LoliHouse</span><span class="rg-chip">M@nI</span><span class="rg-chip">mal lu zen</span><span class="rg-chip">Man.K</span><span class="rg-chip">Maximus</span><span class="rg-chip">MD</span><span class="rg-chip">mdcx</span><span class="rg-chip">Metaljerk</span><span class="rg-chip">MGD</span><span class="rg-chip">MiniFreeza</span><span class="rg-chip">MiniMTBB</span><span class="rg-chip">MinisCuba</span><span class="rg-chip">MiniTheatre</span><span class="rg-chip">Mites</span><span class="rg-chip">Modders Bay</span><span class="rg-chip">Mr.Deadpool</span><span class="rg-chip">NemDiggers</span><span class="rg-chip">neoHEVC</span><span class="rg-chip">Nokou</span><span class="rg-chip">NoobSubs</span><span class="rg-chip">NS</span><span class="rg-chip">Nyanpasu</span><span class="rg-chip">OldCastle</span><span class="rg-chip">Pantsu</span><span class="rg-chip">Pao</span><span class="rg-chip">phazer11</span><span class="rg-chip">Pixel</span><span class="rg-chip">Plex Friendly</span><span class="rg-chip">PnPSubs</span><span class="rg-chip">Polarwindz</span><span class="rg-chip">Project-gxs</span><span class="rg-chip">PuyaSubs</span><span class="rg-chip">QaS</span><span class="rg-chip">QCE</span><span class="rg-chip">Rando235</span><span class="rg-chip">Ranger</span><span class="rg-chip">Rapta</span><span class="rg-chip">M2TS / BDMV / BDVD</span><span class="rg-chip">Raze</span><span class="rg-chip">Reaktor</span><span class="rg-chip">RightShiftBy2</span><span class="rg-chip">Rip Time</span><span class="rg-chip">SAD</span><span class="rg-chip">Salieri</span><span class="rg-chip">Samir755</span><span class="rg-chip">SanKyuu</span><span class="rg-chip">SEiN</span><span class="rg-chip">sekkusu&amp;ok</span><span class="rg-chip">SHFS</span><span class="rg-chip">shincaps</span><span class="rg-chip">SLAX</span><span class="rg-chip">Sokudo</span><span class="rg-chip">SRW</span><span class="rg-chip">SSA</span><span class="rg-chip">StrayGods</span><span class="rg-chip">Suki Desu</span><span class="rg-chip">TeamTurquoize</span><span class="rg-chip">Tenrai Sensei</span><span class="rg-chip">TnF</span><span class="rg-chip">TOPKEK</span><span class="rg-chip">Trix</span><span class="rg-chip">U3-Web</span><span class="rg-chip">UNBIASED</span><span class="rg-chip">uP</span><span class="rg-chip">USD</span><span class="rg-chip">Valenciano</span><span class="rg-chip">VipapkStudios</span><span class="rg-chip">Wardevil</span><span class="rg-chip">WtF Anime</span><span class="rg-chip">xiao-av1</span><span class="rg-chip">Yabai_Desu_NeRandomRemux</span><span class="rg-chip">YakuboEncodes</span><span class="rg-chip">youshikibi</span><span class="rg-chip">YuiSubs</span><span class="rg-chip">Yun</span><span class="rg-chip">zza</span></div>
+</div>
+</div></details>
+  </div>
+
+  <div>
+    <div class="section-label">🌏 Asian Release Groups</div>
+    <p class="rg-sub">22 groups across 3 tiers. Asian LQ is scored -10000.</p>
+<details class="rg">
+<summary><span class="rg-title">Asian Tiers</span></summary><div class="rg-body">
+<p class="rg-rule">Tiers are organized by whether the group includes internal English subtitles. All tiers are WEB-DL or WEBRip.</p>
+<div class="rg-tier">
+<h4 class="rg-tier-title">Asian Tier 01 <span class="rg-score">score 1650</span></h4>
+<div class="rg-chips"><span class="rg-chip">ANDY</span><span class="rg-chip">Archie</span><span class="rg-chip">ECLiPSE</span><span class="rg-chip">HBO</span><span class="rg-chip">HeavenlyOppa</span><span class="rg-chip">iTsOK</span><span class="rg-chip">JKCT</span><span class="rg-chip">LoveBug</span><span class="rg-chip">MARK</span><span class="rg-chip">MMR</span><span class="rg-chip">MrHulk</span><span class="rg-chip">Phanteam</span><span class="rg-chip">SH3LBY</span><span class="rg-chip">SYNFM</span><span class="rg-chip">Wendy</span></div>
+</div>
+<div class="rg-tier">
+<h4 class="rg-tier-title">Asian Tier 02 <span class="rg-score">score 1600</span></h4>
+<div class="rg-chips"><span class="rg-chip">PandaMoon</span></div>
+</div>
+<div class="rg-tier">
+<h4 class="rg-tier-title">Asian Tier 03 <span class="rg-score">score 100</span></h4>
+<div class="rg-chips"><span class="rg-chip">ADWeb</span><span class="rg-chip">CHDWEB</span><span class="rg-chip">HDCTV</span><span class="rg-chip">HHWEB</span><span class="rg-chip">OurTV</span><span class="rg-chip">SHiNE</span></div>
+</div>
+</div></details>
+<details class="rg rg-bad">
+<summary><span class="rg-title">Asian LQ</span><span class="rg-count">7</span></summary><div class="rg-body">
+<p class="rg-rule">Groups with no subtitles, or ones that cause import problems. <span class="rg-score rg-neg">score -10000</span></p>
+<div class="rg-tier">
+<div class="rg-chips"><span class="rg-chip">AppleTor</span><span class="rg-chip">Luvmichelle</span><span class="rg-chip">MagicStar</span><span class="rg-chip">NEXT</span><span class="rg-chip">Taengoo</span><span class="rg-chip">unco</span><span class="rg-chip">unco@AvistaZ</span></div>
+</div>
+</div></details>
+  </div>
+
+  <div class="note">Source: TRaSH-Guides/Guides, docs/json/radarr/cf. Tiers move over time, so re-pull before you copy anything into Radarr.</div>
+
+</div>
+<script>
+(function () {
+  var q = document.getElementById('rgSearch');
+  var secs = [].slice.call(document.querySelectorAll('details.rg'));
+  var state = secs.map(function (s) { return s.open; });
+  q.addEventListener('input', function () {
+    var t = q.value.trim().toLowerCase();
+    secs.forEach(function (s, i) {
+      var hits = 0;
+      s.querySelectorAll('.rg-chip').forEach(function (c) {
+        var m = !!t && c.textContent.toLowerCase().indexOf(t) > -1;
+        c.classList.toggle('hit', m);
+        c.classList.toggle('rg-hide', !!t && !m);
+        if (m) hits++;
+      });
+      s.querySelectorAll('.rg-tier').forEach(function (tier) {
+        tier.classList.toggle('rg-hide', !!t && !tier.querySelector('.rg-chip:not(.rg-hide)'));
+      });
+      s.querySelectorAll('.rg-body > .rg-rule, .rg-note').forEach(function (p) {
+        p.classList.toggle('rg-hide', !!t);
+      });
+      if (t) { s.classList.toggle('rg-hide', hits === 0); s.open = hits > 0; }
+      else { s.classList.remove('rg-hide'); s.open = state[i]; }
+    });
+  });
+})();
+</script>
+</body>
+</html>
