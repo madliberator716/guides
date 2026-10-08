@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sudoku strategies guide</title>
+<style>
+:root{color-scheme:light dark;--bg:#fbfaf7;--card:#f1efe8;--surf:#ffffff;--text:#1f1f1d;--muted:#6a6963;--line:#dcdacf;--line2:#9c9a90;--ab:#e6f1fb;--abd:#85b7eb;--at:#0c447c;--db:#fcebeb;--dbd:#f09595;--dt:#a32d2d;--sb:#eaf3de;--sbd:#97c459;--st:#27500a;--wb:#faeeda;--wbd:#ef9f27;--wt:#633806}
+@media (prefers-color-scheme:dark){:root{--bg:#1b1b19;--card:#262624;--surf:#30302d;--text:#ebe9e0;--muted:#a5a39a;--line:#3b3b37;--line2:#77756c;--ab:#0c447c;--abd:#378add;--at:#b5d4f4;--db:#791f1f;--dbd:#e24b4a;--dt:#f7c1c1;--sb:#27500a;--sbd:#639922;--st:#c0dd97;--wb:#633806;--wbd:#ba7517;--wt:#fac775}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;font-size:16px;line-height:1.6}
+.wrap{max-width:640px;margin:0 auto;padding:20px 16px 56px}
+h1{font-size:28px;line-height:1.2;margin:8px 0 8px;font-weight:600}
+h2{font-size:21px;line-height:1.3;margin:0 0 4px;font-weight:600}
+h3{font-size:16px;margin:18px 0 6px;font-weight:600}
+p{margin:0 0 10px}
+.sub{color:var(--muted);margin:0 0 18px}
+.card{background:var(--card);border-radius:14px;padding:14px 16px;margin:14px 0}
+.card ol,.card ul{margin:6px 0 0;padding-left:22px}
+.card li{margin:4px 0}
+.toc a{color:var(--at);text-decoration:none}
+.toc li{margin:5px 0}
+section{margin:36px 0 0;padding-top:4px}
+.badge{display:inline-block;font-size:12px;font-weight:600;padding:2px 10px;border-radius:999px;margin:0 0 10px;letter-spacing:.02em}
+.b1{background:var(--sb);color:var(--st)}
+.b2{background:var(--wb);color:var(--wt)}
+.b3{background:var(--db);color:var(--dt)}
+.fig{background:var(--surf);border:1px solid var(--line);border-radius:16px;padding:12px;margin:14px 0}
+.fig svg{display:block;width:100%;max-width:420px;margin:0 auto}
+.lg{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:10px;font-size:13px;color:var(--muted);justify-content:center}
+.lg span{display:inline-flex;align-items:center;gap:6px}
+.lg i{width:12px;height:12px;border-radius:3px;display:inline-block}
+.read{background:var(--card);border-radius:12px;padding:12px 14px;margin:0 0 10px}
+.read b{display:block;font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.use{background:var(--ab);color:var(--at);border-radius:12px;padding:10px 14px;margin:0 0 10px;font-size:15px}
+.use b{font-weight:600}
+.bx{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;max-width:340px;margin:0 auto}
+.bc{min-height:84px;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;background:var(--card);border:1px solid var(--line);text-align:center;padding:6px 4px}
+.bc.g{background:var(--sb);border-color:var(--sbd);color:var(--st)}
+.bc.p{background:var(--ab);border-color:var(--abd);color:var(--at)}
+.fx{font-size:26px;font-weight:600}
+.cd{font-size:16px;letter-spacing:.14em;color:var(--muted)}
+.bc.g .cd{color:var(--st);font-weight:600;font-size:22px}
+.cd .hl{color:var(--at);font-weight:700}
+.tg{font-size:12px}
+.rw{display:flex;gap:3px;margin:0 0 4px}
+.cl{flex:1;min-width:0;height:46px;border-radius:7px;background:var(--card);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--muted);gap:3px;flex-wrap:wrap;align-content:center;padding:0 1px}
+.cl.p{background:var(--ab);border-color:var(--abd)}
+.cl.g{background:var(--sb);border-color:var(--sbd);color:var(--st);font-weight:600}
+.cl .fx{font-size:17px;color:var(--text)}
+.rm{color:var(--dt);text-decoration:line-through}
+.hl2{color:var(--at);font-weight:700}
+.lb{font-size:13px;color:var(--muted);margin:12px 0 5px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+.key{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:14px}
+.key span{display:inline-flex;align-items:center;gap:6px}
+.key i{width:14px;height:14px;border-radius:4px;display:inline-block}
+footer{margin-top:40px;color:var(--muted);font-size:13px;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>Sudoku strategies guide</h1>
+<p class="sub">Twelve techniques, from the ones you use on every puzzle to the ones you only need on the hardest. Each has a picture and a plain-English walkthrough.</p>
+
+<div class="card">
+<b>The idea behind everything</b>
+<p style="margin-top:6px">Every row, column, and 3 by 3 box needs the digits 1 to 9 exactly once. Each digit already placed rules that digit out for every cell that shares a row, column, or box with it. Every strategy below is just a smarter way of ruling digits out until one fits.</p>
+</div>
+
+<div class="card">
+<b>The solving loop</b>
+<ol>
+<li>Scan for digits and place any singles (strategies 1 to 3).</li>
+<li>Stuck? Write pencil marks in every empty cell (strategy 4).</li>
+<li>Look for pairs and triples (5, 6), then pointing and box-line patterns (7, 8).</li>
+<li>Still stuck? Try X-Wing, Swordfish, XY-Wing, and coloring (9 to 12).</li>
+<li>After any placement or elimination, go back to step 1.</li>
+</ol>
+</div>
+
+<div class="card">
+<b>How to read the pictures</b>
+<div class="key" style="margin-top:8px">
+<span><i style="background:var(--ab);border:1px solid var(--abd)"></i>The pattern</span>
+<span><i style="background:var(--db);border:1px solid var(--dbd)"></i>Erase this</span>
+<span><i style="background:var(--sb);border:1px solid var(--sbd)"></i>The answer</span>
+<span><i style="background:var(--wb);border:1px solid var(--wbd)"></i>Second color</span>
+</div>
+<p style="margin:10px 0 0;font-size:14px;color:var(--muted)">A struck-through digit is a candidate to cross out. Grids show one digit at a time. Row and box pictures show every candidate in each cell.</p>
+</div>
+
+<div class="card toc">
+<b>Contents</b>
+<ol style="margin-top:8px">
+<li><a href="#s1">Scan rows, columns, boxes</a></li>
+<li><a href="#s2">Naked single</a></li>
+<li><a href="#s3">Hidden single</a></li>
+<li><a href="#s4">Pencil marks</a></li>
+<li><a href="#s5">Naked pairs and triples</a></li>
+<li><a href="#s6">Hidden pairs</a></li>
+<li><a href="#s7">Pointing pairs and triples</a></li>
+<li><a href="#s8">Box-line reduction</a></li>
+<li><a href="#s9">X-Wing</a></li>
+<li><a href="#s10">Swordfish</a></li>
+<li><a href="#s11">XY-Wing</a></li>
+<li><a href="#s12">Coloring</a></li>
+<li><a href="#ref">Quick reference and habits</a></li>
+</ol>
+</div>
+
+<section id="s1">
+<span class="badge b1">Basic</span>
+<h2>1. Scan rows, columns, boxes</h2>
+<p>Pick one digit and look at every place it has already been written. A 5 in a row means no other cell in that row can be a 5. The same goes for its column and its box. Do this for every placed 5, then look for a box, row, or column where only one cell is left that can hold a 5.</p>
+<div class="fig" id="f1"></div>
+<div class="read"><b>Reading the picture</b>
+The four white cells are placed 5s. Red cells can't hold a 5 because they share a row or column with one: rows 1 and 2, and columns 8 and 9. In the outlined top-right box, every cell is blocked except row 3, column 7. The box still needs a 5, so it goes there (green).</div>
+<div class="use"><b>Use it when:</b> always, and first. Cycle through the digits 1 to 9. Start with digits that already appear many times, because they block the most cells.</div>
+<p style="font-size:14px;color:var(--muted)">Common slip: forgetting that a placed digit also blocks its own box, not just its row and column. Check all three.</p>
+</section>
+
+<section id="s2">
+<span class="badge b1">Basic</span>
+<h2>2. Naked single</h2>
+<p>A cell with only one possible digit left. To check a cell, list the digits already in its row, column, and box. If eight different digits show up, the ninth goes in the cell.</p>
+<div class="fig" id="f2"></div>
+<div class="read"><b>Reading the picture</b>
+This is one box with its candidates written in. The 1, 3, 6, and 8 are already placed. The middle-left cell started with more options, but its row and column have already ruled out 2, 5, 7, and 9. Only 4 is left, so it goes in (green).</div>
+<div class="use"><b>Use it when:</b> a row, column, or box is nearly full, or after you've written pencil marks and a cell shows just one digit.</div>
+</section>
+
+<section id="s3">
+<span class="badge b1">Basic</span>
+<h2>3. Hidden single</h2>
+<p>A digit that fits in only one cell of a row, column, or box, even if that cell has other candidates too. The cell is hiding the answer among its extra candidates.</p>
+<div class="fig" id="f3"></div>
+<div class="read"><b>Reading the picture</b>
+The top-middle cell lists 2, 5, and 7. Look at the rest of the box: no other empty cell can be a 7. The box needs a 7 somewhere, so this cell must be it. Once you place the 7, the 2 and 5 in that cell are erased.</div>
+<div class="use"><b>Use it when:</b> you have pencil marks and no naked singles. Take one digit at a time and count how many cells in a unit still list it. If the count is one, place it. Scanning (strategy 1) is hidden singles done without pencil marks.</div>
+</section>
+
+<section id="s4">
+<span class="badge b1">Basic</span>
+<h2>4. Pencil marks</h2>
+<p>Small candidate digits written in each empty cell. They turn invisible patterns into visible ones, and every strategy from 5 onward depends on them. To fill them in: for each empty cell, start with 1 to 9, then cross off every digit already in its row, column, or box.</p>
+<div class="fig" id="f4"></div>
+<div class="read"><b>Reading the picture</b>
+The box already has 1, 3, 6, and 8, so it still needs 2, 4, 5, 7, and 9. Each empty cell lists which of those it could still be. Notice how much easier it is to spot the 4 and the 7 from this view than from the bare grid.</div>
+<div class="use"><b>Use it when:</b> scanning stalls. Write marks once, carefully. After that, every time you place a digit, erase it from the marks in its row, column, and box.</div>
+<p style="font-size:14px;color:var(--muted)">Common slip: writing marks too early on an easy puzzle (wasted effort), or forgetting to update them after placing a digit.</p>
+</section>
+
+<section id="s5">
+<span class="badge b2">Intermediate</span>
+<h2>5. Naked pairs and triples</h2>
+<p>If two cells in the same unit have only the same two candidates, those cells must hold those two digits between them. No other cell in the unit can use either digit, so erase them. A naked triple is the same idea with three cells and three digits.</p>
+<h3>Naked pair</h3>
+<div class="fig" id="f5a"></div>
+<div class="read"><b>Reading the picture</b>
+The two blue cells can only be 2 or 5. So the 2 and 5 are spoken for. The cell next to them, {2, 5, 7}, loses both and becomes a 7. The other two cells lose their 2 and 5 as well, and both end up as {1, 9}, which is a new naked pair. One pair often sets off a chain.</div>
+<h3>Naked triple</h3>
+<div class="fig" id="f5b"></div>
+<div class="read"><b>Reading the picture</b>
+The three blue cells use only the digits 1, 4, and 7 between them. Each cell does not need to contain all three. Together they claim 1, 4, and 7, so those digits are erased from the rest of the row. The two remaining cells collapse to 9 and 8.</div>
+<div class="use"><b>Use it when:</b> you have pencil marks and no singles. Scan each unit for cells with two or three candidates, and look for matches.</div>
+</section>
+
+<section id="s6">
+<span class="badge b2">Intermediate</span>
+<h2>6. Hidden pairs</h2>
+<p>Two digits that appear as candidates in only the same two cells of a unit. Those two cells must hold those two digits, so every other candidate in them can be erased. It is a naked pair in disguise.</p>
+<div class="fig" id="f6"></div>
+<div class="read"><b>Reading the picture</b>
+Look at the digits 3 and 8. Across the whole row, they appear only in the two blue cells. So those cells must be the 3 and the 8. The 5 in the first blue cell and the 1 in the second are erased, leaving a clean pair of {3, 8}.</div>
+<div class="use"><b>Use it when:</b> a pair of digits seems to show up in just two cells of a row, column, or box. Count the cells for each digit and see if two digits share the same two cells.</div>
+</section>
+
+<section id="s7">
+<span class="badge b2">Intermediate</span>
+<h2>7. Pointing pairs and triples</h2>
+<p>If every candidate for a digit inside one box lies in a single row (or column), the box's copy of that digit must be in that line. So no cell of that line outside the box can hold the digit. Two cells in a line make a pointing pair, three make a pointing triple.</p>
+<div class="fig" id="f7"></div>
+<div class="read"><b>Reading the picture</b>
+This grid shows every cell that could still be a 4. In the outlined top-left box, all the candidates for 4 are in row 2 (blue). The box needs a 4, so it will land in row 2. That means the rest of row 2 can't have a 4. The red cells are erased.</div>
+<div class="use"><b>Use it when:</b> you have pencil marks. Look at one digit inside one box at a time and see whether its candidates line up.</div>
+</section>
+
+<section id="s8">
+<span class="badge b2">Intermediate</span>
+<h2>8. Box-line reduction</h2>
+<p>The reverse of pointing. If every candidate for a digit in a row (or column) lies inside one box, then that box's copy of the digit must be in that line. So the other cells of the box can't hold the digit.</p>
+<div class="fig" id="f8"></div>
+<div class="read"><b>Reading the picture</b>
+In row 5, the only cells that can be a 6 are the two blue ones, and both sit in the outlined center box. Row 5 needs a 6, so the center box's 6 is in row 5. The other cells in that box (the red ones, in rows 4 and 6) can't be 6.</div>
+<div class="use"><b>Use it when:</b> a row or column has only two or three candidates for a digit and they all sit in the same box. Pointing and box-line are mirror images, so check both directions.</div>
+</section>
+
+<section id="s9">
+<span class="badge b3">Advanced</span>
+<h2>9. X-Wing</h2>
+<p>Pick a digit. If it can go in exactly two cells in each of two rows, and those cells are in the same two columns, you have an X-Wing. The four cells form a rectangle. Erase the digit from everywhere else in those two columns.</p>
+<div class="fig" id="f9"></div>
+<div class="read"><b>Reading the picture</b>
+In rows 2 and 7, the digit 6 can only go in columns 3 and 8 (blue rectangle). There are just two ways to place those 6s: top-left with bottom-right, or top-right with bottom-left. Either way, columns 3 and 8 each get their 6 from rows 2 and 7. So every other 6 candidate in those columns (red) is erased.</div>
+<div class="use"><b>Use it when:</b> basic and intermediate methods are exhausted. Scan for a digit with exactly two candidates in a row, then look for another row with the same two columns. It also works with rows and columns swapped.</div>
+</section>
+
+<section id="s10">
+<span class="badge b3">Advanced</span>
+<h2>10. Swordfish</h2>
+<p>X-Wing stretched to three rows and three columns. If a digit's candidates in three rows all sit inside the same three columns, those three rows will use up all three columns. Erase the digit from the rest of those columns.</p>
+<div class="fig" id="f10"></div>
+<div class="read"><b>Reading the picture</b>
+For the digit 3, rows 1, 4, and 8 can only place it in columns 2, 5, and 7. The six blue cells form a loop. Each row has two candidates here, but a row may have two or three in the pattern. The three 3s must fall in three different columns, so columns 2, 5, and 7 each get a 3 from those rows. The red cells are erased.</div>
+<div class="use"><b>Use it when:</b> X-Wing finds nothing. Look for three rows where a digit has two or three candidates, all within three columns. Rare, but it does show up on hard puzzles.</div>
+</section>
+
+<section id="s11">
+<span class="badge b3">Advanced</span>
+<h2>11. XY-Wing</h2>
+<p>Three cells that each have exactly two candidates, linked in a chain. One pivot cell and two wing cells share digits so that one of the wings is guaranteed to hold a particular digit. Any cell that sees both wings can't hold that digit.</p>
+<div class="fig" id="f11"></div>
+<div class="read"><b>Reading the picture</b>
+The pivot is {2, 6}. Wing A is {2, 9} and shares a row with the pivot. Wing B is {6, 9} and shares a column with it. If the pivot is 2, Wing A can't be 2, so it's 9. If the pivot is 6, Wing B can't be 6, so it's 9. Either way, one of the wings is a 9. The target cell sees both wings (down Wing A's column and along Wing B's row), so it can't be 9. Its 9 is struck out.</div>
+<div class="use"><b>Use it when:</b> you're stuck and have pencil marks. Find a cell with exactly two candidates, then look for two more two-candidate cells it can see, each sharing one digit with it and a third digit in common with each other.</div>
+</section>
+
+<section id="s12">
+<span class="badge b3">Advanced</span>
+<h2>12. Coloring</h2>
+<p>Focus on one digit. Wherever a row, column, or box has exactly two candidates for that digit, one of them must be true and the other false. Link those pairs into a chain and color it in alternating colors, A, B, A, B. Every cell of one color is true and every cell of the other is false, so you know the cells move together.</p>
+<div class="fig" id="f12"></div>
+<div class="read"><b>Reading the picture</b>
+For the digit 7, row 1 has only two candidates (top row), column 8 has only two, and row 6 has only two. The chain runs A, B, A, B across them. If either A cell is a 7, both are, and both B cells aren't. If a B cell is the 7, the reverse holds. Either way, one color is true. The red cell sees an A cell above it in its column and a B cell in its box, so it sees a true 7 no matter what. It can't be 7 itself.</div>
+<div class="use"><b>Use it when:</b> everything else has failed. A second rule: if two cells of the same color see each other, that color must be false, so every cell of the other color is a 7.</div>
+</section>
+
+<section id="ref">
+<h2>Quick reference</h2>
+<div class="card" style="padding:8px 10px">
+<table>
+<tr><th>Strategy</th><th>Looks for</th><th>Result</th></tr>
+<tr><td>1. Scan</td><td>One open cell for a digit in a unit</td><td>Place it</td></tr>
+<tr><td>2. Naked single</td><td>Cell with one candidate</td><td>Place it</td></tr>
+<tr><td>3. Hidden single</td><td>Digit with one possible cell in a unit</td><td>Place it</td></tr>
+<tr><td>4. Pencil marks</td><td>All candidates per cell</td><td>Enables 5 to 12</td></tr>
+<tr><td>5. Naked pair/triple</td><td>2 or 3 cells sharing 2 or 3 digits</td><td>Erase those digits from the unit</td></tr>
+<tr><td>6. Hidden pair</td><td>2 digits in only the same 2 cells</td><td>Erase other candidates in those cells</td></tr>
+<tr><td>7. Pointing</td><td>Box candidates all in one line</td><td>Erase along the line outside the box</td></tr>
+<tr><td>8. Box-line</td><td>Line candidates all in one box</td><td>Erase in the box outside the line</td></tr>
+<tr><td>9. X-Wing</td><td>Rectangle of a digit in 2 rows and 2 columns</td><td>Erase in the 2 columns</td></tr>
+<tr><td>10. Swordfish</td><td>Digit locked to 3 rows and 3 columns</td><td>Erase in the 3 columns</td></tr>
+<tr><td>11. XY-Wing</td><td>Pivot plus two wings sharing a digit</td><td>Erase from cells seeing both wings</td></tr>
+<tr><td>12. Coloring</td><td>Chain of two-candidate links</td><td>Erase from cells seeing both colors</td></tr>
+</table>
+</div>
+
+<h2 style="margin-top:24px">Habits that help</h2>
+<div class="card">
+<ul style="margin-top:0">
+<li>Work one digit at a time, then switch.</li>
+<li>Recheck after every placement. Each one can unlock others.</li>
+<li>Move to harder techniques only when the easier ones stall.</li>
+<li>Don't guess. If you can't find a move, you're missing a candidate or a pattern, not a lucky digit.</li>
+<li>If a puzzle suddenly makes no sense, an earlier mark was wrong. Recheck your pencil marks before anything else.</li>
+</ul>
+</div>
+</section>
+
+<footer>Sudoku strategies guide</footer>
+</div>
+
+<script>
+(function(){
+var NS='http://www.w3.org/2000/svg',S=38,OX=26,OY=22;
+var T={n:['--surf','--line2','--text'],p:['--ab','--abd','--at'],r:['--db','--dbd','--dt'],g:['--sb','--sbd','--st'],w:['--wb','--wbd','--wt'],c:['--card','--line','--muted'],x:['--db','--db','--dt']};
+
+function grid(id,sp){
+var host=document.getElementById(id),svg=document.createElementNS(NS,'svg');
+svg.setAttribute('viewBox','0 0 380 370');svg.setAttribute('role','img');svg.setAttribute('aria-label',sp.alt);host.appendChild(svg);
+function E(t,a,tx){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);if(tx!=null)e.textContent=tx;svg.appendChild(e)}
+function X(c){return OX+(c-1)*S}
+function Y(r){return OY+(r-1)*S}
+function cell(r,c,k,t){var s=T[k];E('rect',{x:X(c)+1,y:Y(r)+1,width:S-2,height:S-2,rx:4,style:'fill:var('+s[0]+');stroke:var('+s[1]+');stroke-width:1'+(k=='x'?';opacity:.55':'')});
+if(t!=null){E('text',{x:X(c)+S/2,y:Y(r)+S/2,'text-anchor':'middle','dominant-baseline':'central',style:'font-size:15px;font-weight:600;fill:var('+s[2]+')'},t);
+if(k=='r')E('line',{x1:X(c)+9,x2:X(c)+S-9,y1:Y(r)+S/2,y2:Y(r)+S/2,style:'stroke:var(--dt);stroke-width:1.5'})}}
+for(var r=1;r<=9;r++)for(var c=1;c<=9;c++)cell(r,c,'c');
+for(var i=0;i<=3;i++){var o=i*3*S;
+E('line',{x1:OX+o,y1:OY,x2:OX+o,y2:OY+9*S,style:'stroke:var(--line2);stroke-width:1.5'});
+E('line',{x1:OX,y1:OY+o,x2:OX+9*S,y2:OY+o,style:'stroke:var(--line2);stroke-width:1.5'})}
+for(var j=1;j<=9;j++){
+E('text',{x:X(j)+S/2,y:12,'text-anchor':'middle','dominant-baseline':'central',style:'font-size:11px;fill:var(--muted)'},j);
+E('text',{x:12,y:Y(j)+S/2,'text-anchor':'middle','dominant-baseline':'central',style:'font-size:11px;fill:var(--muted)'},j)}
+(sp.links||[]).forEach(function(l){E('line',{x1:X(l[1])+S/2,y1:Y(l[0])+S/2,x2:X(l[3])+S/2,y2:Y(l[2])+S/2,style:'stroke:var(--at);stroke-width:2;stroke-dasharray:5 3'})});
+sp.layers.forEach(function(L){L[1].forEach(function(q){cell(q[0],q[1],L[0],q.length>2?q[2]:null)})});
+if(sp.box){var b=sp.box;E('rect',{x:X(b[1]),y:Y(b[0]),width:(b[3]-b[1]+1)*S,height:(b[2]-b[0]+1)*S,rx:4,style:'fill:none;stroke:var(--at);stroke-width:2.5'})}
+var lg=document.createElement('div');lg.className='lg';
+sp.legend.forEach(function(i){var s=T[i[0]],e=document.createElement('span');e.innerHTML='<i style="background:var('+s[0]+');border:1px solid var('+s[1]+')"></i>'+i[1];lg.appendChild(e)});
+host.appendChild(lg)}
+
+function rows(id,list){
+var host=document.getElementById(id);
+list.forEach(function(x){
+var l=document.createElement('div');l.className='lb';l.textContent=x[0];host.appendChild(l);
+var d=document.createElement('div');d.className='rw';
+x[1].forEach(function(s){
+var e=document.createElement('div');e.className='cl';
+if(typeof s=='number'){e.innerHTML='<span class="fx">'+s+'</span>'}
+else{e.className+=' '+(s[3]||'');
+e.innerHTML=s[0].split('').map(function(ch){var c=(s[1]||'').indexOf(ch)>-1?'rm':((s[2]||'').indexOf(ch)>-1?'hl2':'');return '<span class="'+c+'">'+ch+'</span>'}).join('')}
+d.appendChild(e)});
+host.appendChild(d)})}
+
+function boxFig(id,mode){
+var host=document.getElementById(id),d=[{f:1},{c:'257'},{f:3},{c:'4'},{f:6},{c:'259'},{f:8},{c:'259'},{c:'259'}];
+var g=document.createElement('div');g.className='bx';
+d.forEach(function(x,i){
+var e=document.createElement('div');e.className='bc';
+if(x.f){e.innerHTML='<span class="fx">'+x.f+'</span>'}
+else{
+var h=x.c.split('').map(function(ch){return '<span'+(mode=='hidden'&&i==1&&ch=='7'?' class="hl"':'')+'>'+ch+'</span>'}).join('');
+e.innerHTML='<span class="cd">'+h+'</span>';
+if(mode=='naked'&&i==3){e.className+=' g';e.innerHTML+='<span class="tg">Naked single</span>'}
+if(mode=='hidden'&&i==1){e.className+=' p';e.innerHTML+='<span class="tg">Hidden single</span>'}}
+g.appendChild(e)});
+host.appendChild(g)}
+
+var P={'1,2':1,'2,5':1,'5,8':1,'8,9':1},bl=[];
+for(var r=1;r<=9;r++)for(var c=1;c<=9;c++){if(!P[r+','+c]&&(r<=2||c>=8))bl.push([r,c])}
+grid('f1',{alt:'Sudoku grid where four placed fives block every cell of the top-right box except row 3, column 7.',layers:[['x',bl],['n',[[1,2,5],[2,5,5],[5,8,5],[8,9,5]]],['g',[[3,7,5]]]],box:[1,7,3,9],legend:[['n','Placed 5'],['x','Blocked from holding a 5'],['g','Only spot left']]});
+
+boxFig('f2','naked');
+boxFig('f3','hidden');
+boxFig('f4','marks');
+
+rows('f5a',[
+['Before',[4,['25','','','p'],['25','','','p'],['257','25','',''],3,['129','2','',''],6,['159','5','',''],8]],
+['After',[4,['25','','','p'],['25','','','p'],['7','','','g'],3,['19'],6,['19'],8]]]);
+rows('f5b',[
+['Before',[2,['14','','','p'],['47','','','p'],['17','','','p'],3,['149','14'],5,['478','47'],6]],
+['After',[2,['14','','','p'],['47','','','p'],['17','','','p'],3,['9','','','g'],5,['8','','','g'],6]]]);
+rows('f6',[
+['Before',[4,['358','5','38','p'],['138','1','38','p'],6,['125'],7,['25'],9,['12']]],
+['After',[4,['38','','','p'],['38','','','p'],6,['125'],7,['25'],9,['12']]]]);
+
+grid('f7',{alt:'Candidates for 4: three in the top-left box all lie in row 2, so 4 is erased from the rest of row 2.',layers:[['c',[[4,8,4],[5,4,4],[7,2,4],[8,6,4]]],['p',[[2,1,4],[2,2,4],[2,3,4]]],['r',[[2,5,4],[2,7,4],[2,9,4]]]],box:[1,1,3,3],legend:[['p','Box candidates, all in row 2'],['r','Erase 4 here'],['c','Other candidates for 4']]});
+
+grid('f8',{alt:'Candidates for 6: both in row 5 lie in the center box, so 6 is erased from other cells of that box.',layers:[['c',[[1,2,6],[8,8,6],[3,6,6],[7,3,6]]],['p',[[5,4,6],[5,5,6]]],['r',[[4,5,6],[6,4,6],[6,6,6]]]],box:[4,4,6,6],legend:[['p','Only 6s in row 5, both in this box'],['r','Erase 6 here'],['c','Other candidates for 6']]});
+
+grid('f9',{alt:'X-Wing for 6 in rows 2 and 7 and columns 3 and 8; other 6 candidates in those columns are erased.',links:[[2,3,2,8],[2,8,7,8],[7,8,7,3],[7,3,2,3]],layers:[['c',[[1,5,6],[3,1,6],[5,5,6],[8,4,6]]],['p',[[2,3,6],[2,8,6],[7,3,6],[7,8,6]]],['r',[[4,3,6],[5,8,6],[9,3,6]]]],legend:[['p','X-Wing corners'],['r','Erase 6 here'],['c','Other candidates for 6']]});
+
+grid('f10',{alt:'Swordfish for 3 across rows 1, 4, 8 and columns 2, 5, 7; other 3 candidates in those columns are erased.',links:[[1,2,1,5],[1,5,4,5],[4,5,4,7],[4,7,8,7],[8,7,8,2],[8,2,1,2]],layers:[['c',[[2,1,3],[3,4,3],[6,9,3],[7,8,3]]],['p',[[1,2,3],[1,5,3],[4,5,3],[4,7,3],[8,2,3],[8,7,3]]],['r',[[3,2,3],[6,5,3],[9,7,3],[5,7,3]]]],legend:[['p','Swordfish cells'],['r','Erase 3 here'],['c','Other candidates for 3']]});
+
+grid('f12',{alt:'Coloring for 7: a four-cell chain alternates A and B, and a red cell that sees both colors cannot be 7.',links:[[1,2,1,8],[1,8,6,8],[6,8,6,3]],layers:[['c',[[3,5,7],[8,4,7],[9,9,7],[2,6,7]]],['p',[[1,2,'A'],[6,8,'A']]],['w',[[1,8,'B'],[6,3,'B']]],['r',[[4,2,7]]]],legend:[['p','Color A'],['w','Color B'],['r','Sees A and B, so not 7'],['c','Other candidates for 7']]});
+
+var xy=document.getElementById('f11');
+xy.innerHTML='<svg viewBox="0 0 380 270" role="img" aria-label="XY-Wing: pivot with 2 and 6, wing A with 2 and 9, wing B with 6 and 9, and a target cell that loses the candidate 9.">'
++'<g style="stroke:var(--line2);stroke-width:1.5"><line x1="160" y1="62" x2="220" y2="62"/><line x1="100" y1="94" x2="100" y2="170"/><line x1="280" y1="94" x2="280" y2="170"/><line x1="160" y1="202" x2="220" y2="202"/></g>'
++xbox(40,30,'Pivot','2','6','p')+xbox(220,30,'Wing A','2','9','p')+xbox(40,170,'Wing B','6','9','p')+xbox(220,170,'Target','4','9','r')
++'<line x1="286" y1="214" x2="302" y2="214" style="stroke:var(--dt);stroke-width:2"/></svg>';
+function xbox(x,y,t,a,b,k){var s=T[k],f='fill:var('+s[2]+')',cx=x+60;
+return '<rect x="'+x+'" y="'+y+'" width="120" height="64" rx="8" style="fill:var('+s[0]+');stroke:var('+s[1]+')"/>'
++'<text x="'+cx+'" y="'+(y+20)+'" text-anchor="middle" dominant-baseline="central" style="font-size:12px;'+f+'">'+t+'</text>'
++'<text x="'+(cx-14)+'" y="'+(y+44)+'" text-anchor="middle" dominant-baseline="central" style="font-size:17px;font-weight:600;'+f+'">'+a+'</text>'
++'<text x="'+(cx+14)+'" y="'+(y+44)+'" text-anchor="middle" dominant-baseline="central" style="font-size:17px;font-weight:600;'+f+'">'+b+'</text>'}
+})();
+</script>
+</body>
+</html>
